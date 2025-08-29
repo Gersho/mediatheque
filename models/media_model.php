@@ -27,7 +27,7 @@ function get_filtered_medias(): array
         set_flash('error', 'Numéro de page invalide');
         return $default;
     }
-    $per_page = 5;
+    $per_page = 10;
     $count = get_media_count();
     $nb_pages = ceil($count / $per_page);
     if ($current_page > $nb_pages) {
@@ -45,6 +45,7 @@ function get_filtered_medias(): array
         LEFT JOIN movies m ON m.id = medias.id
         LEFT JOIN books b ON b.id = medias.id
         LEFT JOIN games g ON g.id = medias.id
+        WHERE m.id IS NOT NULL OR g.id IS NOT NULL OR b.id IS NOT NULL
         LIMIT $per_page OFFSET $offset";
     $medias = db_select($sql);
     return [
@@ -58,4 +59,15 @@ function get_media_count(): int
 {
     $sql = 'SELECT COUNT(id) FROM medias';
     return db_connect()->query($sql)->fetch(PDO::FETCH_NUM)[0];
+}
+
+function get_media_url(int $id, string $type)
+{
+    if ($type === 'Game') {
+        return url("game/display?id=$id");
+    } else if ($type === 'Movie') {
+        return url("movie/display?id=$id");
+    } else {
+        return url("book/display?id=$id");
+    }
 }

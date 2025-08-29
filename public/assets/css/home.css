@@ -2,38 +2,78 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  align-items: center;
+  gap: 40px;
 }
 
 .media-tile {
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 250px;
-  height: 250px;
-  background-color: aqua;
+  height: 260px;
+  /* background-color: rgba(129, 129, 129, 0.52) */
 }
 
 .media-tile img {
   width: 150px;
   height: 200px;
+  border-radius: 0.3rem;
   /* object-fit: cover; */
 }
 
-.pagination {
+.media-tile-genre-cover {
+  display: flex;
+  align-items: flex-start;
+}
+
+.media-tile-genre-cover h2 {
+  font-weight: 500;
+  writing-mode: sideways-lr;
+  font-size: 2rem;
+  letter-spacing: 1rem;
+}
+
+.media-tile-cover-title {
+  all: unset;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+  width: 150px;
+  cursor: pointer;
+}
+.media-tile-cover-title:hover p {
+  /* TODO */
+}
+
+.media-tile-cover-title p {
+  font-weight: 500;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
   margin: 20px;
 }
 
-.pagination a {
-  color: black;
+.pagination .pagination-btn {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  color: rgb(255, 255, 255);
   padding: 8px 16px;
   text-decoration: none;
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   border: 1px solid #ddd;
+  align-items: center;
 }
 
-.pagination a:hover {
+.pagination .pagination-btn.hide {
+  opacity: 50%;
+}
+
+.pagination .pagination-btn:hover:not(.hide) {
   background-color: #ddd;
+  color: black;
 }

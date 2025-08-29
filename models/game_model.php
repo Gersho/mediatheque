@@ -6,8 +6,6 @@ function get_game_by_id($id)
     return db_select_one($query, [$id]);
 }
 
-
-
 function insert_new_game($game_data)
 {
         $id = insert_new_media('Game');
@@ -34,3 +32,4 @@ function insert_new_game($game_data)
                 }
                 return false;
     }
+
