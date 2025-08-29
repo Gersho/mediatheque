@@ -2,13 +2,16 @@
 
 function insert_new_book($book_data)
 {
+        $id = insert_new_media('Book');
+         
         $query = "INSERT INTO books 
-        (title, genre, stock, author, isbn, pages, published_year, summary)
-         VALUES('?','?','?','?','?','?','?','?')";
+        (id, title, genre, stock, author, isbn, pages, published_year, summary)
+        VALUES (?,?,?,?,?,?,?,?,?)";
 
                 if (db_execute(
                     $query,
                     [
+                        $id,
                         $book_data['title'],
                         $book_data['genre'],
                         $book_data['stock'],
@@ -16,7 +19,7 @@ function insert_new_book($book_data)
                         $book_data['isbn'],
                         $book_data['pages'],
                         $book_data['published_year'],
-                        $book_data['summary']
+                        $book_data['summary'],
                     ]
                 )) {
                     set_flash('success','Média ajouté avec succès');

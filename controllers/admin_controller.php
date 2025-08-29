@@ -69,8 +69,8 @@ function admin_game_add()
             "editor",
             "plateform",
             "pegi",
+            "description",
         ];
-
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $game_data[$key] = clean_input($_POST[$key]);

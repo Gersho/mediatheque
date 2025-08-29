@@ -4,28 +4,32 @@
 /**
  * Sécurise l'affichage d'une chaîne de caractères (protection XSS)
  */
-function escape($string) {
+function escape($string)
+{
     return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
 }
 
 /**
  * Affiche une chaîne sécurisée (échappée)
  */
-function e($string) {
+function e($string)
+{
     echo escape($string);
 }
 
 /**
  * Retourne une chaîne sécurisée sans l'afficher
  */
-function esc($string) {
+function esc($string)
+{
     return escape($string);
 }
 
 /**
  * Génère une URL absolue
  */
-function url($path = '') {
+function url($path = '')
+{
     $base_url = rtrim(BASE_URL, '/');
     $path = ltrim($path, '/');
     return $base_url . '/' . $path;
@@ -34,7 +38,8 @@ function url($path = '') {
 /**
  * Redirection HTTP
  */
-function redirect($path = '') {
+function redirect($path = '')
+{
     $url = url($path);
     header("Location: $url");
     exit;
@@ -43,7 +48,8 @@ function redirect($path = '') {
 /**
  * Génère un token CSRF
  */
-function csrf_token() {
+function csrf_token()
+{
     if (!isset($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
@@ -53,21 +59,24 @@ function csrf_token() {
 /**
  * Vérifie un token CSRF
  */
-function verify_csrf_token($token) {
+function verify_csrf_token($token)
+{
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
 
 /**
  * Définit un message flash
  */
-function set_flash($type, $message) {
+function set_flash($type, $message)
+{
     $_SESSION['flash_messages'][$type][] = $message;
 }
 
 /**
  * Récupère et supprime les messages flash
  */
-function get_flash_messages($type = null) {
+function get_flash_messages($type = null)
+{
     if (!isset($_SESSION['flash_messages'])) {
         return [];
     }
@@ -86,7 +95,8 @@ function get_flash_messages($type = null) {
 /**
  * Vérifie s'il y a des messages flash
  */
-function has_flash_messages($type = null) {
+function has_flash_messages($type = null)
+{
     if (!isset($_SESSION['flash_messages'])) {
         return false;
     }
@@ -101,7 +111,8 @@ function has_flash_messages($type = null) {
 /**
  * Nettoie une chaîne de caractères
  */
-function clean_input($data) {
+function clean_input($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -111,14 +122,16 @@ function clean_input($data) {
 /**
  * Valide une adresse email
  */
-function validate_email($email) {
+function validate_email($email)
+{
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
 /**
  * Génère un mot de passe sécurisé
  */
-function generate_password($length = 12) {
+function generate_password($length = 12)
+{
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
     $password = '';
     for ($i = 0; $i < $length; $i++) {
@@ -130,70 +143,80 @@ function generate_password($length = 12) {
 /**
  * Hache un mot de passe
  */
-function hash_password($password) {
+function hash_password($password)
+{
     return password_hash($password, PASSWORD_DEFAULT);
 }
 
 /**
  * Vérifie un mot de passe
  */
-function verify_password($password, $hash) {
+function verify_password($password, $hash)
+{
     return password_verify($password, $hash);
 }
 
 /**
  * Formate une date
  */
-function format_date($date, $format = 'd/m/Y H:i') {
+function format_date($date, $format = 'd/m/Y H:i')
+{
     return date($format, strtotime($date));
 }
 
 /**
  * Vérifie si une requête est en POST
  */
-function is_post() {
+function is_post()
+{
     return $_SERVER['REQUEST_METHOD'] === 'POST';
 }
 
 /**
  * Vérifie si une requête est en GET
  */
-function is_get() {
+function is_get()
+{
     return $_SERVER['REQUEST_METHOD'] === 'GET';
 }
 
 /**
  * Retourne la valeur d'un paramètre POST
  */
-function post($key, $default = null) {
+function post($key, $default = null)
+{
     return $_POST[$key] ?? $default;
 }
 
 /**
  * Retourne la valeur d'un paramètre GET
  */
-function get($key, $default = null) {
+function get($key, $default = null)
+{
     return $_GET[$key] ?? $default;
 }
 
 /**
  * Vérifie si un utilisateur est connecté
  */
-function is_logged_in() {
+function is_logged_in()
+{
     return isset($_SESSION['user_id']);
 }
 
 /**
  * Retourne l'ID de l'utilisateur connecté
  */
-function current_user_id() {
+function current_user_id()
+{
     return $_SESSION['user_id'] ?? null;
 }
 
 /**
  * Déconnecte l'utilisateur
  */
-function logout() {
+function logout()
+{
     session_destroy();
     redirect('auth/login');
 }
@@ -201,16 +224,45 @@ function logout() {
 /**
  * Formate un nombre
  */
-function format_number($number, $decimals = 2) {
+function format_number($number, $decimals = 2)
+{
     return number_format($number, $decimals, ',', ' ');
 }
 
 /**
  * Génère un slug à partir d'une chaîne
  */
-function generate_slug($string) {
+function generate_slug($string)
+{
     $string = strtolower($string);
     $string = preg_replace('/[^a-z0-9\s-]/', '', $string);
     $string = preg_replace('/[\s-]+/', '-', $string);
     return trim($string, '-');
-} 
+}
+
+
+
+/**
+ *  custom functions starting from here
+ */
+
+enum ErrorType: string
+{
+    case Warning = "Warning";
+    case Error = "Error";
+    case Info = "Info";
+    case Debug = "Debug";
+}
+
+function error_logging(ErrorType $type, string $message)
+{
+    $log_file = LOG_PATH . '/app.log';
+    if (!file_exists("$log_file")) {
+        if (!is_dir(LOG_PATH)) {
+            mkdir(LOG_PATH, 0644, true);
+        }
+        touch($log_file);
+    }
+    $date = date('Y-m-d H:i:s');
+    error_log("[$date] [$type->value] $message\n", 3, $log_file);
+}

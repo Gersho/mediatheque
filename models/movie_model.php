@@ -1,14 +1,23 @@
-<?php 
+<?php
+
+function get_movie_by_id($id)
+{
+    $query = "SELECT * FROM  movies WHERE id = ? LIMIT 1";
+    return db_select_one($query, [$id]);
+}
 
 function insert_new_movie($movie_data)
 {
+        $id = insert_new_media('Movie');
+
         $query = "INSERT INTO movies 
-        (title, genre, stock, director, duration, published_year, synopsis, certification)
-         VALUES('?','?','?','?','?','?','?','?')";
+        (id, title, genre, stock, director, duration, published_year, synopsis, certification)
+        VALUES(?,?,?,?,?,?,?,?,?)";
 
                 if (db_execute(
                     $query,
                     [
+                        $id,
                         $movie_data['title'],
                         $movie_data['genre'],
                         $movie_data['stock'],

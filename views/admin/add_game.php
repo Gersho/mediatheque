@@ -10,17 +10,17 @@
             <div class="form-group">
                 <label for="title">Titre</label>
                 <input type="text" id="title" name="title" required 
-                       placeholder="Titre du film">
+                       placeholder="Titre du jeu">
             </div>
             
             <div class="form-group">
                 <label for="genre">Genre</label>
                 <select id="genre" name="genre" required>
                     <option value="">Genre du jeu</option>
-                    <option value="fps">FPS</option>
-                    <option value="mmo">MMO</option>
-                    <option value="moba">MOBA</option>
-                    <option value="rpg">RPG</option>
+                    <option value="FPS">FPS</option>
+                    <option value="MMO">MMO</option>
+                    <option value="MOBA">MOBA</option>
+                    <option value="RPG">RPG</option>
                 </select>
             </div>
             
@@ -38,19 +38,19 @@
             
             <div class="form-group">
                 <label for="plateform">Plateforme</label>
-                <select>
+                <select id="plateform" name="plateform" required>
                     <option value="">Plateforme</option>
-                    <option value="pc">PC</option>
+                    <option value="PC">PC</option>
                     <option value="PlayStation">Playstation</option>
-                    <option value="xbox">Xbox</option>
-                    <option value="nintendo">Nintendo</option>
-                    <option value="mobile">Mobile</option>
+                    <option value="Xbox">Xbox</option>
+                    <option value="Nintendo">Nintendo</option>
+                    <option value="Mobile">Mobile</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="pegi">Pegi</label>
-                <select>
+                <select id="pegi" name="pegi" required>
                     <option value="3">3</option>
                     <option value="7">7</option>
                     <option value="12">12</option>
@@ -60,8 +60,8 @@
             </div>
 
             <div class="form-group">
-                <label for="descritpion">Description</label>
-                <textarea id="description" name="descrition"
+                <label for="description">Description</label>
+                <textarea id="description" name="description"
                         placeholder="Description"></textarea>
             </div>
 

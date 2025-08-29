@@ -57,8 +57,8 @@
             </div>
 
             <div class="form-group">
-                <label for="published-year">Date de publication</label>
-                <input type="number" id="published-year" name="published-year" required
+                <label for="published_year">Date de publication</label>
+                <input type="number" id="published_year" name="published_year" required
                         placeholder="Date de publication" min="1900">
             </div>
 

@@ -1,5 +1,19 @@
 <?php
 // TODO filter for real
+
+function insert_new_media($type) 
+{
+
+    $query = "INSERT INTO medias (type) VALUES (?)";
+    if (db_execute($query, [$type]))
+        {
+            return db_last_insert_id();
+        }
+        return false;
+}
+
+
+
 function get_filtered_medias(): array
 {
     $default = ['medias' => [], 'current_page' => 1, 'pages' => 1];

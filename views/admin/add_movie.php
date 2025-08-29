@@ -51,8 +51,8 @@
             </div>
 
             <div class="form-group">
-                <label for="published-year">Date de publication</label>
-                <input type="number" id="published-year" name="published-year" required
+                <label for="published_year">Date de publication</label>
+                <input type="number" id="published_year" name="published_year" required
                     placeholder="Date de publication" min="1900">
             </div>
 
@@ -64,9 +64,9 @@
 
             <div class="form-group">
                 <label for="certification">Certification</label>
-                <select id="certification" name="certification">
+                <select id="certification" name="certification" required>
                     <option value="">Certification</option>
-                    <option value="everyone">Tous publics</option>
+                    <option value="Tous public">Tous publics</option>
                     <option value="-12">-12</option>
                     <option value="-16">-16</option>
                     <option value="-18">-18</option>
