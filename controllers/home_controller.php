@@ -10,9 +10,14 @@ function home_index()
         'title' => 'Accueil',
         'stylesheets' => ['assets/css/home.css']
     ];
-    $medias = get_filtered_medias();
-    $data = array_merge($data, $medias);
-    load_view_with_layout('home/index', $data);
+    try {
+        $medias = get_filtered_medias();
+        $data = array_merge($data, $medias);
+        load_view_with_layout('home/index', $data);
+    } catch (Exception $e) {
+        set_flash('error', $e->getMessage());
+        redirect();
+    }
 }
 
 /**

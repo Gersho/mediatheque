@@ -7,12 +7,22 @@ function insert_new_media(array $data, callable $insert_func)
     try {
         $query = "INSERT INTO medias (title, genre, type, stock) VALUES (?,?,?,?)";
         db_execute($query, [$title, $genre, $type, $stock]);
-        $insert_func(db_last_insert_id(), $data);
+        $media_id = db_last_insert_id();
+        $insert_func($media_id, $data);
+        $cover_path = handle_cover_upload();
+        if ($cover_path) {
+            $query = "UPDATE medias SET cover_path = ? WHERE id = ?";
+            db_execute($query, [$cover_path, $media_id]);
+        }
         db_commit();
         set_flash('success', 'Média ajouté avec succès');
         return true;
-    } catch (PDOException $e) {
-        $msg = "Insert Error. Media Type: $type | Media title: $title | Type: PDOException | Message: " . $e->getMessage();
+    } catch (Exception $e) {
+        if ($e instanceof PDOException) {
+            $msg = "Insert Error. Media Type: $type | Media title: $title | Type: PDOException | Message: " . $e->getMessage();
+        } else {
+            $msg = $e->getMessage();
+        }
         set_flash('error', $msg);
         error_logging(ErrorType::Error, $msg);
         db_rollback();
@@ -20,27 +30,28 @@ function insert_new_media(array $data, callable $insert_func)
     return false;
 }
 
-
-
-function get_filtered_medias(): array
+function get_current_page(): int
 {
-    $default = ['medias' => [], 'current_page' => 1, 'pages' => 1];
     $current_page = $_GET['page'] ?? 1;
     if (!filter_var($current_page, FILTER_VALIDATE_INT)) {
-        set_flash('error', 'Numéro de page invalide');
-        return $default;
+        throw new Exception('Numéro de page invalide');
     }
     $current_page = (int) $current_page;
     if ($current_page <= 0) {
-        set_flash('error', 'Numéro de page invalide');
-        return $default;
+        throw new Exception('Numéro de page invalide');
     }
-    $per_page = 10;
+    return $current_page;
+}
+
+function get_filtered_medias(): array
+{
+    $current_page = get_current_page();
+    $per_page = 12;
     $count = get_media_count();
     $nb_pages = ceil($count / $per_page);
+    $nb_pages = $nb_pages === 0.0 ? 1 : $nb_pages;
     if ($current_page > $nb_pages) {
-        set_flash('error', 'Numéro de page invalide');
-        return $default;
+        throw new Exception('Numéro de page invalide');
     }
     $offset = ($current_page - 1) * $per_page;
     $sql = "
@@ -69,4 +80,12 @@ function get_media_url(int $id, string $type)
     } else {
         return url("book/show?id=$id");
     }
+}
+
+function get_media_cover_path(?string $path): string
+{
+    if ($path === null) {
+        return BASE_URL . '/assets/images/no-cover.png';
+    }
+    return $path;
 }

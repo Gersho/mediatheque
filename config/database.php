@@ -23,3 +23,5 @@ define('PUBLIC_PATH', ROOT_PATH . '/public');
 
 // Added configuratinons
 define('LOG_PATH', ROOT_PATH . '/logs');
+define('UPLOAD_PATH', '/uploads/covers');
+define('UPLOAD_MAX_SIZE', 2000000);
