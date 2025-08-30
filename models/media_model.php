@@ -1,15 +1,23 @@
 <?php
-// TODO filter for real
 
-function insert_new_media($type) 
+function insert_new_media(array $data, callable $insert_func)
 {
-
-    $query = "INSERT INTO medias (type) VALUES (?)";
-    if (db_execute($query, [$type]))
-        {
-            return db_last_insert_id();
-        }
-        return false;
+    db_begin_transaction();
+    extract($data);
+    try {
+        $query = "INSERT INTO medias (title, genre, type, stock) VALUES (?,?,?,?)";
+        db_execute($query, [$title, $genre, $type, $stock]);
+        $insert_func(db_last_insert_id(), $data);
+        db_commit();
+        set_flash('success', 'Média ajouté avec succès');
+        return true;
+    } catch (PDOException $e) {
+        $msg = "Insert Error. Media Type: $type | Media title: $title | Type: PDOException | Message: " . $e->getMessage();
+        set_flash('error', $msg);
+        error_logging(ErrorType::Error, $msg);
+        db_rollback();
+    }
+    return false;
 }
 
 
@@ -36,16 +44,7 @@ function get_filtered_medias(): array
     }
     $offset = ($current_page - 1) * $per_page;
     $sql = "
-        SELECT *, 
-        COALESCE(medias.id, b.id, m.id, g.id) AS id,
-        COALESCE(b.title, m.title, g.title) AS title,
-        COALESCE(b.genre, m.genre, g.genre) AS genre,
-        COALESCE(b.published_year, m.published_year) AS published_year,
-        COALESCE(b.stock, m.stock, g.stock) AS stock FROM medias 
-        LEFT JOIN movies m ON m.id = medias.id
-        LEFT JOIN books b ON b.id = medias.id
-        LEFT JOIN games g ON g.id = medias.id
-        WHERE m.id IS NOT NULL OR g.id IS NOT NULL OR b.id IS NOT NULL
+        SELECT * FROM medias
         LIMIT $per_page OFFSET $offset";
     $medias = db_select($sql);
     return [
@@ -64,10 +63,10 @@ function get_media_count(): int
 function get_media_url(int $id, string $type)
 {
     if ($type === 'Game') {
-        return url("game/display?id=$id");
+        return url("game/show?id=$id");
     } else if ($type === 'Movie') {
-        return url("movie/display?id=$id");
+        return url("movie/show?id=$id");
     } else {
-        return url("book/display?id=$id");
+        return url("book/show?id=$id");
     }
 }
