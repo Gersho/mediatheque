@@ -12,7 +12,11 @@
   align-items: center;
   width: 250px;
   height: 260px;
-  /* background-color: rgba(129, 129, 129, 0.52) */
+  transition: transform .2s;
+}
+
+.media-tile:hover {
+  transform: scale(1.03);
 }
 
 .media-tile img {

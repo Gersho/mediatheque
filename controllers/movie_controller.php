@@ -1,6 +1,6 @@
 <?php
 
-function movie_display()
+function movie_show()
 {
     if (!is_get()) {
         redirect('home');
@@ -24,5 +24,5 @@ function movie_display()
         'stock' => $movie_info["stock"]
     ];
 
-    load_view_with_layout('movie/display', $data);
+    load_view_with_layout('movie/show', $data);
 }

@@ -1,6 +1,6 @@
 <?php
 
-function game_display()
+function game_show()
 {
     if (!is_get()) {
         redirect('home');
@@ -23,5 +23,5 @@ function game_display()
         'stock' => $game_info["stock"]
     ];
 
-    load_view_with_layout('game/display', $data);
+    load_view_with_layout('game/show', $data);
 }
