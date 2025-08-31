@@ -11,7 +11,14 @@ function home_index()
         'stylesheets' => ['assets/css/home.css']
     ];
     try {
-        $medias = get_filtered_medias();
+        $filter_list = ["title", "type", "genre", "available"];
+        $filters = [];
+        foreach ($filter_list as $filter) {
+            if (isset($_GET[$filter])) {
+                $filters[$filter] = clean_input($_GET[$filter]);
+            }
+        }
+        $medias = get_filtered_medias($filters);
         $data = array_merge($data, $medias);
         load_view_with_layout('home/index', $data);
     } catch (Exception $e) {

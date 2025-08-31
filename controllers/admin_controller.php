@@ -48,7 +48,6 @@ function admin_add_movie()
             if (isset($_POST[$key])) {
                 $movie_data[$key] = clean_input($_POST[$key]);
             } else {
-                var_dump($key);
                 set_flash("error", "Veuillez remplir tous les champs");
                 return false;
             }
@@ -94,5 +93,32 @@ function admin_fill_db()
     foreach ($datas as $data) {
         $insert_function = "insert_new_" . strtolower($data["type"]);
         insert_new_media($data, $insert_function);
+    }
+}
+
+function admin_test()
+{
+    $response = file_get_contents("https://api.imdbapi.dev/titles?types=MOVIE&startYear=1900&sortBy=SORT_BY_USER_RATING_COUNT&sortOrder=DESC");
+    if ($response) {
+        $response = json_decode($response, true);
+        $movies = $response["titles"];
+        foreach ($movies as $movie) {
+            $data["type"] = "Movie";
+            $data["title"] = $movie["primaryTitle"];
+            $data["cover_path"] = $movie["primaryImage"]["url"];
+            $data["published_year"] = $movie["startYear"];
+            $data["duration"] = $movie["runtimeSeconds"] / 60;
+            $data["genre"] = $movie["genres"][0];
+            $data["certification"] = "-12";
+            $data["director"] = "dunno";
+            $data["synopsis"] = $movie["plot"];
+            $data["stock"] = 1;
+            try {
+                insert_new_media($data, 'insert_new_movie');
+            } catch (Exception $e) {
+                error_logging(ErrorType::Error, $e->getMessage());
+            }
+        }
+
     }
 }

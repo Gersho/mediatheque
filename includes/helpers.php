@@ -358,3 +358,19 @@ function handle_cover_upload(): string|null
     imagedestroy($image);
     return $file_path;
 }
+
+function get_page_url(int $page): string
+{
+    $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+    $get = $_GET;
+    if (isset($get['page']) && $page == 1) {
+        unset($get['page']);
+    } else {
+        $get['page'] = $page;
+    }
+    $query = http_build_query($get);
+    if (!empty($query)) {
+        $uri .= "?$query";
+    }
+    return $uri;
+}
