@@ -8,7 +8,8 @@
 :root {
   --primary-color: #000000;
   --primary-hover: #2563eb;
-  --secondary-color: #6945aa;
+  /* --secondary-color: #6945aa; */
+  --secondary-color: #e2bb3a;
   --success-color: #10b981;
   --error-color: #ef4444;
   --warning-color: #f59e0b;
@@ -472,7 +473,7 @@ body {
 
 /* Code blocks */
 pre {
-  background: #f8f8f8;
+  background: var(--background-color);
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
@@ -480,7 +481,7 @@ pre {
 }
 
 code {
-  background: #f1f5f9;
+  background: #000000;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   font-family: "Courier New", monospace;

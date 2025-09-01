@@ -5,8 +5,8 @@ function insert_new_media(array $data, callable $insert_func)
     db_begin_transaction();
     extract($data);
     try {
-        $query = "INSERT INTO medias (title, genre, type, stock) VALUES (?,?,?,?)";
-        db_execute($query, [$title, $genre, $type, $stock]);
+        $query = "INSERT INTO medias (title, genre, type, stock, cover_path) VALUES (?,?,?,?,?)";
+        db_execute($query, [$title, $genre, $type, $stock, $cover_path ?? null]);
         $media_id = db_last_insert_id();
         $insert_func($media_id, $data);
         $cover_path = handle_cover_upload();
@@ -43,21 +43,45 @@ function get_current_page(): int
     return $current_page;
 }
 
-function get_filtered_medias(): array
+function get_filter_conditions_and_params(array $filters): array
 {
+    $conditions = [];
+    $params = [];
+
+    foreach ($filters as $filter => $value) {
+        if ($filter === 'title') {
+            $params[] = "%$value%";
+            $conditions[] = "$filter LIKE ?";
+        } else if ($filter === 'available') {
+            $conditions[] = 'stock > 0';
+        } else {
+            $params[] = $value;
+            $conditions[] = "$filter = ?";
+        }
+    }
+
+    return [$conditions, $params];
+}
+
+function get_filtered_medias(array $filters = []): array
+{
+    [$conditions, $params] = get_filter_conditions_and_params($filters);
     $current_page = get_current_page();
     $per_page = 12;
-    $count = get_media_count();
+    $count = get_media_count($conditions, $params);
     $nb_pages = ceil($count / $per_page);
     $nb_pages = $nb_pages === 0.0 ? 1 : $nb_pages;
+
     if ($current_page > $nb_pages) {
         throw new Exception('Numéro de page invalide');
     }
     $offset = ($current_page - 1) * $per_page;
-    $sql = "
-        SELECT * FROM medias
-        LIMIT $per_page OFFSET $offset";
-    $medias = db_select($sql);
+    $sql = "SELECT * FROM medias";
+    if ($conditions) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
+    $sql .= " LIMIT $per_page OFFSET $offset;";
+    $medias = db_select($sql, $params);
     return [
         "medias" => $medias,
         "pages" => $nb_pages,
@@ -65,10 +89,15 @@ function get_filtered_medias(): array
     ];
 }
 
-function get_media_count(): int
+function get_media_count(array $conditions, array $params): int
 {
     $sql = 'SELECT COUNT(id) FROM medias';
-    return db_connect()->query($sql)->fetch(PDO::FETCH_NUM)[0];
+    if ($conditions) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
+    $stmt = db_connect()->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetch(PDO::FETCH_NUM)[0];
 }
 
 function get_media_url(int $id, string $type)

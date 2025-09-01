@@ -15,6 +15,15 @@
   transition: transform .2s;
 }
 
+.media-tile.unavailable {
+  opacity: 70%;
+}
+
+.media-tile.unavailable img {
+  filter: blur(.1rem);
+  /* filter: brightness(30%); */
+}
+
 .media-tile:hover {
   transform: scale(1.03);
 }
@@ -23,7 +32,6 @@
   width: 150px;
   height: 200px;
   border-radius: 0.3rem;
-  /* object-fit: cover; */
 }
 
 .media-tile-genre-cover {
@@ -36,6 +44,8 @@
   writing-mode: sideways-lr;
   font-size: 2rem;
   letter-spacing: 1rem;
+  cursor: default;
+  /* color: var(--secondary-color); */
 }
 
 .media-tile-cover-title {
