@@ -2,34 +2,25 @@
 
 function get_movie_by_id($id)
 {
-    $query = "SELECT * FROM  movies WHERE id = ? LIMIT 1";
+    $query = "SELECT * FROM  movies mo LEFT JOIN medias m ON m.id = mo.id WHERE mo.id = ? LIMIT 1";
     return db_select_one($query, [$id]);
 }
 
-function insert_new_movie($movie_data)
+function insert_new_movie(int $media_id, array $movie_data)
 {
-        $id = insert_new_media('Movie');
+    $query = "INSERT INTO movies 
+        (id, director, duration, published_year, synopsis, certification)
+        VALUES(?,?,?,?,?,?)";
 
-        $query = "INSERT INTO movies 
-        (id, title, genre, stock, director, duration, published_year, synopsis, certification)
-        VALUES(?,?,?,?,?,?,?,?,?)";
-
-                if (db_execute(
-                    $query,
-                    [
-                        $id,
-                        $movie_data['title'],
-                        $movie_data['genre'],
-                        $movie_data['stock'],
-                        $movie_data['director'],
-                        $movie_data['duration'],
-                        $movie_data['published_year'],
-                        $movie_data['synopsis'],
-                        $movie_data['certification'],
-                    ]
-                )) {
-                    set_flash('success','Média ajouté avec succès');
-                    return db_last_insert_id();
-                }
-                return false;
-    }
+    return db_execute(
+        $query,
+        [
+            $media_id,
+            $movie_data['director'],
+            $movie_data['duration'],
+            $movie_data['published_year'],
+            $movie_data['synopsis'],
+            $movie_data['certification'],
+        ]
+    );
+}

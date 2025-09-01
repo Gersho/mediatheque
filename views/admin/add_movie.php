@@ -9,8 +9,7 @@
 
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required
-                    placeholder="Titre du film">
+                <input type="text" id="title" name="title" required placeholder="Titre du film">
             </div>
 
             <div class="form-group">
@@ -34,20 +33,17 @@
 
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required
-                    placeholder="Stock" min="1">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1">
             </div>
 
             <div class="form-group">
                 <label for="director">Réalisateur</label>
-                <input type="text" id="director" name="director" required
-                    placeholder="Réalisateur">
+                <input type="text" id="director" name="director" required placeholder="Réalisateur">
             </div>
 
             <div class="form-group">
                 <label for="duration">Durée (minutes)</label>
-                <input type="number" id="duration" name="duration" required
-                    placeholder="Durée" min="1" max="999">
+                <input type="number" id="duration" name="duration" required placeholder="Durée" min="1" max="999">
             </div>
 
             <div class="form-group">
@@ -58,15 +54,14 @@
 
             <div class="form-group">
                 <label for="synopsis">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" required
-                    placeholder="Synopsis du film"></textarea>
+                <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="certification">Certification</label>
                 <select id="certification" name="certification" required>
                     <option value="">Certification</option>
-                    <option value="Tous public">Tous publics</option>
+                    <option value="Tous publics">Tous publics</option>
                     <option value="-12">-12</option>
                     <option value="-16">-16</option>
                     <option value="-18">-18</option>
@@ -78,6 +73,6 @@
                 Ajouter
             </button>
         </form>
-        
+
     </div>
-</div> 
+</div>

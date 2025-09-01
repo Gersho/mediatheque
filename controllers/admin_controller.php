@@ -1,8 +1,8 @@
 <?php
 
-function admin_book_add()
+function admin_add_book()
 {
-
+    // TODO validation, Check unique constaints (by insert or by select)
     if (is_post()) {
         $all_data = [
             "title",
@@ -23,13 +23,13 @@ function admin_book_add()
                 return false;
             }
         }
-
-        insert_new_book($book_data);
-        
+        $book_data['type'] = 'Book';
+        insert_new_media($book_data, 'insert_new_book');
+        //TODO if success redirect to dashboard ?
     }
     load_view_with_layout("admin/add_book");
 }
-function admin_movie_add()
+function admin_add_movie()
 {
 
     if (is_post()) {
@@ -52,13 +52,13 @@ function admin_movie_add()
                 return false;
             }
         }
-
-        insert_new_movie($movie_data);
+        $movie_data['type'] = 'Movie';
+        insert_new_media($movie_data, 'insert_new_movie');
     }
     load_view_with_layout("admin/add_movie");
 }
 
-function admin_game_add()
+function admin_add_game()
 {
 
     if (is_post()) {
@@ -79,9 +79,18 @@ function admin_game_add()
                 return false;
             }
         }
-
-        insert_new_game($game_data);
+        $game_data["type"] = "Game";
+        insert_new_media($game_data, 'insert_new_game');
     }
-
     load_view_with_layout("admin/add_game");
+}
+
+//TODO delete
+function admin_fill_db()
+{
+    $datas = include_once "../testing/database/db_data.php";
+    foreach ($datas as $data) {
+        $insert_function = "insert_new_" . strtolower($data["type"]);
+        insert_new_media($data, $insert_function);
+    }
 }

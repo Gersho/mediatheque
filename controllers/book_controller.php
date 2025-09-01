@@ -1,6 +1,6 @@
 <?php
 
-function book_display()
+function book_show()
 {
     if (!is_get()) {
         redirect('home');
@@ -24,5 +24,5 @@ function book_display()
         'stock' => $book_info["stock"]
     ];
 
-    load_view_with_layout('book/display', $data);
+    load_view_with_layout('book/show', $data);
 }

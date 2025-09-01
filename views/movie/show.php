@@ -9,7 +9,7 @@
 
 
     <p>Synopsis:</p>
-    <p><?php e($summary); ?> </p>
+    <p><?php e($synopsis); ?> </p>
 
 
 
