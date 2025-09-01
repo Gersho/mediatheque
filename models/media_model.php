@@ -9,7 +9,7 @@ function insert_new_media(array $data, callable $insert_func)
         db_execute($query, [$title, $genre, $type, $stock, $cover_path ?? null]);
         $media_id = db_last_insert_id();
         $insert_func($media_id, $data);
-        $cover_path = handle_cover_upload();
+        $cover_path = upload_cover_image();
         if ($cover_path) {
             $query = "UPDATE medias SET cover_path = ? WHERE id = ?";
             db_execute($query, [$cover_path, $media_id]);

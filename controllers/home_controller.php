@@ -14,7 +14,7 @@ function home_index()
         $filter_list = ["title", "type", "genre", "available"];
         $filters = [];
         foreach ($filter_list as $filter) {
-            if (isset($_GET[$filter])) {
+            if (isset($_GET[$filter]) && !empty($_GET[$filter])) {
                 $filters[$filter] = clean_input($_GET[$filter]);
             }
         }

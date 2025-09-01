@@ -343,7 +343,7 @@ function resize_image(array $file, array $file_info): GdImage
     return $dest;
 }
 
-function handle_cover_upload(): string|null
+function upload_cover_image(): string|null
 {
     if (!isset($_FILES["cover"]) || $_FILES["cover"]["error"] === UPLOAD_ERR_NO_FILE) {
         return null;
