@@ -18,7 +18,7 @@ function home_index()
                 $filters[$filter] = clean_input($_GET[$filter]);
             }
         }
-        $medias = get_filtered_medias($filters);
+        $medias = get_medias($filters);
         $data = array_merge($data, $medias);
         load_view_with_layout('home/index', $data);
     } catch (Exception $e) {
