@@ -4,7 +4,7 @@
             <p>Ajouter un film</p>
         </div>
 
-        <form method="POST" class="auth-form">
+        <form method="POST" class="auth-form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
 
             <div class="form-group">
@@ -66,6 +66,11 @@
                     <option value="-16">-16</option>
                     <option value="-18">-18</option>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cover">Upload cover</label>
+                <input type="file" id="cover" name="cover">
             </div>
 
             <button type="submit" class="btn btn-primary btn-full">

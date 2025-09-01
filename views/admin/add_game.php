@@ -3,16 +3,15 @@
         <div class="auth-header">
             <p>Ajouter un jeu</p>
         </div>
-        
-        <form method="POST" class="auth-form">
+
+        <form method="POST" class="auth-form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
 
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required 
-                       placeholder="Titre du jeu">
+                <input type="text" id="title" name="title" required placeholder="Titre du jeu">
             </div>
-            
+
             <div class="form-group">
                 <label for="genre">Genre</label>
                 <select id="genre" name="genre" required>
@@ -23,19 +22,17 @@
                     <option value="RPG">RPG</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required
-                       placeholder="Stock" min="1">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1">
             </div>
-            
+
             <div class="form-group">
                 <label for="editor">Éditeur</label>
-                <input type="text" id="editor" name="editor" required
-                       placeholder="Éditeur">
+                <input type="text" id="editor" name="editor" required placeholder="Éditeur">
             </div>
-            
+
             <div class="form-group">
                 <label for="plateform">Plateforme</label>
                 <select id="plateform" name="plateform" required>
@@ -61,15 +58,20 @@
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" name="description"
-                        placeholder="Description"></textarea>
+                <textarea id="description" name="description" placeholder="Description"></textarea>
             </div>
+
+            <div class="form-group">
+                <label for="cover">Upload cover</label>
+                <input type="file" id="cover" name="cover">
+            </div>
+
 
             <button type="submit" class="btn btn-primary btn-full">
                 <i class="fas fa-user-plus"></i>
                 Ajouter
             </button>
         </form>
-        
+
     </div>
-</div> 
+</div>

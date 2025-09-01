@@ -266,3 +266,95 @@ function error_logging(ErrorType $type, string $message)
     $date = date('Y-m-d H:i:s');
     error_log("[$date] [$type->value] $message\n", 3, $log_file);
 }
+
+function validate_upload($file): array
+{
+    $errorMessages = [
+        UPLOAD_ERR_INI_SIZE => "Le fichier téléchargé dépasse la directive upload_max_filesize dans php.ini",
+        UPLOAD_ERR_FORM_SIZE => "Le fichier téléchargé dépasse la directive MAX_FILE_SIZE spécifiée dans le formulaire HTML",
+        UPLOAD_ERR_PARTIAL => "Le fichier n'a été que partiellement téléchargé",
+        UPLOAD_ERR_NO_TMP_DIR => "Dossier temporaire manquant",
+        UPLOAD_ERR_CANT_WRITE => "Échec de l'écriture du fichier sur le disque",
+        UPLOAD_ERR_EXTENSION => "Une extension PHP a interrompu le téléchargement du fichier",
+    ];
+    if ($file["error"] !== UPLOAD_ERR_OK) {
+        throw new Exception($errorMessages[$file["error"]]);
+    }
+    if (!is_uploaded_file($file['tmp_name'])) {
+        throw new Exception("Le fichier upload ne vient pas d'une requête POST");
+    }
+    if ($file["size"] > UPLOAD_MAX_SIZE) {
+        throw new Exception("Le fichier est trop volumineux. Taille max: " . UPLOAD_MAX_SIZE / 1000000 . 'mo.');
+    }
+
+    $file_info = getimagesize($_FILES["cover"]["tmp_name"]);
+    if ($file_info === false) {
+        throw new Exception("Le fichier upload n'est pas une image");
+    }
+
+    $file_extension = explode("/", $file["type"])[1];
+    $file_mime_type = explode("/", $file_info["mime"])[1];
+    $allowed_types = ["jpeg", "jpg", "png", "gif"];
+
+    if (!in_array($file_extension, $allowed_types) || !in_array($file_mime_type, $allowed_types)) {
+        throw new Exception("Type de fichier non valide (formats acceptés : jpg, png, gif).");
+    }
+    $file_info["ext"] = $file_mime_type;
+    return $file_info;
+}
+
+function create_image_from_file(string $path, string $mime_type): GdImage
+{
+    $image = match ($mime_type) {
+        'image/jpeg', 'image/jpg' => imagecreatefromjpeg($path),
+        'image/png' => imagecreatefrompng($path),
+        'image/gif' => imagecreatefromgif($path),
+        default => false,
+    };
+    if (!$image) {
+        throw new Exception("Echec de la création de l'image");
+    }
+    return $image;
+}
+
+function save_image(GdImage $image, string $destination, string $mime_type)
+{
+    $success = match ($mime_type) {
+        'image/jpeg', 'image/jpg' => imagejpeg($image, $destination),
+        'image/png' => imagepng($image, $destination),
+        'image/gif' => imagegif($image, $destination),
+        default => false,
+    };
+    if (!$success) {
+        throw new Exception("Echec de la sauvegarde de l'image");
+    }
+}
+
+function resize_image(array $file, array $file_info): GdImage
+{
+    $new_width = 300;
+    $new_height = 400;
+    $dest = imagecreatetruecolor($new_width, $new_height);
+    $source = create_image_from_file($file['tmp_name'], $file_info['mime']);
+    if (!imagecopyresampled($dest, $source, 0, 0, 0, 0, $new_width, $new_height, $file_info[0], $file_info[1])) {
+        throw new Exception("Echec du resize de l'image");
+    }
+    imagedestroy($source);
+    return $dest;
+}
+
+function handle_cover_upload(): string|null
+{
+    if (!isset($_FILES["cover"]) || $_FILES["cover"]["error"] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+    $file = $_FILES["cover"];
+    $file_info = validate_upload($file);
+    $image = resize_image($file, $file_info);
+    $filename = uniqid() . '.' . $file_info['ext'];
+    $file_path = UPLOAD_PATH . '/' . $filename;
+    $destination = ROOT_PATH . $file_path;
+    save_image($image, $destination, $file_info['mime']);
+    imagedestroy($image);
+    return $file_path;
+}

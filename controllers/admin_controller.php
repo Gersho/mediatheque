@@ -2,7 +2,7 @@
 
 function admin_add_book()
 {
-    // TODO validation, Check unique constaints (by insert or by select)
+    // TODO validation + Check unique constaints (by insert or by select)
     if (is_post()) {
         $all_data = [
             "title",
@@ -48,6 +48,7 @@ function admin_add_movie()
             if (isset($_POST[$key])) {
                 $movie_data[$key] = clean_input($_POST[$key]);
             } else {
+                var_dump($key);
                 set_flash("error", "Veuillez remplir tous les champs");
                 return false;
             }
@@ -71,6 +72,7 @@ function admin_add_game()
             "pegi",
             "description",
         ];
+
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $game_data[$key] = clean_input($_POST[$key]);
