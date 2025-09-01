@@ -1,0 +1,60 @@
+.container {
+  /*padding: 0;*/
+  /* margin: 0; */
+  /* border-radius: 30%; */
+  text-align: center;
+  color: black;
+  line-height: 2;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  padding: 3rem;
+  background-color: lightblue;
+}
+
+section {
+  display: flex;
+  gap: 3rem;
+
+  /* width: 55rem; */
+  /* border-radius: 5%; */
+}
+
+img {
+  width: 300px;
+  height: 400px;
+  display: block;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+button {
+  width: 5rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.textfield {
+  text-align: left;
+}
+
+.titlefield {
+  /* padding-top: -100px; */
+  line-height: 1;
+}
+
+.blabla {
+  line-height: 4;
+}
+
+.zen {
+  background-color: blue;
+  float: right;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.cushion {
+  height: 2rem;
+  background-color: brown;
+}
