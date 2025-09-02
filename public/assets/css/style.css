@@ -7,14 +7,13 @@
 
 :root {
   --primary-color: #000000;
-  --primary-hover: #2563eb;
-  /* --secondary-color: #6945aa; */
   --secondary-color: #e2bb3a;
+  --primary-hover: var(--secondary-color);
   --success-color: #10b981;
   --error-color: #ef4444;
   --warning-color: #f59e0b;
   --background-color: #1b1b1b;
-  --text-color: #ffffff;
+  --text-color: #000000;
   --border-color: #e5e7eb;
   --white: #ffffff;
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
@@ -68,7 +67,7 @@ body {
 }
 
 .nav-menu a {
-  color: var(--text-color);
+  color: var(--white);
   text-decoration: none;
   font-weight: 500;
   display: block;
@@ -320,7 +319,7 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: black;
+  color: var(--text-color);
 }
 
 .form-group input,
@@ -478,10 +477,10 @@ pre {
   border-radius: 0.5rem;
   overflow-x: auto;
   margin: 1rem 0;
+  color: white;
 }
 
 code {
-  background: #000000;
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   font-family: "Courier New", monospace;
