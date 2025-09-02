@@ -21,7 +21,9 @@ function movie_show()
         'published_year' => $movie_info["published_year"],
         'synopsis' => $movie_info["synopsis"],
         'certification' => $movie_info["certification"],
-        'stock' => $movie_info["stock"]
+        'cover_path' => $movie_info['cover_path'],
+        'stock' => $movie_info["stock"],
+        'stylesheets' => ['assets/css/media.css']
     ];
 
     load_view_with_layout('movie/show', $data);
