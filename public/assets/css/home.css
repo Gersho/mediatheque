@@ -1,4 +1,5 @@
 .media-container {
+  color: var(--white);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -21,7 +22,7 @@
 
 .media-tile.unavailable img {
   /* filter: blur(0.1rem); */
-  filter: brightness(30%);
+  filter: brightness(20%);
 }
 
 .media-tile:hover {
