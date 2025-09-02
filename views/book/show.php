@@ -18,7 +18,9 @@
             <p>genre: <?php e($genre); ?></p>
             <p>pages: <?php e($pages); ?></p>
             <p>Resumé:</p>
-            <p><?php e($summary); ?> </p>
+
+
+            <div class="scroll-box"><?php e($summary); ?> </div>
 
 
         </div>

@@ -58,3 +58,13 @@ button {
   height: 2rem;
   background-color: brown;
 }
+
+.scroll-box {
+  height: 20rem;
+  width: 45rem;
+  overflow: auto;
+  background-color: yellowgreen;
+  color: white;
+  /* font-family:sans-serif; */
+  padding: 10px;
+}
