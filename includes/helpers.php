@@ -352,8 +352,8 @@ function upload_cover_image(): string|null
     $file_info = validate_upload($file);
     $image = resize_image($file, $file_info);
     $filename = uniqid() . '.' . $file_info['ext'];
-    $file_path = UPLOAD_PATH . '/' . $filename;
-    $destination = ROOT_PATH . $file_path;
+    $file_path = "uploads/covers/$filename";
+    $destination = UPLOAD_PATH . '/' . $filename;
     save_image($image, $destination, $file_info['mime']);
     imagedestroy($image);
     return $file_path;
@@ -382,3 +382,60 @@ function dd(mixed $value)
     echo "</code></pre>";
     die();
 }
+
+function upload_cover_from_url(string $url): ?string
+{
+    if (empty($url)) {
+        return null;
+    }
+
+    // Download image content
+    $image_content = @file_get_contents($url);
+    if ($image_content === false) {
+        throw new Exception("Impossible de télécharger l'image depuis l'URL: $url");
+    }
+
+    // Create temporary file
+    $tmp_file = tempnam(sys_get_temp_dir(), 'cover_');
+    file_put_contents($tmp_file, $image_content);
+
+    // Validate image type
+    $file_info = getimagesize($tmp_file);
+    if ($file_info === false) {
+        unlink($tmp_file);
+        throw new Exception("Le fichier téléchargé n'est pas une image valide");
+    }
+
+    $file_mime_type = $file_info["mime"];
+    $allowed_types = ["image/jpeg", "image/png", "image/gif"];
+    if (!in_array($file_mime_type, $allowed_types)) {
+        unlink($tmp_file);
+        throw new Exception("Type de fichier non valide (formats acceptés : jpg, png, gif).");
+    }
+
+    // Resize image
+    $image = resize_image(
+        ["tmp_name" => $tmp_file], // mimic $_FILES
+        $file_info
+    );
+
+    // Generate unique filename
+    $ext = match ($file_mime_type) {
+        "image/jpeg" => "jpg",
+        "image/png" => "png",
+        "image/gif" => "gif",
+    };
+    $filename = uniqid() . '.' . $ext;
+    $file_path = "uploads/covers/$filename";
+    $destination = UPLOAD_PATH . '/' . $filename;
+
+    // Save image
+    save_image($image, $destination, $file_mime_type);
+
+    // Clean up
+    imagedestroy($image);
+    unlink($tmp_file);
+
+    return $file_path;
+}
+

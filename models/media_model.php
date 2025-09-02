@@ -80,7 +80,7 @@ function get_medias(array $filters = []): array
     if ($conditions) {
         $sql .= " WHERE " . implode(" AND ", $conditions);
     }
-    $sql .= " LIMIT $per_page OFFSET $offset;";
+    $sql .= " ORDER BY id DESC LIMIT $per_page OFFSET $offset;";
     $medias = db_select($sql, $params);
     return [
         "medias" => $medias,
@@ -113,10 +113,8 @@ function get_media_url(int $id, string $type)
 
 function get_media_cover_path(?string $path): string
 {
-    if ($path === null) {
+    if ($path === null || !file_exists(ROOT_PATH . "/$path")) {
         return BASE_URL . '/assets/images/no-cover.png';
-    } else if (str_starts_with($path, 'http')) {
-        return $path;
     }
     return UPLOAD_URL . "/$path";
 }
