@@ -49,15 +49,11 @@ button {
 
 .zen {
   background-color: blue;
-  float: right;
   margin-bottom: 2rem;
   gap: 2rem;
+  float: right;
 }
 
-.cushion {
-  height: 2rem;
-  background-color: brown;
-}
 
 .scroll-box {
   height: 20rem;
