@@ -24,3 +24,11 @@ function get_book_by_id($id)
     $query = "SELECT * FROM  books b LEFT JOIN medias m ON m.id = b.id WHERE b.id = ? LIMIT 1";
     return db_select_one($query, [$id]);
 }
+
+    function check_isbn_unique($isbn)
+    {
+        $query = "SELECT id FROM books WHERE isbn = ?";
+        $result = db_select_one($query, [$isbn]);
+
+        return !$result;
+    }
