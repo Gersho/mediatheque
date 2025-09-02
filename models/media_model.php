@@ -9,7 +9,7 @@ function insert_new_media(array $data, callable $insert_func)
         db_execute($query, [$title, $genre, $type, $stock, $cover_path ?? null]);
         $media_id = db_last_insert_id();
         $insert_func($media_id, $data);
-        $cover_path = handle_cover_upload();
+        $cover_path = upload_cover_image();
         if ($cover_path) {
             $query = "UPDATE medias SET cover_path = ? WHERE id = ?";
             db_execute($query, [$cover_path, $media_id]);
@@ -63,7 +63,7 @@ function get_filter_conditions_and_params(array $filters): array
     return [$conditions, $params];
 }
 
-function get_filtered_medias(array $filters = []): array
+function get_medias(array $filters = []): array
 {
     [$conditions, $params] = get_filter_conditions_and_params($filters);
     $current_page = get_current_page();
@@ -115,6 +115,16 @@ function get_media_cover_path(?string $path): string
 {
     if ($path === null) {
         return BASE_URL . '/assets/images/no-cover.png';
+    } else if (str_starts_with($path, 'http')) {
+        return $path;
     }
-    return $path;
+    return UPLOAD_URL . "/$path";
+}
+
+function get_genre_values(): array
+{
+    $sql = "SHOW COLUMNS FROM medias WHERE field = 'genre'";
+    $type = db_select_one($sql)['Type'];
+    preg_match_all("/'([^']*)'/", $type, $matches);
+    return $matches[1];
 }

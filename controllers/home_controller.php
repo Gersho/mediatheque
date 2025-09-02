@@ -15,10 +15,13 @@ function home_index()
         $filters = [];
         foreach ($filter_list as $filter) {
             if (isset($_GET[$filter])) {
-                $filters[$filter] = clean_input($_GET[$filter]);
+                $clean_input = clean_input($_GET[$filter]);
+                if (!empty($clean_input)) {
+                    $filters[$filter] = $clean_input;
+                }
             }
         }
-        $medias = get_filtered_medias($filters);
+        $medias = get_medias($filters);
         $data = array_merge($data, $medias);
         load_view_with_layout('home/index', $data);
     } catch (Exception $e) {

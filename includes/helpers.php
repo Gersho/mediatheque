@@ -343,7 +343,7 @@ function resize_image(array $file, array $file_info): GdImage
     return $dest;
 }
 
-function handle_cover_upload(): string|null
+function upload_cover_image(): string|null
 {
     if (!isset($_FILES["cover"]) || $_FILES["cover"]["error"] === UPLOAD_ERR_NO_FILE) {
         return null;
@@ -373,4 +373,12 @@ function get_page_url(int $page): string
         $uri .= "?$query";
     }
     return $uri;
+}
+
+function dd(mixed $value)
+{
+    echo "<pre><code>";
+    print_r($value);
+    echo "</code></pre>";
+    die();
 }
