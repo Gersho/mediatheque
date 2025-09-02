@@ -5,7 +5,7 @@
             <span class="placement-button">
                 <?php
                 if ($stock !== 0):
-                ?> <button>rent</button> <?php
+                ?> <button class="btn btn-primary louer">Emprunter</button> <?php
                                     else: ?>
                     <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
 
