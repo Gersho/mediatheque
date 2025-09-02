@@ -9,12 +9,12 @@
 
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required placeholder="Titre du jeu">
+                <input type="text" id="title" name="title" required placeholder="Titre du jeu" value="<?php if (isset($entries['title'])) echo $entries['title'];?>">
             </div>
 
             <div class="form-group">
                 <label for="genre">Genre</label>
-                <select id="genre" name="genre" required>
+                <select id="genre" name="genre" required value="<?php if (isset($entries['genre'])) echo $entries['genre'];?>">
                     <option value="">Genre du jeu</option>
                     <option value="FPS">FPS</option>
                     <option value="MMO">MMO</option>
@@ -25,17 +25,17 @@
 
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock'])) echo $entries['stock'];?>">
             </div>
 
             <div class="form-group">
                 <label for="editor">Éditeur</label>
-                <input type="text" id="editor" name="editor" required placeholder="Éditeur">
+                <input type="text" id="editor" name="editor" required placeholder="Éditeur" value="<?php if (isset($entries['editor'])) echo $entries['editor'];?>">
             </div>
 
             <div class="form-group">
                 <label for="plateform">Plateforme</label>
-                <select id="plateform" name="plateform" required>
+                <select id="plateform" name="plateform" required value="<?php if (isset($entries['plateform'])) echo $entries['plateform'];?>">
                     <option value="">Plateforme</option>
                     <option value="PC">PC</option>
                     <option value="PlayStation">Playstation</option>
@@ -47,7 +47,7 @@
 
             <div class="form-group">
                 <label for="pegi">Pegi</label>
-                <select id="pegi" name="pegi" required>
+                <select id="pegi" name="pegi" required value="<?php if (isset($entries['pegi'])) echo $entries['pegi'];?>">
                     <option value="3">3</option>
                     <option value="7">7</option>
                     <option value="12">12</option>
