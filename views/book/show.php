@@ -6,7 +6,6 @@
 
         <div class="textfield">
             <div class="titlefield">
-
                 <h1><?php e($title); ?></h1>
             </div>
             <div class="blabla">
