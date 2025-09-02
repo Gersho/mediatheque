@@ -3,11 +3,11 @@
   /* margin: 0; */
   /* border-radius: 30%; */
   text-align: center;
-  color: black;
+  color: white;
   line-height: 2;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   padding: 4rem;
-  background-color: lightblue;
+  
 }
 
 section {
@@ -29,9 +29,10 @@ h1 {
 }
 
 button {
-  width: 5rem;
+  width: 10rem;
   height: 3rem;
   font-size: 1rem;
+margin: 2rem;
 }
 
 .textfield {
@@ -45,15 +46,16 @@ button {
   padding-left: 1rem;
 }
 
-.blabla {
+.auteur {
   line-height: 4;
 }
 
-.zen {
+.placement-button {
   padding: 10px ;
   margin-bottom: 2rem;
   gap: 2rem;
-  float: right;
+ 
+  
 }
 
 
@@ -62,8 +64,13 @@ button {
   width: 45rem;
   border-radius: 15px;
   overflow: auto;
-  background-color: rgb(71, 110, 123);
-  color: rgb(9, 7, 7);
+  /* background-color: rgb(71, 110, 123); */
+  /* color: rgb(9, 7, 7); */
+  color: white;
   /* font-family:sans-serif; */
   padding: 10px;
+}
+.message{
+  font-size:x-large;
+  font-style: italic;
 }

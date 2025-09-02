@@ -1,14 +1,28 @@
 <div class="container">
 
     <section>
-        <div><img src="<?php e($cover_path); ?>"></div>
+        <div>
+            
+        <img src="<?php e($cover_path); ?>">
+    <span class="placement-button">
+
+        <?php
+        if ($stock !== 0):
+            ?> <button>rent</button> <?php
+        else: ?>
+            <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
+
+        <?php endif; ?>
+    </span>
+    
+    </div>
 
 
         <div class="textfield">
             <div class="titlefield">
                 <h1><?php e($title); ?></h1>
             </div>
-            <div class="blabla">
+            <div class="auteur">
                 <p>par <?php e($author); ?> en <?php e($published_year); ?></p>
             </div>
 
@@ -24,16 +38,7 @@
 
         </div>
     </section>
-    <span class="zen">
-
-        <?php
-        if ($stock !== 0):
-            ?> <button>rent</button> <?php
-        else: ?>
-            <button>sorry, this book is currently unavailable</button>
-
-        <?php endif; ?>
-    </span>
+    
 
 
 
