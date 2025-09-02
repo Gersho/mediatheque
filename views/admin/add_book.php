@@ -6,15 +6,14 @@
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required placeholder="Titre du livre">
+                <input type="text" id="title" name="title" required placeholder="Titre du livre" value="<?php if (isset($entries['title'])) echo $entries['title'];?>">
             </div>
 
             <div class="form-group">
                 <label for="genre">Genre</label>
-                <select id="genre" name="genre" required>
+                <select id="genre" name="genre" value="<?php if (isset($entries['genre'])) echo $entries['genre'];?>" required>
                     <option value="">Genre du livre</option>
                     <option value="action">Action</option>
                     <option value="comedy">Comedie</option>
@@ -33,33 +32,33 @@
 
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock'])) echo $entries['stock'];?>">
             </div>
 
             <div class="form-group">
                 <label for="author">Auteur</label>
-                <input type="text" id="author" name="author" required placeholder="Auteur">
+                <input type="text" id="author" name="author" required placeholder="Auteur" value="<?php if (isset($entries['author'])) echo $entries['author'];?>">
             </div>
 
             <div class="form-group">
                 <label for="isbn">ISBN</label>
-                <input type="text" id="isbn" name="isbn" required placeholder="ISBN" min="0">
+                <input type="text" id="isbn" name="isbn" required placeholder="ISBN" min="0" value="<?php if (isset($entries['isbn'])) echo $entries['isbn'];?>">
             </div>
 
             <div class="form-group">
                 <label for="pages">Pages</label>
-                <input type="number" id="pages" name="pages" required placeholder="Nombre de pages" min="1" max="9999">
+                <input type="number" id="pages" name="pages" required placeholder="Nombre de pages" min="1" max="9999" value="<?php if (isset($entries['pages'])) echo $entries['pages'];?>">
             </div>
 
             <div class="form-group">
                 <label for="published_year">Date de publication</label>
                 <input type="number" id="published_year" name="published_year" required
-                    placeholder="Date de publication" min="1900">
+                    placeholder="Date de publication" min="1900" value="<?php if (isset($entries['title'])) echo $entries['published_year'];?>">
             </div>
 
             <div class="form-group">
                 <label for="summary">Résumé</label>
-                <textarea id="summary" name="summary" required placeholder="Résumé du livre"></textarea>
+                <textarea id="summary" name="summary" required placeholder="Résumé du livre" maxlength="3000"></textarea>
             </div>
 
             <div class="form-group">

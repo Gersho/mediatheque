@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS books (
     isbn VARCHAR(13) NOT NULL UNIQUE CHECK (LENGTH(isbn) = 10 OR LENGTH(isbn) = 13),
     pages INT NOT NULL CHECK (pages > 1 AND pages <= 9999),
     published_year INT NOT NULL CHECK (published_year >= 1900),
-    summary TEXT NOT NULL,
+    summary TEXT NOT NULL CHECK (LENGTH(summary) <= 3000),
     FOREIGN KEY(id) REFERENCES medias(id) ON DELETE CASCADE
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS movies (
     director VARCHAR(100) NOT NULL CHECK (LENGTH(director) > 2 AND LENGTH(director) <= 100),
     duration INT NOT NULL CHECK (duration > 0 AND duration <= 999),
     published_year INT NOT NULL CHECK (published_year >= 1900),
-    synopsis TEXT NOT NULL,
+    synopsis TEXT NOT NULL CHECK (LENGTH(synopsis) <= 3000),
     certification ENUM('Tous publics', '-12', '-16', '-18') NOT NULL,
     FOREIGN KEY(id) REFERENCES medias(id) ON DELETE CASCADE
 );
@@ -52,6 +52,6 @@ CREATE TABLE IF NOT EXISTS games (
     editor VARCHAR(100) NOT NULL CHECK (LENGTH(editor) > 2 AND LENGTH(editor) <= 100),
     plateform ENUM('PC', 'PlayStation', 'Xbox', 'Nintendo', 'Mobile') NOT NULL,
     pegi ENUM('3', '7', '12', '16', '18') NOT NULL,
-    description TEXT NOT NULL,
+    description TEXT NOT NULL CHECK (LENGTH(description) <= 3000),
     FOREIGN KEY(id) REFERENCES medias(id) ON DELETE CASCADE
 );
