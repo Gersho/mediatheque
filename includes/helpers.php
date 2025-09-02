@@ -374,3 +374,11 @@ function get_page_url(int $page): string
     }
     return $uri;
 }
+
+function dd(mixed $value)
+{
+    echo "<pre><code>";
+    print_r($value);
+    echo "</code></pre>";
+    die();
+}

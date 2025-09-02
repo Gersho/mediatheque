@@ -120,3 +120,11 @@ function get_media_cover_path(?string $path): string
     }
     return UPLOAD_URL . "/$path";
 }
+
+function get_genre_values(): array
+{
+    $sql = "SHOW COLUMNS FROM medias WHERE field = 'genre'";
+    $type = db_select_one($sql)['Type'];
+    preg_match_all("/'([^']*)'/", $type, $matches);
+    return $matches[1];
+}
