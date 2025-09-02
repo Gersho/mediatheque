@@ -1,15 +1,30 @@
-<section>
-    <h1><?php e($title); ?></h1>
-    <p>by <?php e($editor); ?> on <?php e($plateform); ?></p>
-    <p>genre: <?php e($genre); ?></p>
-    <p>pegi: <?php e($pegi); ?></p>
-    <p><?php e($description); ?> </p>
+<!-- ● Jeux vidéo : titre, éditeur, plateforme, genre, âge minimum requis, description -->
+<div class="container">
+    <section>
+        <div>
+            <img src="<?php e($cover_path); ?>">
+            <span class="placement-button">
+                <?php
+                if ($stock !== 0):
+                ?> <button>rent</button> <?php
+                                    else: ?>
+                    <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
 
-    <?php
-    if ($stock !== 0):
-        ?> <button>rent</button> <?php
-    else: ?>
-        <button>sorry, this game is currently unavailable</button>
+                <?php endif; ?>
+            </span>
 
-    <?php endif; ?>
-</section>
+        </div>
+        <div class="textfield">
+            <div class="titlefield">
+                <h1><?php e($title); ?></h1>
+            </div>
+            <div class="auteur">
+                <p>par <?php e($editor); ?> sur <?php e($plateform); ?></p>
+            </div>
+            <p>genre: <?php e($genre); ?></p>
+            <p>pegi: <?php e($pegi); ?></p>
+            <p>description:</p>
+            <div class="scroll-box"><?php e($description); ?> </div>
+        </div>
+    </section>
+</div>
