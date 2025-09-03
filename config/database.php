@@ -1,14 +1,13 @@
 <?php
 // Configuration de la base de données
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'db');
 define('DB_NAME', 'php_mvc_app');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', 'root');
 define('DB_CHARSET', 'utf8');
 
 // Configuration générale de l'application
-
-define('BASE_URL', 'http://localhost/mediatheque-lyn-grp05/public/');
+define('BASE_URL', 'http://localhost:8080/public');
 define('APP_NAME', 'PHP MVC Starter');
 define('APP_VERSION', '1.0.0');
 
