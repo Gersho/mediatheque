@@ -5,14 +5,14 @@ function insert_new_media(array $data, callable $insert_func)
     db_begin_transaction();
     extract($data);
     try {
-        $query = "INSERT INTO medias (title, genre, type, stock, cover_path) VALUES (?,?,?,?,?)";
-        db_execute($query, [$title, $genre, $type, $stock, $cover_path ?? null]);
+        $query = "INSERT INTO medias (title, genre, type, stock, cover_img) VALUES (?,?,?,?,?)";
+        db_execute($query, [$title, $genre, $type, $stock, $cover_img ?? null]);
         $media_id = db_last_insert_id();
         $insert_func($media_id, $data);
-        $cover_path = upload_cover_image();
-        if ($cover_path) {
-            $query = "UPDATE medias SET cover_path = ? WHERE id = ?";
-            db_execute($query, [$cover_path, $media_id]);
+        $cover_img = upload_cover_image();
+        if ($cover_img) {
+            $query = "UPDATE medias SET cover_img = ? WHERE id = ?";
+            db_execute($query, [$cover_img, $media_id]);
         }
         db_commit();
         set_flash('success', 'Média ajouté avec succès');
@@ -89,7 +89,7 @@ function get_medias(array $filters = []): array
     ];
 }
 
-function get_media_count(array $conditions, array $params): int
+function get_media_count(array $conditions = [], array $params = []): int
 {
     $sql = 'SELECT COUNT(id) FROM medias';
     if ($conditions) {
@@ -111,9 +111,9 @@ function get_media_url(int $id, string $type)
     }
 }
 
-function get_media_cover_path(?string $path): string
+function get_media_cover_img(?string $path): string
 {
-    if ($path === null || !file_exists(ROOT_PATH . "/$path")) {
+    if ($path === null || !file_exists(UPLOAD_PATH . "/$path")) {
         return BASE_URL . '/assets/images/no-cover.png';
     }
     return UPLOAD_URL . "/$path";

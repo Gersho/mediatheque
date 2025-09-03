@@ -71,7 +71,6 @@ function admin_add_book()
                 set_flash('error', $msg);
             }
         }
-
     }
 
     $data = [
@@ -229,7 +228,6 @@ function admin_add_game()
             } else {
                 set_flash("error", "Veuillez remplir tous les champs");
             }
-
         }
         if (empty($errors)) {
 
@@ -256,6 +254,7 @@ function admin_fill_db()
     $datas = include_once "../testing/database/db_data.php";
     foreach ($datas as $data) {
         $insert_function = "insert_new_" . strtolower($data["type"]);
+        $data["cover_img"] = upload_cover_from_url($data["cover_img"]);
         insert_new_media($data, $insert_function);
     }
 }
@@ -281,7 +280,7 @@ function admin_database()
                     $data["synopsis"] = $movie["plot"];
                     $data["stock"] = 1;
                     try {
-                        $data["cover_path"] = upload_cover_from_url($movie["primaryImage"]["url"]);
+                        $data["cover_img"] = upload_cover_from_url($movie["primaryImage"]["url"]);
                         insert_new_media($data, 'insert_new_movie');
                     } catch (Exception $e) {
                         error_logging(ErrorType::Error, $e->getMessage());

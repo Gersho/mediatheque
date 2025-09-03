@@ -20,7 +20,7 @@ function game_show()
         'plateform' => $game_info["plateform"],
         'pegi' => $game_info["pegi"],
         'description' => $game_info["description"],
-        'cover_path' => $game_info['cover_path'],
+        'cover_img' => $game_info['cover_img'],
         'stock' => $game_info["stock"],
         'stylesheets' => ['assets/css/media.css']
     ];

@@ -352,11 +352,10 @@ function upload_cover_image(): string|null
     $file_info = validate_upload($file);
     $image = resize_image($file, $file_info);
     $filename = uniqid() . '.' . $file_info['ext'];
-    $file_path = "uploads/covers/$filename";
     $destination = UPLOAD_PATH . '/' . $filename;
     save_image($image, $destination, $file_info['mime']);
     imagedestroy($image);
-    return $file_path;
+    return $filename;
 }
 
 function get_page_url(int $page): string
@@ -426,7 +425,6 @@ function upload_cover_from_url(string $url): ?string
         "image/gif" => "gif",
     };
     $filename = uniqid() . '.' . $ext;
-    $file_path = "uploads/covers/$filename";
     $destination = UPLOAD_PATH . '/' . $filename;
 
     // Save image
@@ -436,6 +434,5 @@ function upload_cover_from_url(string $url): ?string
     imagedestroy($image);
     unlink($tmp_file);
 
-    return $file_path;
+    return $filename;
 }
-

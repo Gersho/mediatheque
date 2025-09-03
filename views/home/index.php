@@ -30,7 +30,7 @@
             <div class="media-tile-genre-cover">
                 <h2><?= strtoupper($media['type']) ?></h2>
                 <a class="media-tile-cover-title" href="<?= get_media_url($media['id'], $media['type']) ?>">
-                    <img src="<?= get_media_cover_path($media['cover_path']) ?>" alt="cover">
+                    <img src="<?= get_media_cover_img($media['cover_img']) ?>" alt="cover">
                     <p><?php e($media['title']) ?></p>
                 </a>
             </div>
