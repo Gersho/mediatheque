@@ -49,7 +49,7 @@ function admin_add_book()
                 elseif ($key === 'author' && !(strlen($temp) >=2 && strlen($temp) <= 100)) {
                     $errors['author'] = 'Auteur invalide (nombre de caractères)';
                 }
-                elseif ($key ==='isbn' && (strlen($temp) !== 10 && strlen($temp) !== 13 && !check_isbn_unique($temp)))
+                elseif ($key ==='isbn' && ((strlen($temp) !== 10 && strlen($temp) !== 13) || !check_isbn_unique($temp)))
                 {
                     $errors['isbn'] = 'ISBN invalide (10 ou 13 chiffres) ou déjà utilisé';
                 }
@@ -87,6 +87,7 @@ function admin_add_book()
 
     $data = [
     "entries" => $book_data,
+    "action" => 'Ajouter',
     ];
 
     load_view_with_layout("admin/add_book", $data);
@@ -95,6 +96,7 @@ function admin_add_movie()
 {
     $errors = [];
     $movie_data = [];
+    $action = "Ajouter";
 
     if (is_post()) {
         $all_data = [
@@ -180,6 +182,7 @@ function admin_add_movie()
     
     $data = [
         "entries" => $movie_data,
+        "action" => 'Ajouter',
         ];
 
     load_view_with_layout("admin/add_movie", $data);
@@ -189,7 +192,6 @@ function admin_add_game()
 {
     $errors = [];
     $game_data = [];
-
     
 
     if (is_post()) {
@@ -275,6 +277,7 @@ function admin_add_game()
 
     $data = [
         "entries" => $game_data,
+        "action" => 'Ajouter',
     ];
 
     load_view_with_layout("admin/add_game", $data);
@@ -315,4 +318,63 @@ function admin_test()
         }
 
     }
+}
+
+function admin_edit_medias()
+{
+    $data = [
+        "action" => 'Modifier',
+    ];
+    load_view_with_layout('admin/edit_medias', $data);
+}
+
+function admin_edit_book()
+{
+    $data = [
+        "action" => 'Modifier',
+    ];
+    load_view_with_layout('admin/add_book', $data);
+}
+
+function admin_edit_movie()
+{
+    $data = [
+        "action" => 'Modifier',
+    ];
+    load_view_with_layout('admin/add_movie', $data);
+}
+
+function admin_edit_game()
+{
+    $data = [
+        'action' => 'Modifier',
+    ];
+    load_view_with_layout('admin/add_game', $data);
+}
+
+
+function admin_medias()
+{
+    $data = [
+        'title' => 'Admin dashboard',
+        'stylesheets' => ['assets/css/admin.css']
+    ];
+    $filter_list = ["title", "type", "genre", "available"];
+    $filters = [];
+    foreach ($filter_list as $filter) {
+        if (isset($_GET[$filter])) {
+            $clean_input = clean_input($_GET[$filter]);
+            if (!empty($clean_input)) {
+                $filters[$filter] = $clean_input;
+            }
+        }
+    }
+    $medias = get_medias($filters);
+    $data = array_merge($data, $medias);
+    load_view_with_layout('admin/medias', $data);
+}
+
+function admin_index()
+{
+    load_view_with_layout('admin/index');
 }

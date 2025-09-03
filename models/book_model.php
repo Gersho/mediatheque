@@ -26,9 +26,8 @@ function get_book_by_id($id)
 }
 
     function check_isbn_unique($isbn)
-    {
+    {   
         $query = "SELECT id FROM books WHERE isbn = ?";
         $result = db_select_one($query, [$isbn]);
-
-        return !$result;
+        return empty($result);
     }

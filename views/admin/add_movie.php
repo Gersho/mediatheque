@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p>Ajouter un film</p>
+            <p><?=$action?> un film</p>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -14,20 +14,20 @@
 
             <div class="form-group">
                 <label for="genre">Genre</label>
-                <select id="genre" name="genre" required value="<?php if (isset($entries['genre'])) echo $entries['genre'];?>">
+                <select id="genre" name="genre" required>
                     <option value="">Genre du film</option>
-                    <option value="action">Action</option>
-                    <option value="comedy">Comedie</option>
-                    <option value="documentary">Documentaire</option>
-                    <option value="drama">Drame</option>
-                    <option value="fantasy">Fantaisie</option>
-                    <option value="horror">Horreur</option>
-                    <option value="musical">Musical</option>
-                    <option value="mystery">Mystère</option>
-                    <option value="romance">Romance</option>
-                    <option value="science fiction">Science Fiction</option>
-                    <option value="thriller">Suspense</option>
-                    <option value="western">Western</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'action') echo 'selected';?> value="action">Action</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'comedy') echo 'selected';?> value="comedy">Comedie</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'documentary') echo 'selected';?> value="documentary">Documentaire</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'drama') echo 'selected';?> value="drama">Drame</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'fantasy') echo 'selected';?> value="fantasy">Fantaisie</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'horror') echo 'selected';?> value="horror">Horreur</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'musical') echo 'selected';?> value="musical">Musical</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'mystery') echo 'selected';?> value="mystery">Mystère</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'romance') echo 'selected';?> value="romance">Romance</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'science fiction') echo 'selected';?> value="science fiction">Science Fiction</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'thriller') echo 'selected';?> value="thriller">Suspense</option>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'western') echo 'selected';?> value="western">Western</option>
                 </select>
             </div>
 
@@ -54,17 +54,17 @@
 
             <div class="form-group">
                 <label for="synopsis">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film" value="<?php if (isset($entries['synopsis'])) echo $entries['synopsis'];?>"></textarea>
+                <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film"><?php if (isset($entries['synopsis'])) echo $entries['synopsis'];?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="certification">Certification</label>
-                <select id="certification" name="certification" required value="<?php if (isset($entries['certification'])) echo $entries['certification'];?>">
+                <select id="certification" name="certification" required>
                     <option value="">Certification</option>
-                    <option value="Tous publics">Tous publics</option>
-                    <option value="-12">-12</option>
-                    <option value="-16">-16</option>
-                    <option value="-18">-18</option>
+                    <option <?php if (isset($entries['certification']) && $entries['certification'] === 'Tous publics') echo 'selected';?> value="Tous publics">Tous publics</option>
+                    <option <?php if (isset($entries['certification']) && $entries['certification'] === '-12') echo 'selected';?>  value="-12">-12</option>
+                    <option <?php if (isset($entries['certification']) && $entries['certification'] === '-16') echo 'selected';?>  value="-16">-16</option>
+                    <option <?php if (isset($entries['certification']) && $entries['certification'] === '-18') echo 'selected';?>  value="-18">-18</option>
                 </select>
             </div>
 
@@ -75,7 +75,7 @@
 
             <button type="submit" class="btn btn-primary btn-full">
                 <i class="fas fa-user-plus"></i>
-                Ajouter
+                <?=$action?>
             </button>
         </form>
 
