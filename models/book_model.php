@@ -25,10 +25,10 @@ function get_book_by_id($id)
     return db_select_one($query, [$id]);
 }
 
-    function check_isbn_unique($isbn)
-    {
-        $query = "SELECT id FROM books WHERE isbn = ?";
-        $result = db_select_one($query, [$isbn]);
+function check_isbn_unique(string $isbn)
+{
+    $query = "SELECT id FROM books WHERE isbn = ?";
+    $result = db_select_one($query, [$isbn]);
 
-        return !$result;
-    }
+    return empty($result);
+}

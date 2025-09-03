@@ -28,3 +28,4 @@ define('UPLOAD_URL', 'http://localhost/mediatheque-lyn-grp05/uploads/covers');
 define('UPLOAD_PATH', ROOT_PATH . '/uploads/covers');
 define('UPLOAD_MAX_SIZE', 2000000);
 define('MAX_MEDIA_PER_PAGE', 12);
+define('DEBUG', true);
