@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS medias (
         'RPG'
     ) NOT NULL,
     type ENUM('Book', 'Movie', 'Game') NOT NULL,
-    cover_path VARCHAR(200) DEFAULT NULL,
+    cover_img VARCHAR(200) DEFAULT NULL,
     stock INT NOT NULL
 );
 
