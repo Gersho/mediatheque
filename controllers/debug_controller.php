@@ -40,5 +40,5 @@ function debug_index()
             }
         }
     }
-    load_view_with_layout('admin/database');
+    load_view_with_layout('debug/index');
 }
