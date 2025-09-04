@@ -1,6 +1,6 @@
 <div class="show-card">
     <a href="medias">
-        <h1 class="page-title">Panneau de contrôle des médias</h1>
+        <h1>Panneau de contrôle des médias</h1>
     </a>
     <div class="flex">
         <a href="add_book" class="btn btn-primary margin-1">Ajouter un livre</a>

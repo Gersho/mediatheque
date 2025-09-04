@@ -314,3 +314,12 @@ function admin_index()
 {
     load_view_with_layout('admin/index');
 }
+
+function admin_users()
+{
+    $data = ['stylesheets' => ['assets/css/user.css']];
+    $users = get_all_users();
+    $data['users'] = $users;
+    $data['fields'] = ['id', 'nom', 'email', 'création'];
+    load_view_with_layout('admin/users', $data);
+}

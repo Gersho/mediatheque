@@ -1,0 +1,31 @@
+.user-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  gap: 3rem;
+}
+
+.user-page h1 {
+  color: var(--secondary-color);
+}
+
+.user-table {
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.user-table td,
+.user-table th {
+  /* border: solid 0.1rem white; */
+  border: 0.1rem solid;
+  border-color: white;
+  padding: 0.8rem;
+}
+
+.btn-delete:hover {
+  background-color: rgb(128, 15, 15);
+  color: white;
+  transform: translateY(-1px);
+}
