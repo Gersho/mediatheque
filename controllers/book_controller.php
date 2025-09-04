@@ -24,7 +24,7 @@ function book_show()
         'summary' => $book_info["summary"],
         'title' => $book_info["title"],
         'genre' => $book_info["genre"],
-        'cover_path' => $book_info['cover_path'],
+        'cover_img' => $book_info['cover_img'],
         'stock' => $book_info["stock"],
         'stylesheets' => ['assets/css/media.css']
     ];
@@ -43,5 +43,5 @@ function book_show()
 //     ["title"]=> string(16) "The Great Gatsby" 
 //     ["genre"]=> string(5) "Drama" 
 //     ["type"]=> string(4) "Book" 
-//     ["cover_path"]=> string(60) "https://m.media-amazon.com/images/I/91yg5rniqwL._SL1500_.jpg" 
+//     ["cover_img"]=> string(60) "https://m.media-amazon.com/images/I/91yg5rniqwL._SL1500_.jpg" 
 //     ["stock"]=> int(4) } 
