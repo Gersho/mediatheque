@@ -74,8 +74,8 @@ function admin_add_book()
     }
 
     $data = [
-    "entries" => $book_data,
-    "action" => 'Ajouter',
+        "entries" => $book_data,
+        "action" => 'Ajouter',
     ];
 
     load_view_with_layout("admin/add_book", $data);
@@ -161,7 +161,7 @@ function admin_add_movie()
     $data = [
         "entries" => $movie_data,
         "action" => 'Ajouter',
-        ];
+    ];
 
     load_view_with_layout("admin/add_movie", $data);
 }
@@ -170,7 +170,7 @@ function admin_add_game()
 {
     $errors = [];
     $game_data = [];
-    
+
 
     if (is_post()) {
         $all_data = [
@@ -289,7 +289,11 @@ function admin_medias()
 {
     $data = [
         'title' => 'Admin dashboard',
-        'stylesheets' => ['assets/css/admin.css']
+        'stylesheets' => [
+            'assets/css/search_bar.css',
+            'assets/css/pagination.css',
+            'assets/css/admin.css'
+        ]
     ];
     $filter_list = ["title", "type", "genre", "available"];
     $filters = [];

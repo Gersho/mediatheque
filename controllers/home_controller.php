@@ -8,7 +8,11 @@ function home_index()
 {
     $data = [
         'title' => 'Accueil',
-        'stylesheets' => ['assets/css/home.css']
+        'stylesheets' => [
+            'assets/css/home.css',
+            'assets/css/search_bar.css',
+            'assets/css/pagination.css'
+        ]
     ];
     try {
         $filter_list = ["title", "type", "genre", "available"];
