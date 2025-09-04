@@ -3,7 +3,8 @@
 function movie_show()
 {
     if (!is_get()) {
-        redirect('home');
+        // redirect('home');
+        redirect('errors/404');
     }
 
     $movie_id = escape($_GET["id"]);
@@ -23,6 +24,7 @@ function movie_show()
         'certification' => $movie_info["certification"],
         'cover_img' => $movie_info['cover_img'],
         'stock' => $movie_info["stock"],
+        'media_id' => $movie_id,
         'stylesheets' => ['assets/css/media.css']
     ];
 
