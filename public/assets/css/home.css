@@ -158,3 +158,8 @@
 .search-btn:hover {
   transform: scale(1.1);
 }
+
+.show-card {
+  background-color: yellow;
+}
+

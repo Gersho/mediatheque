@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p>Ajouter un jeu</p>
+            <p><?= $data['action'] ?> un jeu</p>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -14,12 +14,12 @@
 
             <div class="form-group">
                 <label for="genre">Genre</label>
-                <select id="genre" name="genre" required value="<?php if (isset($entries['genre'])) echo $entries['genre'];?>">
+                <select id="genre" name="genre" required>
                     <option value="">Genre du jeu</option>
-                    <option value="FPS">FPS</option>
-                    <option value="MMO">MMO</option>
-                    <option value="MOBA">MOBA</option>
-                    <option value="RPG">RPG</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'FPS') echo 'selected';?> value="FPS">FPS</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'MMO') echo 'selected';?> value="MMO">MMO</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'MOBA') echo 'selected';?> value="MOBA">MOBA</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'RPG') echo 'selected';?> value="RPG">RPG</option>
                 </select>
             </div>
 
@@ -35,30 +35,31 @@
 
             <div class="form-group">
                 <label for="plateform">Plateforme</label>
-                <select id="plateform" name="plateform" required value="<?php if (isset($entries['plateform'])) echo $entries['plateform'];?>">
+                <select id="plateform" name="plateform" required>
                     <option value="">Plateforme</option>
-                    <option value="PC">PC</option>
-                    <option value="PlayStation">Playstation</option>
-                    <option value="Xbox">Xbox</option>
-                    <option value="Nintendo">Nintendo</option>
-                    <option value="Mobile">Mobile</option>
+                    <option <?php if (isset($entries['plateform']) && $entries['plateform'] === 'PC') echo 'selected';?> value="PC">PC</option>
+                    <option <?php if (isset($entries['plateform']) && $entries['plateform'] === 'Playstation') echo 'selected';?> value="PlayStation">Playstation</option>
+                    <option <?php if (isset($entries['plateform']) && $entries['plateform'] === 'Xbox') echo 'selected';?> value="Xbox">Xbox</option>
+                    <option <?php if (isset($entries['plateform']) && $entries['plateform'] === 'Nintendo') echo 'selected';?> value="Nintendo">Nintendo</option>
+                    <option <?php if (isset($entries['plateform']) && $entries['plateform'] === 'Mobile') echo 'selected';?> value="Mobile">Mobile</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="pegi">Pegi</label>
                 <select id="pegi" name="pegi" required value="<?php if (isset($entries['pegi'])) echo $entries['pegi'];?>">
-                    <option value="3">3</option>
-                    <option value="7">7</option>
-                    <option value="12">12</option>
-                    <option value="16">16</option>
-                    <option value="18">18</option>
+                    <option value="pegi">Pegi</option>
+                    <option <?php if (isset($entries['pegi']) && $entries['pegi'] === '3') echo 'selected';?> value="3">3</option>
+                    <option <?php if (isset($entries['pegi']) && $entries['pegi'] === '7') echo 'selected';?> value="7">7</option>
+                    <option <?php if (isset($entries['pegi']) && $entries['pegi'] === '12') echo 'selected';?> value="12">12</option>
+                    <option <?php if (isset($entries['pegi']) && $entries['pegi'] === '16') echo 'selected';?> value="16">16</option>
+                    <option <?php if (isset($entries['pegi']) && $entries['pegi'] === '18') echo 'selected';?> value="18">18</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" placeholder="Description"></textarea>
+                <textarea id="description" name="description" placeholder="Description"><?php if (isset($entries['description'])) echo $entries['description'];?></textarea>
             </div>
 
             <div class="form-group">
@@ -69,7 +70,7 @@
 
             <button type="submit" class="btn btn-primary btn-full">
                 <i class="fas fa-user-plus"></i>
-                Ajouter
+                <?=$data['action']?>
             </button>
         </form>
 

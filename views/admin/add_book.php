@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p>Ajouter un livre</p>
+            <p><?=$data['action']?> un livre</p>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -13,20 +13,20 @@
 
             <div class="form-group">
                 <label for="genre">Genre</label>
-                <select id="genre" name="genre" value="<?php if (isset($entries['genre'])) echo $entries['genre'];?>" required>
-                    <option value="">Genre du livre</option>
-                    <option value="action">Action</option>
-                    <option value="comedy">Comedie</option>
-                    <option value="documentary">Documentaire</option>
-                    <option value="drama">Drame</option>
-                    <option value="fantasy">Fantaisie</option>
-                    <option value="horror">Horreur</option>
-                    <option value="musical">Musical</option>
-                    <option value="mystery">Mystère</option>
-                    <option value="romance">Romance</option>
-                    <option value="science fiction">Science Fiction</option>
-                    <option value="thriller">Suspense</option>
-                    <option value="western">Western</option>
+                <select id="genre" name="genre" required>
+                    <option>Genre du livre</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'action') echo 'selected';?> value="action">Action</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'comedy') echo 'selected';?> value="comedy">Comedie</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'documentary') echo 'selected';?> value="documentary">Documentaire</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'drama') echo 'selected';?> value="drama">Drame</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'fantasy') echo 'selected';?> value="fantasy">Fantaisie</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'horror') echo 'selected';?> value="horror">Horreur</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'musical') echo 'selected';?> value="musical">Musical</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'mystere') echo 'selected';?> value="mystery">Mystère</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'romance') echo 'selected';?> value="romance">Romance</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'science fiction') echo 'selected';?> value="science fiction">Science Fiction</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'thriller') echo 'selected';?> value="thriller">Suspense</option>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'western') echo 'selected';?> value="western">Western</option>
                 </select>
             </div>
 
@@ -58,7 +58,7 @@
 
             <div class="form-group">
                 <label for="summary">Résumé</label>
-                <textarea id="summary" name="summary" required placeholder="Résumé du livre" maxlength="3000"></textarea>
+                <textarea id="summary" name="summary" required placeholder="Résumé du livre" maxlength="3000" autocomplete="on"><?php if (isset($entries['summary'])) echo $entries['summary'];?></textarea>
             </div>
 
             <div class="form-group">
@@ -68,7 +68,7 @@
 
             <button type="submit" class="btn btn-primary btn-full">
                 <i class="fas fa-user-plus"></i>
-                Ajouter
+                <?=$data['action']?>
             </button>
         </form>
 
