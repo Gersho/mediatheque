@@ -4,7 +4,7 @@ function admin_add_book()
 {
     // TODO validation + Check unique constaints (by insert or by select)
     $errors = [];
-    $book_data = [];     
+    $book_data = [];
 
     if (is_post()) {
 
@@ -39,50 +39,38 @@ function admin_add_book()
                 $temp = clean_input($_POST[$key]);
                 if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
                     $errors['title'] = 'Titre invalide (nombre de caractères)';
-                }
-                elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
+                } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
                     $errors['genre'] = "Genre invalide";
-                }
-                elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+                } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
                     $errors['stock'] = 'Le stock doit être un entier positif';
-                }
-                elseif ($key === 'author' && !(strlen($temp) >=2 && strlen($temp) <= 100)) {
+                } elseif ($key === 'author' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                     $errors['author'] = 'Auteur invalide (nombre de caractères)';
-                }
-                elseif ($key ==='isbn' && ((strlen($temp) !== 10 && strlen($temp) !== 13) || !check_isbn_unique($temp)))
-                {
+                } elseif ($key === 'isbn' && ((strlen($temp) !== 10 && strlen($temp) !== 13) || !check_isbn_unique($temp))) {
                     $errors['isbn'] = 'ISBN invalide (10 ou 13 chiffres) ou déjà utilisé';
-                }
-                elseif ($key === 'pages'&& !($temp >= 1 && $temp <= 9999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
-                    $errors['pages'] =  'Le nombre de pages doit être un entier entre 1 et 9999';
-                }
-                elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
-                    $errors['published_year'] =  "L'année de publication doit être comprise entre 1900 et l'année actuelle";
-                }
-                elseif ($key === 'summary' && !(strlen($temp) >= 1 && strlen($temp) <= 3000 )) {
+                } elseif ($key === 'pages' && !($temp >= 1 && $temp <= 9999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+                    $errors['pages'] = 'Le nombre de pages doit être un entier entre 1 et 9999';
+                } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
+                    $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
+                } elseif ($key === 'summary' && !(strlen($temp) >= 1 && strlen($temp) <= 3000)) {
                     $errors['summary'] = "Le résumé doit comprendre entre 1 et 3000 caractères";
                 }
                 $book_data[$key] = $temp;
-            }
-            
-            else {
+            } else {
                 set_flash("error", "Veuillez remplir tous les champs");
                 $errors[$key] = 'Veuillez remplir tous les champs';
             }
         }
-        
+
         if (empty($errors)) {
-            
+
             $book_data['type'] = 'Book';
             insert_new_media($book_data, 'insert_new_book');
             //TODO if success redirect to dashboard ?
-        }
-        else {
+        } else {
             foreach ($errors as $key => $msg) {
                 set_flash('error', $msg);
-                }
             }
-        
+        }
     }
 
     $data = [
@@ -137,49 +125,39 @@ function admin_add_movie()
                 $temp = clean_input($_POST[$key]);
                 if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
                     $errors['title'] = 'Titre invalide (nombre de caractères)';
-                }
-                elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
+                } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
                     $errors['genre'] = 'Genre invalide';
-                }
-                elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+                } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
                     $errors['stock'] = 'Le stock doit être un entier positif';
-                }
-                elseif ($key === 'director' && !(strlen($temp) >=2 && strlen($temp) <= 100)) {
+                } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                     $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
-                }
-                elseif ($key === 'duration'&& !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
-                    $errors['duration'] =  'La durée du film doit être un entier entre 1 et 999';
-                }
-                elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
-                    $errors['published_year'] =  "L'année de publication doit être comprise entre 1900 et l'année actuelle";
-                }
-                elseif ($key === 'synopsis' && !(strlen($temp) <= 3000 )) {
+                } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+                    $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
+                } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
+                    $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
+                } elseif ($key === 'synopsis' && !(strlen($temp) <= 3000)) {
                     $errors['summary'] = "Synopsis: maximum 3000 caractères";
-                }
-                elseif ($key === 'certification' && !in_array($temp, $certification_enum)) {
+                } elseif ($key === 'certification' && !in_array($temp, $certification_enum)) {
                     $errors['certification'] = 'Public cible invalide';
                 }
                 $movie_data[$key] = $temp;
-            } 
-            
-            else {
+            } else {
                 set_flash("error", "Veuillez remplir tous les champs");
             }
         }
 
         if (empty($errors)) {
-            
+
             $movie_data['type'] = 'Movie';
             insert_new_media($movie_data, 'insert_new_movie');
             //TODO if success redirect to dashboard ?
-        }
-        else {
+        } else {
             foreach ($errors as $key => $msg) {
                 set_flash('error', $msg);
-                }
             }
+        }
     }
-    
+
     $data = [
         "entries" => $movie_data,
         "action" => 'Ajouter',
@@ -206,12 +184,12 @@ function admin_add_game()
         ];
 
         $genre_enum = [
-                'FPS',
-                'MMO',
-                'MOBA',
-                'RPG'
+            'FPS',
+            'MMO',
+            'MOBA',
+            'RPG'
         ];
-        
+
         $plateform_enum = [
             'PC',
             'PlayStation',
@@ -235,44 +213,34 @@ function admin_add_game()
 
                 if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
                     $errors['title'] = 'Titre invalide (nombre de caractères)';
-                }
-                elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
+                } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
                     $errors['genre'] = 'Genre invalide';
-                }
-                elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+                } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
                     $errors['stock'] = 'Le stock doit être un entier positif';
-                }
-                elseif ($key === 'editor' && !(strlen($temp) >=2 && strlen($temp) <= 100)) {
+                } elseif ($key === 'editor' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                     $errors['editor'] = 'Éditeur invalide (nombre de caractères)';
-                }
-                elseif ($key === 'plateform' && !in_array($temp, $plateform_enum)) {
-                    $errors['plateform'] =  "Plateforme invalide";
-                }
-                elseif ($key === 'pegi' && !in_array($temp, $pegi_enum)) {
+                } elseif ($key === 'plateform' && !in_array($temp, $plateform_enum)) {
+                    $errors['plateform'] = "Plateforme invalide";
+                } elseif ($key === 'pegi' && !in_array($temp, $pegi_enum)) {
                     $errors['pegi'] = 'Public cible invalide';
-                }
-                elseif ($key === 'description' && !(strlen($temp) <= 3000 )) {
+                } elseif ($key === 'description' && !(strlen($temp) <= 3000)) {
                     $errors['description'] = "Description: maximum 3000 caractères";
                 }
                 $game_data[$key] = $temp;
-            }
-            
-            else {
+            } else {
                 set_flash("error", "Veuillez remplir tous les champs");
             }
-
         }
         if (empty($errors)) {
-            
+
             $game_data['type'] = 'Game';
             insert_new_media($game_data, 'insert_new_game');
             //TODO if success redirect to dashboard ?
-        }
-        else {
+        } else {
             foreach ($errors as $key => $msg) {
                 set_flash('error', $msg);
-                }
             }
+        }
     }
 
     $data = [
@@ -283,42 +251,6 @@ function admin_add_game()
     load_view_with_layout("admin/add_game", $data);
 }
 
-//TODO delete
-function admin_fill_db()
-{
-    $datas = include_once "../testing/database/db_data.php";
-    foreach ($datas as $data) {
-        $insert_function = "insert_new_" . strtolower($data["type"]);
-        insert_new_media($data, $insert_function);
-    }
-}
-
-function admin_test()
-{
-    $response = file_get_contents("https://api.imdbapi.dev/titles?types=MOVIE&startYear=1900&sortBy=SORT_BY_USER_RATING_COUNT&sortOrder=DESC");
-    if ($response) {
-        $response = json_decode($response, true);
-        $movies = $response["titles"];
-        foreach ($movies as $movie) {
-            $data["type"] = "Movie";
-            $data["title"] = $movie["primaryTitle"];
-            $data["cover_path"] = $movie["primaryImage"]["url"];
-            $data["published_year"] = $movie["startYear"];
-            $data["duration"] = $movie["runtimeSeconds"] / 60;
-            $data["genre"] = $movie["genres"][0];
-            $data["certification"] = "-12";
-            $data["director"] = "dunno";
-            $data["synopsis"] = $movie["plot"];
-            $data["stock"] = 1;
-            try {
-                insert_new_media($data, 'insert_new_movie');
-            } catch (Exception $e) {
-                error_logging(ErrorType::Error, $e->getMessage());
-            }
-        }
-
-    }
-}
 
 function admin_edit_medias()
 {

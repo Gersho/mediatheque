@@ -1,12 +1,12 @@
 <div class="container">
     <section>
         <div>
-            <img src="<?php e($cover_path); ?>">
+            <img src="<?= get_media_cover_img($cover_img) ?>">
             <span class="placement-button">
                 <?php
                 if ($stock !== 0):
-                ?> <button>rent</button> <?php
-                                    else: ?>
+                ?> <button class="btn btn-primary louer">Emprunter</button> <?php
+                                                                        else: ?>
                     <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
 
                 <?php endif; ?>

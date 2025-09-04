@@ -66,3 +66,5 @@ config/database.php
 
 composer.*
 vendor
+Dockerfile
+*.yml

@@ -257,7 +257,7 @@ enum ErrorType: string
 function error_logging(ErrorType $type, string $message)
 {
     $log_file = LOG_PATH . '/app.log';
-    if (!file_exists("$log_file")) {
+    if (!file_exists($log_file)) {
         if (!is_dir(LOG_PATH)) {
             mkdir(LOG_PATH, 0644, true);
         }
@@ -277,6 +277,7 @@ function validate_upload($file): array
         UPLOAD_ERR_CANT_WRITE => "Échec de l'écriture du fichier sur le disque",
         UPLOAD_ERR_EXTENSION => "Une extension PHP a interrompu le téléchargement du fichier",
     ];
+
     if ($file["error"] !== UPLOAD_ERR_OK) {
         throw new Exception($errorMessages[$file["error"]]);
     }
@@ -287,6 +288,7 @@ function validate_upload($file): array
         throw new Exception("Le fichier est trop volumineux. Taille max: " . UPLOAD_MAX_SIZE / 1000000 . 'mo.');
     }
 
+    // get the image infos
     $file_info = getimagesize($_FILES["cover"]["tmp_name"]);
     if ($file_info === false) {
         throw new Exception("Le fichier upload n'est pas une image");
@@ -303,6 +305,14 @@ function validate_upload($file): array
     return $file_info;
 }
 
+/**
+ * Create image object from a file with correct mime type
+ * 
+ * @param string $path
+ * @param string $mime_type
+ * @throws \Exception
+ * @return GdImage
+ */
 function create_image_from_file(string $path, string $mime_type): GdImage
 {
     $image = match ($mime_type) {
@@ -319,6 +329,7 @@ function create_image_from_file(string $path, string $mime_type): GdImage
 
 function save_image(GdImage $image, string $destination, string $mime_type)
 {
+    // Create the image file to destination by mime type
     $success = match ($mime_type) {
         'image/jpeg', 'image/jpg' => imagejpeg($image, $destination),
         'image/png' => imagepng($image, $destination),
@@ -334,29 +345,53 @@ function resize_image(array $file, array $file_info): GdImage
 {
     $new_width = 300;
     $new_height = 400;
+
+    // Create new image object with defined size
     $dest = imagecreatetruecolor($new_width, $new_height);
+
+    // Create image object from the file uploaded
     $source = create_image_from_file($file['tmp_name'], $file_info['mime']);
+
+    // Copy image uploaded to new image object with new size
     if (!imagecopyresampled($dest, $source, 0, 0, 0, 0, $new_width, $new_height, $file_info[0], $file_info[1])) {
         throw new Exception("Echec du resize de l'image");
     }
+
+    // Clean memory
     imagedestroy($source);
     return $dest;
 }
 
 function upload_cover_image(): string|null
 {
+    // return null if no file is uploaded
     if (!isset($_FILES["cover"]) || $_FILES["cover"]["error"] === UPLOAD_ERR_NO_FILE) {
         return null;
     }
+    // Check if directory exist
+    if (!is_dir(UPLOAD_PATH)) {
+        if (!mkdir(UPLOAD_PATH, 0644, true)) {
+            throw new Exception("Failed to create uploads/covers directories");
+        }
+    }
     $file = $_FILES["cover"];
+
+    // Check if the image is valid
     $file_info = validate_upload($file);
+
+    // Create the image object with the new size
     $image = resize_image($file, $file_info);
+
+
     $filename = uniqid() . '.' . $file_info['ext'];
-    $file_path = UPLOAD_PATH . '/' . $filename;
-    $destination = ROOT_PATH . $file_path;
+    $destination = UPLOAD_PATH . '/' . $filename;
+
+    // save image to destination
     save_image($image, $destination, $file_info['mime']);
+
+    // clean memory
     imagedestroy($image);
-    return $file_path;
+    return $filename;
 }
 
 function get_page_url(int $page): string
@@ -381,4 +416,66 @@ function dd(mixed $value)
     print_r($value);
     echo "</code></pre>";
     die();
+}
+
+function upload_cover_from_url(string $url): ?string
+{
+    if (empty($url)) {
+        return null;
+    }
+
+    // Check if directory exist
+    if (!is_dir(UPLOAD_PATH)) {
+        if (!mkdir(UPLOAD_PATH, 0644, true)) {
+            throw new Exception("Failed to create uploads/covers directories");
+        }
+    }
+
+    // Download image content
+    $image_content = @file_get_contents($url);
+    if ($image_content === false) {
+        throw new Exception("Impossible de télécharger l'image depuis l'URL: $url");
+    }
+
+    // Create temporary file
+    $tmp_file = tempnam(sys_get_temp_dir(), 'cover_');
+    file_put_contents($tmp_file, $image_content);
+
+    // Validate image type
+    $file_info = getimagesize($tmp_file);
+    if ($file_info === false) {
+        unlink($tmp_file);
+        throw new Exception("Le fichier téléchargé n'est pas une image valide");
+    }
+
+    $file_mime_type = $file_info["mime"];
+    $allowed_types = ["image/jpeg", "image/png", "image/gif"];
+    if (!in_array($file_mime_type, $allowed_types)) {
+        unlink($tmp_file);
+        throw new Exception("Type de fichier non valide (formats acceptés : jpg, png, gif).");
+    }
+
+    // Resize image
+    $image = resize_image(
+        ["tmp_name" => $tmp_file], // mimic $_FILES
+        $file_info
+    );
+
+    // Generate unique filename
+    $ext = match ($file_mime_type) {
+        "image/jpeg" => "jpg",
+        "image/png" => "png",
+        "image/gif" => "gif",
+    };
+    $filename = uniqid() . '.' . $ext;
+    $destination = UPLOAD_PATH . '/' . $filename;
+
+    // Save image
+    save_image($image, $destination, $file_mime_type);
+
+    // Clean up
+    imagedestroy($image);
+    unlink($tmp_file);
+
+    return $filename;
 }
