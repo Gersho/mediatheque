@@ -170,7 +170,7 @@ function admin_add_game()
 {
     $errors = [];
     $game_data = [];
-
+    
 
     if (is_post()) {
         $all_data = [

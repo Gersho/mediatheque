@@ -1,5 +1,4 @@
 <?php
-
 function insert_new_book(int $media_id, array $book_data)
 {
     $query = "INSERT INTO books 
