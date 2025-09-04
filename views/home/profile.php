@@ -8,9 +8,9 @@
     <div class="container">
         <div class="content-grid">
             <div class="content-main">
-            <h1><?php e($message); ?></h1>
+
                 <h2><?php e($message); ?> </h2>
-<p><?php e($content); ?></p>
+                <p><?php e($content); ?></p>
 
             </div>
         </div>
