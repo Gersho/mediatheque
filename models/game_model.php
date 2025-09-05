@@ -24,3 +24,19 @@ function insert_new_game(int $media_id, array $game_data)
     );
 }
 
+function update_game(int $game_id, array $game_data) {
+    $query = "UPDATE games SET 
+            editor = ?,
+            plateform = ?,
+            pegi = ?,
+            description = ?
+            WHERE id = ?";
+
+    return db_execute($query, [
+            $game_data['editor'],
+            $game_data['plateform'],
+            $game_data['pegi'],
+            $game_data['description'],
+            $game_id,
+        ]);
+}
