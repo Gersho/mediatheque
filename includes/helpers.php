@@ -289,7 +289,7 @@ function validate_upload($file): array
     }
 
     // get the image infos
-    $file_info = getimagesize($_FILES["cover"]["tmp_name"]);
+    $file_info = getimagesize($_FILES["cover_img"]["tmp_name"]);
     if ($file_info === false) {
         throw new Exception("Le fichier upload n'est pas une image");
     }
@@ -365,7 +365,7 @@ function resize_image(array $file, array $file_info): GdImage
 function upload_cover_image(): string|null
 {
     // return null if no file is uploaded
-    if (!isset($_FILES["cover"]) || $_FILES["cover"]["error"] === UPLOAD_ERR_NO_FILE) {
+    if (!isset($_FILES["cover_img"]) || $_FILES["cover_img"]["error"] === UPLOAD_ERR_NO_FILE) {
         return null;
     }
     // Check if directory exist
@@ -374,7 +374,7 @@ function upload_cover_image(): string|null
             throw new Exception("Failed to create uploads/covers directories");
         }
     }
-    $file = $_FILES["cover"];
+    $file = $_FILES["cover_img"];
 
     // Check if the image is valid
     $file_info = validate_upload($file);

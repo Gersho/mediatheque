@@ -23,9 +23,9 @@ function insert_new_media(array $data, callable $insert_func)
         } else {
             $msg = $e->getMessage();
         }
-            set_flash('error', $msg);
-            error_logging(ErrorType::Error, $msg);
-            db_rollback();
+        set_flash('error', $msg);
+        error_logging(ErrorType::Error, $msg);
+        db_rollback();
     }
     return false;
 }
@@ -57,12 +57,7 @@ function update_media(array $data, callable $update_func)
             WHERE id = ?";
 
         db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
-        $affected = db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
-        if ($affected === 0) {
-            db_rollback();
-            set_flash('error', "Aucune ligne modifiée : vérifie l'ID");
-            return false;
-        }
+        db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
         // Vérification callback
         if (is_callable($update_func)) {
             $update_func($id, $data);
@@ -71,13 +66,11 @@ function update_media(array $data, callable $update_func)
         db_commit();
         set_flash('success', 'Média modifié avec succès');
         return true;
-
     } catch (Exception $e) {
         db_rollback();
         if ($e instanceof PDOException) {
             $msg = "Insert Error. Media Type: $type | Media title: $title | Type: PDOException | Message: " . $e->getMessage();
-        }
-        else {
+        } else {
             $msg = $e->getMessage();
         }
         set_flash('error', $msg);

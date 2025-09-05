@@ -1,3 +1,10 @@
+<?php
+//TODO move this function
+function get_edit_url(int $id, string $type)
+{
+    return url("admin/edit_$type?id=$id");
+}
+?>
 <div class="show-card">
     <a href="medias">
         <h1 class="page-title">Panneau de contrôle des médias</h1>
@@ -34,14 +41,8 @@
             <button class="search-btn" type="submit"></button>
         </form>
     </div>
-<<<<<<< Updated upstream
-
     <div class="media-container">
 
-=======
-    <div class="media-container">
-
->>>>>>> Stashed changes
         <table>
             <thead>
                 <tr>
@@ -59,24 +60,11 @@
                         <td class="text-white"><?= $media['stock'] ?></td>
                         <td class="text-white"><?= $media['type'] ?></td>
                         <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
-<<<<<<< Updated upstream
-                        <td><a class="btn btn-primary" href="<?= "edit_" . $media['type'] ?>">Modifier</a></td>
-                        <td><a class="btn btn-alert">Supprimer</a></td>
-=======
-                        <form method="POST">
-                            <td><button type="submit" name="<?= "edit_" . $media['id'] ?>" class="btn btn-primary">Modifier</a></td>
-                        </form>
-                        <form method="POST">
-                            <td><button type="submit" name="<?= "delete_" . $media['id'] ?>" class="btn btn-alert">Supprimer</a></td>
-                        </form>
->>>>>>> Stashed changes
+                        <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Edit</a></td>
                     </tr>
                 </tbody>
             <?php endforeach; ?>
         </table>
-<<<<<<< Updated upstream
-        <?php include_once VIEW_PATH . '/medias/pagination.php' ?>
-=======
 
 
         <div class="pagination">
@@ -93,6 +81,5 @@
                 <div class="pagination-btn hide">❯</div>
             <?php endif; ?>
         </div>
->>>>>>> Stashed changes
     </div>
 </div>

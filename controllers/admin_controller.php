@@ -286,21 +286,21 @@ function admin_medias()
     $medias = get_medias($filters);
     $data = array_merge($data, $medias);
 
-    foreach ($data['medias'] as $media)
-        if (isset($_POST['edit_' . $media['id']]) && $media["type"] === 'Book') {
-            admin_edit_book($media['id']);
-            die();
-        }
-    foreach ($data['medias'] as $media)
-        if (isset($_POST['edit_' . $media['id']]) && $media["type"] === 'Movie') {
-            admin_edit_movie($media['id']);
-            die();
-        }
-    foreach ($data['medias'] as $media)
-        if (isset($_POST['edit_' . $media['id']]) && $media["type"] === 'Game') {
-            admin_edit_game($media['id']);
-            die();
-        }
+    // foreach ($data['medias'] as $media)
+    //     if (isset($_POST['edit_' . $media['id']]) && $media["type"] === 'Book') {
+    //         admin_edit_book($media['id']);
+    //         die();
+    //     }
+    // foreach ($data['medias'] as $media)
+    //     if (isset($_POST['edit_' . $media['id']]) && $media["type"] === 'Movie') {
+    //         admin_edit_movie($media['id']);
+    //         die();
+    //     }
+    // foreach ($data['medias'] as $media)
+    //     if (isset($_POST['edit_' . $media['id']]) && $media["type"] === 'Game') {
+    //         admin_edit_game($media['id']);
+    //         die();
+    //     }
     load_view_with_layout('admin/medias', $data);
 }
 function admin_index()
@@ -308,13 +308,13 @@ function admin_index()
     load_view_with_layout('admin/index');
 }
 
-function admin_edit_book($id)
+function admin_edit_book()
 {
     $data = [
         'action' => 'Modifier',
-        'entries' => get_book_by_id($id),
+        // 'entries' => get_book_by_id(),
     ];
-    
+
     load_view_with_layout('admin/add_book', $data);
 }
 
@@ -329,12 +329,14 @@ function admin_edit_movie($id)
 
 
 
-function admin_edit_game($id)
+function admin_edit_game()
 {
+    //TODO validation id from GET 
+    $id = $_GET['id'];
     $errors = [];
+    //todo check if exist
     $game_data = get_game_by_id($id);
-    $game_data['id'] = $id; 
-    
+
     if (is_post()) {
         $all_data = [
             "title",
@@ -345,7 +347,7 @@ function admin_edit_game($id)
             "pegi",
             "description",
         ];
-        
+
         $genre_enum = [
             'FPS',
             'MMO',
@@ -360,7 +362,7 @@ function admin_edit_game($id)
             'Nintendo',
             'Mobile',
         ];
-        
+
         $pegi_enum = [
             '3',
             '7',
@@ -370,10 +372,11 @@ function admin_edit_game($id)
         ];
 
         foreach ($all_data as $key) {
-            if (isset($_POST[$key])) {
-                echo $key;
-                $game_data[$key] = clean_input($_POST[$key]);
+            if (!isset($_POST[$key])) {
+                $errors[$key] = "$key n'est pas renseigné";
+                continue;
             }
+            $game_data[$key] = clean_input($_POST[$key]);
             if ($key === 'title' && !(strlen($game_data[$key]) > 1 && strlen($game_data[$key]) < 200)) {
                 $errors['title'] = 'Titre invalide (nombre de caractères)';
             } elseif ($key === 'genre' && !in_array($game_data[$key], $genre_enum)) {
@@ -391,10 +394,9 @@ function admin_edit_game($id)
             }
         }
         if (empty($errors)) {
-
-            update_media($game_data,  'update_game');
-            redirect(path: 'admin/medias');
-            exit();            
+            if (update_media($game_data,  'update_game')) {
+                redirect(path: 'admin/medias');
+            }
         } else {
             foreach ($errors as $key => $msg) {
                 set_flash('error', $msg);
