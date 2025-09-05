@@ -4,15 +4,14 @@
             <img src="<?= e(get_media_cover_img($cover_img)) ?>">
             <span class="placement-button">
                 <?php
-                if ($stock !== 0):
+                if ($stock !== 0 && !$already_rented):
                     ?>
-
-
                     <button popovertarget="my-popover" class="btn btn-primary louer">Emprunter</button>
                     <?php
-                else: ?>
+                elseif ($already_rented): ?>
+                    <div class="message">Vous louez deja ce media.</div>
+                <?php else: ?>
                     <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
-
                 <?php endif; ?>
             </span>
 

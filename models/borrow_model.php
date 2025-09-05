@@ -4,13 +4,13 @@
 function get_borrow_count_by_user_id(int $user_id)
 {
     $query = "SELECT COUNT(id) FROM borrowed WHERE user_id = ? AND return_date is NULL";
-    return db_select_one($query, [$user_id]);
+    return db_select_one($query, [$user_id])["COUNT(id)"];
 }
 
 function get_media_stock_by_id(int $media_id)
 {
     $query = "SELECT stock FROM medias WHERE id = ?";
-    return db_select_one($query, [$media_id]);
+    return db_select_one($query, [$media_id])["stock"];
 }
 
 function decrement_media_stock(int $media_id)
@@ -40,4 +40,12 @@ function borrow_media(int $media_id, int $user_id)
         db_rollback();
     }
     return false;
+}
+
+
+function is_media_already_borrowed_by_user(int $media_id, int $user_id)
+{
+    $query = "SELECT id FROM borrowed WHERE user_id = ? AND media_id = ? AND return_date is NULL";
+    $ret = db_select_one($query, [$user_id, $media_id]);
+    return (bool) $ret;
 }

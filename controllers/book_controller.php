@@ -3,7 +3,7 @@
 function book_show()
 {
     if (!is_get()) {
-        redirect('home');
+        redirect('errors/404');
     }
 
     $book_id = escape($_GET["id"]);
@@ -13,8 +13,11 @@ function book_show()
         redirect('errors/404');
     }
 
-
-    // var_dump($book_info);
+    $already_rented = null;
+    if (is_logged_in()) {
+        $user_id = current_user_id();
+        $already_rented = is_media_already_borrowed_by_user($book_id, $user_id);
+    }
 
     $data = [
         'author' => $book_info["author"],
@@ -26,6 +29,8 @@ function book_show()
         'genre' => $book_info["genre"],
         'cover_img' => $book_info['cover_img'],
         'stock' => $book_info["stock"],
+        'media_id' => $book_id,
+        'already_rented' => $already_rented,
         'stylesheets' => ['assets/css/media.css']
     ];
 
