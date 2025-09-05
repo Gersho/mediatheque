@@ -21,20 +21,26 @@ function media_borrow()
     error_logging(ErrorType::Debug, "in media_borrow with USER id " . $user_id);
 
     //check if media is available
-    $media_id = escape($_POST["id"]);
-    if (get_media_stock_by_id($media_id) <= 0) {
+    $media_id = intval(escape($_POST["id"]));
+    $ret = get_media_stock_by_id($media_id);
+    if (!$ret || $ret <= 0) {
         set_flash("error", "item is out of stock");
         redirect("home");
     }
 
-    error_logging(ErrorType::Debug, "get_borrow_count_by_user_id " . $user_id . "|| count: " . get_borrow_count_by_user_id($user_id)["COUNT(id)"]);
+    error_logging(ErrorType::Debug, "get_borrow_count_by_user_id " . $user_id . "|| count: " . get_borrow_count_by_user_id($user_id));
 
-    //check user has rented less than 3
-    if (get_borrow_count_by_user_id($user_id)["COUNT(id)"] >= 3) {
-        set_flash("error", "You are already renting the maximum number of medias");
+    //check media already borrowed by this user
+    if (is_media_already_borrowed_by_user($media_id, $user_id)) {
+        set_flash("error", "You are already renting this media");
         redirect("home");
     }
 
+    //check user has rented less than 3
+    if (get_borrow_count_by_user_id($user_id) >= 3) {
+        set_flash("error", "You are already renting the maximum number of medias");
+        redirect("home");
+    }
 
     //(TODO optional) check user has no late media
 

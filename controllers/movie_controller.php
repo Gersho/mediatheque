@@ -3,7 +3,6 @@
 function movie_show()
 {
     if (!is_get()) {
-        // redirect('home');
         redirect('errors/404');
     }
 
@@ -12,6 +11,12 @@ function movie_show()
     if (!$movie_info) {
         error_logging(ErrorType::Warning, "Unable to find movie with id#" . $movie_id);
         redirect('errors/404');
+    }
+
+    $already_rented = null;
+    if (is_logged_in()) {
+        $user_id = current_user_id();
+        $already_rented = is_media_already_borrowed_by_user($movie_id, $user_id);
     }
 
     $data = [
@@ -25,6 +30,7 @@ function movie_show()
         'cover_img' => $movie_info['cover_img'],
         'stock' => $movie_info["stock"],
         'media_id' => $movie_id,
+        'already_rented' => $already_rented,
         'stylesheets' => ['assets/css/media.css']
     ];
 
