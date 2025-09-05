@@ -29,3 +29,16 @@
   color: white;
   transform: translateY(-1px);
 }
+
+.borrow-list-container {
+  display: flex;
+  width: 100%;
+  background-color: aqua;
+  justify-content: center;
+}
+
+#borrow-list {
+  background-color: white;
+  align-self: center;
+  justify-self: center;
+}
