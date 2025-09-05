@@ -34,9 +34,14 @@
             <button class="search-btn" type="submit"></button>
         </form>
     </div>
+<<<<<<< Updated upstream
 
     <div class="media-container">
 
+=======
+    <div class="media-container">
+
+>>>>>>> Stashed changes
         <table>
             <thead>
                 <tr>
@@ -54,12 +59,40 @@
                         <td class="text-white"><?= $media['stock'] ?></td>
                         <td class="text-white"><?= $media['type'] ?></td>
                         <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
+<<<<<<< Updated upstream
                         <td><a class="btn btn-primary" href="<?= "edit_" . $media['type'] ?>">Modifier</a></td>
                         <td><a class="btn btn-alert">Supprimer</a></td>
+=======
+                        <form method="POST">
+                            <td><button type="submit" name="<?= "edit_" . $media['id'] ?>" class="btn btn-primary">Modifier</a></td>
+                        </form>
+                        <form method="POST">
+                            <td><button type="submit" name="<?= "delete_" . $media['id'] ?>" class="btn btn-alert">Supprimer</a></td>
+                        </form>
+>>>>>>> Stashed changes
                     </tr>
                 </tbody>
             <?php endforeach; ?>
         </table>
+<<<<<<< Updated upstream
         <?php include_once VIEW_PATH . '/medias/pagination.php' ?>
+=======
+
+
+        <div class="pagination">
+            <?php if ($current_page > 1): ?>
+                <?php $link = get_page_url($current_page - 1) ?>
+                <a class="pagination-btn" href=" <?= $link ?>">❮</a>
+            <?php else: ?>
+                <div class="pagination-btn hide">❮</div>
+            <?php endif; ?>
+            <?php if ($current_page < $pages): ?>
+                <?php $link = get_page_url($current_page + 1) ?>
+                <a class="pagination-btn" href=" <?= $link ?>">❯</a>
+            <?php else: ?>
+                <div class="pagination-btn hide">❯</div>
+            <?php endif; ?>
+        </div>
+>>>>>>> Stashed changes
     </div>
 </div>
