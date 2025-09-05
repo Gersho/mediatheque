@@ -1,4 +1,7 @@
 <?php
+
+// fonction pour ajouter les médias.
+
 function insert_new_book(int $media_id, array $book_data)
 {
     $query = "INSERT INTO books 
@@ -17,6 +20,9 @@ function insert_new_book(int $media_id, array $book_data)
         ]
     );
 }
+
+// tableau DB dans lequel le model vient selectionner selon l'id.
+
 
 function get_book_by_id($id)
 {

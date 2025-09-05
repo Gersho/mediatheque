@@ -1,10 +1,12 @@
 <?php
-
 function book_show()
 {
+    
     if (!is_get()) {
         redirect('home');
     }
+    // le controleur demande au model de le chercher dans la DB.
+
 
     $book_id = escape($_GET["id"]);
     $book_info = get_book_by_id($book_id);
@@ -16,6 +18,7 @@ function book_show()
 
     // var_dump($book_info);
 
+// la DB des medias du model
     $data = [
         'author' => $book_info["author"],
         'isbn' => $book_info["isbn"],
@@ -28,7 +31,7 @@ function book_show()
         'stock' => $book_info["stock"],
         'stylesheets' => ['assets/css/media.css']
     ];
-
+// renvoi vers la vu.
     load_view_with_layout('book/show', $data);
 }
 
