@@ -16,18 +16,9 @@
                 <label for="genre">Genre</label>
                 <select id="genre" name="genre" required>
                     <option value="">Genre du film</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'action') echo 'selected';?> value="action">Action</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'comedy') echo 'selected';?> value="comedy">Comedie</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'documentary') echo 'selected';?> value="documentary">Documentaire</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'drama') echo 'selected';?> value="drama">Drame</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'fantasy') echo 'selected';?> value="fantasy">Fantaisie</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'horror') echo 'selected';?> value="horror">Horreur</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'musical') echo 'selected';?> value="musical">Musical</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'mystery') echo 'selected';?> value="mystery">Mystère</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'romance') echo 'selected';?> value="romance">Romance</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'science fiction') echo 'selected';?> value="science fiction">Science Fiction</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'thriller') echo 'selected';?> value="thriller">Suspense</option>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === 'western') echo 'selected';?> value="western">Western</option>
+                    <?php foreach ($data['genres_enum'] as $genre): ?>
+                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === $genre) echo 'selected';?> value="<?= $genre ?>"><?= $genre ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
@@ -61,10 +52,9 @@
                 <label for="certification">Certification</label>
                 <select id="certification" name="certification" required>
                     <option value="">Certification</option>
-                    <option <?php if (isset($entries['certification']) && $entries['certification'] === 'Tous publics') echo 'selected';?> value="Tous publics">Tous publics</option>
-                    <option <?php if (isset($entries['certification']) && $entries['certification'] === '-12') echo 'selected';?>  value="-12">-12</option>
-                    <option <?php if (isset($entries['certification']) && $entries['certification'] === '-16') echo 'selected';?>  value="-16">-16</option>
-                    <option <?php if (isset($entries['certification']) && $entries['certification'] === '-18') echo 'selected';?>  value="-18">-18</option>
+                    <?php foreach ($data['certification_enum'] as $certification): ?>
+                    <option <?php if (isset($entries['certification']) && $entries['certification'] === $certification) echo 'selected';?> value="<?= $certification ?>"><?= $certification ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 

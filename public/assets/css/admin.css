@@ -5,6 +5,7 @@ a {
 }
 
 .text-white {
+  text-decoration: none;
   color: white;
 }
 

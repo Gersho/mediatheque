@@ -34,7 +34,6 @@
             <button class="search-btn" type="submit"></button>
         </form>
     </div>
-
     <div class="media-container">
 
         <table>
@@ -54,12 +53,14 @@
                         <td class="text-white"><?= $media['stock'] ?></td>
                         <td class="text-white"><?= $media['type'] ?></td>
                         <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
-                        <td><a class="btn btn-primary" href="<?= "edit_" . $media['type'] ?>">Modifier</a></td>
-                        <td><a class="btn btn-alert">Supprimer</a></td>
+                        <td><a class="btn btn-primary margin-1" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a></td>
+                        <td><a class="btn btn-alert margin-1" href="<?= get_delete_url($media['id'], $media['type']) ?>">Supprimer</a></td>
                     </tr>
                 </tbody>
             <?php endforeach; ?>
         </table>
+
         <?php include_once VIEW_PATH . '/medias/pagination.php' ?>
+
     </div>
 </div>

@@ -38,3 +38,23 @@ function check_isbn_unique(string $isbn)
 
     return empty($result);
 }
+
+function update_book(int $book_id, array $book_data) {
+    $query = "UPDATE books SET 
+            author = ?,
+            isbn = ?,
+            pages = ?,
+            published_year = ?,
+            summary = ?
+            WHERE id = ?";
+
+    return db_execute($query, [
+        $book_data["author"],
+        $book_data["isbn"],
+        $book_data["pages"],
+        $book_data["published_year"],
+        $book_data["summary"],
+        $book_id,
+    ]);
+}
+
