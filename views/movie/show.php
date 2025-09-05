@@ -5,13 +5,13 @@
             <span class="placement-button">
                 <?php
                 if ($stock !== 0):
-                    ?>
+                ?>
 
 
                     <button popovertarget="my-popover" class="btn btn-primary louer">Emprunter</button>
-                    <?php
+                <?php
                 else: ?>
-                    <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
+                    <div class="message">Désolé ! Ce film n'est plus disponible en stock.</div>
 
                 <?php endif; ?>
             </span>
@@ -34,12 +34,13 @@
 </div>
 
 <!-- Modal popover -->
-<div popover id="my-popover">Are you sure ?
-
-    <form action="<?= url("media/borrow") ?>" method="post">
-        <button name="id" value="<?php e($media_id); ?>">YES</button>
-    </form>
-    <form action="" method="get">
-        <button name="id" value="<?php e($media_id); ?>">NO</button>
-    </form>
+<div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
+    <div class="espacement">
+        <form action="<?= url("media/borrow") ?>" method="post">
+            <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
+        </form>
+        <form action="" method="get">
+            <button class="no" name="id" value="<?php e($media_id); ?>">NON</button>
+        </form>
+    </div>
 </div>
