@@ -1,10 +1,3 @@
-<?php
-//TODO move this function
-function get_edit_url(int $id, string $type)
-{
-    return url("admin/edit_$type?id=$id");
-}
-?>
 <div class="show-card">
     <a href="medias">
         <h1 class="page-title">Panneau de contrôle des médias</h1>
@@ -60,26 +53,14 @@ function get_edit_url(int $id, string $type)
                         <td class="text-white"><?= $media['stock'] ?></td>
                         <td class="text-white"><?= $media['type'] ?></td>
                         <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
-                        <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Edit</a></td>
+                        <td><a class="btn btn-primary margin-1" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a></td>
+                        <td><a class="btn btn-alert margin-1" href="<?= get_delete_url($media['id'], $media['type']) ?>">Supprimer</a></td>
                     </tr>
                 </tbody>
             <?php endforeach; ?>
         </table>
 
+        <?php include_once VIEW_PATH . '/medias/pagination.php' ?>
 
-        <div class="pagination">
-            <?php if ($current_page > 1): ?>
-                <?php $link = get_page_url($current_page - 1) ?>
-                <a class="pagination-btn" href=" <?= $link ?>">❮</a>
-            <?php else: ?>
-                <div class="pagination-btn hide">❮</div>
-            <?php endif; ?>
-            <?php if ($current_page < $pages): ?>
-                <?php $link = get_page_url($current_page + 1) ?>
-                <a class="pagination-btn" href=" <?= $link ?>">❯</a>
-            <?php else: ?>
-                <div class="pagination-btn hide">❯</div>
-            <?php endif; ?>
-        </div>
     </div>
 </div>

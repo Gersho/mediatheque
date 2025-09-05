@@ -24,3 +24,19 @@ function insert_new_movie(int $media_id, array $movie_data)
         ]
     );
 }
+function update_movie(int $movie_id, array $movie_data) {
+    $query = "UPDATE movies SET 
+            director = ?,
+            duration = ?,
+            published_year = ?,
+            synopsis = ?
+            WHERE id = ?";
+
+    return db_execute($query, [
+            $movie_data['director'],
+            $movie_data['duration'],
+            $movie_data['published_year'],
+            $movie_data['synopsis'],
+            $movie_id,
+        ]);
+}

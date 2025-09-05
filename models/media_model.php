@@ -260,3 +260,17 @@ function get_genre_values(): array
     preg_match_all("/'([^']*)'/", $type, $matches);
     return $matches[1];
 }
+
+function get_edit_url(int $id, string $type)
+{
+    return url("admin/edit_$type?id=$id");
+}
+function get_delete_url(int $id)
+{
+    return url("admin/delete_media?id=$id");
+}
+function delete_media_from_db(int $media_id)
+{
+    $query = "DELETE FROM medias WHERE id = ?";
+    return db_execute($query, [$media_id]);
+}
