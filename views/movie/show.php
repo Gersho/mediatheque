@@ -4,6 +4,7 @@
             <img src="<?= e(get_media_cover_img($cover_img)) ?>">
             <span class="placement-button">
                 <?php
+
                 if ($stock !== 0 && !$already_rented):
                     ?>
                     <button popovertarget="my-popover" class="btn btn-primary louer">Emprunter</button>
@@ -33,12 +34,13 @@
 </div>
 
 <!-- Modal popover -->
-<div popover id="my-popover">Are you sure ?
-
-    <form action="<?= url("media/borrow") ?>" method="post">
-        <button name="id" value="<?php e($media_id); ?>">YES</button>
-    </form>
-    <form action="" method="get">
-        <button name="id" value="<?php e($media_id); ?>">NO</button>
-    </form>
+<div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
+    <div class="espacement">
+        <form action="<?= url("media/borrow") ?>" method="post">
+            <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
+        </form>
+        <form action="" method="get">
+            <button class="no" name="id" value="<?php e($media_id); ?>">NON</button>
+        </form>
+    </div>
 </div>
