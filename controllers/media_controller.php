@@ -70,12 +70,12 @@ function media_return()
     // TODO: REMPLACER LES GET PAR POST
 
     // $_POST["id"] is media id
-    if (/* !is_post() || */ !isset($_GET["id"])) {
+    if (!is_post() || !isset($_POST["id"])) {
         redirect('errors/404');
     }
 
-    error_logging(ErrorType::Debug, "in media_borrow with MEDIA id " . $_GET["id"]);
-    $media_id = $_GET['id'];
+    error_logging(ErrorType::Debug, "in media_borrow with MEDIA id " . $_POST["id"]);
+    $media_id = $_POST['id'];
     $user_id = null;
     if (!is_logged_in()) {
         set_flash("error", "you must be logged in");
