@@ -1,4 +1,7 @@
 <?php
+
+// fonction pour ajouter les médias.
+
 function insert_new_book(int $media_id, array $book_data)
 {
     $query = "INSERT INTO books 
@@ -18,6 +21,9 @@ function insert_new_book(int $media_id, array $book_data)
     );
 }
 
+// tableau DB dans lequel le model vient selectionner selon l'id.
+
+
 function get_book_by_id($id)
 {
     $query = "SELECT * FROM  books b LEFT JOIN medias m ON m.id = b.id WHERE b.id = ? LIMIT 1";
@@ -32,3 +38,23 @@ function check_isbn_unique(string $isbn)
 
     return empty($result);
 }
+
+function update_book(int $book_id, array $book_data) {
+    $query = "UPDATE books SET 
+            author = ?,
+            isbn = ?,
+            pages = ?,
+            published_year = ?,
+            summary = ?
+            WHERE id = ?";
+
+    return db_execute($query, [
+        $book_data["author"],
+        $book_data["isbn"],
+        $book_data["pages"],
+        $book_data["published_year"],
+        $book_data["summary"],
+        $book_id,
+    ]);
+}
+

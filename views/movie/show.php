@@ -1,14 +1,18 @@
 <div class="container">
     <section>
         <div>
-            <img src="<?= get_media_cover_img($cover_img) ?>">
+            <img src="<?= e(get_media_cover_img($cover_img)) ?>">
             <span class="placement-button">
                 <?php
-                if ($stock !== 0):
-                ?> <button class="btn btn-primary louer">Emprunter</button> <?php
-                                                                        else: ?>
-                    <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
 
+                if ($stock !== 0 && !$already_rented):
+                    ?>
+                    <button popovertarget="my-popover" class="btn btn-primary louer">Emprunter</button>
+                    <?php
+                elseif ($already_rented): ?>
+                    <div class="message">Vous louez deja ce media.</div>
+                <?php else: ?>
+                    <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
                 <?php endif; ?>
             </span>
 
@@ -21,9 +25,22 @@
                 <p>en <?php e($published_year); ?> par <?php e($director); ?></p>
             </div>
             <p>durée: <?php e($duration); ?></p>
+            <p>genre: <?php e($genre); ?></p>
             <p>certification: <?php e($certification); ?></p>
             <p>synopsis: </p>
             <div class="scroll-box"><?php e($synopsis); ?> </div>
         </div>
     </section>
+</div>
+
+<!-- Modal popover -->
+<div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
+    <div class="espacement">
+        <form action="<?= url("media/borrow") ?>" method="post">
+            <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
+        </form>
+        <form action="" method="get">
+            <button class="no" name="id" value="<?php e($media_id); ?>">NON</button>
+        </form>
+    </div>
 </div>

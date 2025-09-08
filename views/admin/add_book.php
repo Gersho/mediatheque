@@ -6,6 +6,7 @@
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+
             <div class="form-group">
                 <label for="title">Titre</label>
                 <input type="text" id="title" name="title" required placeholder="Titre du livre" value="<?php if (isset($entries['title'])) echo $entries['title'];?>">
@@ -15,18 +16,9 @@
                 <label for="genre">Genre</label>
                 <select id="genre" name="genre" required>
                     <option>Genre du livre</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'action') echo 'selected';?> value="action">Action</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'comedy') echo 'selected';?> value="comedy">Comedie</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'documentary') echo 'selected';?> value="documentary">Documentaire</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'drama') echo 'selected';?> value="drama">Drame</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'fantasy') echo 'selected';?> value="fantasy">Fantaisie</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'horror') echo 'selected';?> value="horror">Horreur</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'musical') echo 'selected';?> value="musical">Musical</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'mystere') echo 'selected';?> value="mystery">Mystère</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'romance') echo 'selected';?> value="romance">Romance</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'science fiction') echo 'selected';?> value="science fiction">Science Fiction</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'thriller') echo 'selected';?> value="thriller">Suspense</option>
-                    <option <?php if (isset($entries['genre']) && $entries['genre'] === 'western') echo 'selected';?> value="western">Western</option>
+                    <?php foreach ($data['genres_enum'] as $genre): ?>
+                    <option <?php if (isset($entries['genre']) && $entries['genre'] === $genre) echo 'selected';?> value="<?= $genre ?>"><?= $genre ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
 
@@ -42,7 +34,7 @@
 
             <div class="form-group">
                 <label for="isbn">ISBN</label>
-                <input type="text" id="isbn" name="isbn" required placeholder="ISBN" min="0" value="<?php if (isset($entries['isbn'])) echo $entries['isbn'];?>">
+                <input type="text" id="isbn" name="isbn" required placeholder="ISBN" value="<?php if (isset($entries['isbn'])) echo $entries['isbn'];?>">
             </div>
 
             <div class="form-group">
@@ -53,7 +45,7 @@
             <div class="form-group">
                 <label for="published_year">Date de publication</label>
                 <input type="number" id="published_year" name="published_year" required
-                    placeholder="Date de publication" min="1900" value="<?php if (isset($entries['title'])) echo $entries['published_year'];?>">
+                    placeholder="Date de publication" min="1900" value="<?php if (isset($entries['published_year'])) echo $entries['published_year'];?>">
             </div>
 
             <div class="form-group">
