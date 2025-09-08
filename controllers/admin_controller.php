@@ -1,38 +1,16 @@
 <?php
-
+//TODO : VERIFIER SI ADMIN=true
 function admin_add_book()
 {
     $errors = [];
     $book_data = [];
-
+    $all_data = get_books_fields();
+    $genre_enum = get_books_movies_genres();
     
-    $all_data = [
-            "title",
-            "genre",
-            "stock",
-            "author",
-            "isbn",
-            "pages",
-            "published_year",
-            "summary",
-        ];
-
-        $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
-        
-        if (is_post()) {
+    if (is_post()) {
+        if (isset($_POST['csrf_token'])) {
+            verify_csrf_token($_POST['csrf_token']);
+        }
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -90,40 +68,15 @@ function admin_add_movie()
     $errors = [];
     $movie_data = [];
 
-    $all_data = [
-        "title",
-            "genre",
-            "stock",
-            "director",
-            "duration",
-            "published_year",
-            "synopsis",
-            "certification",
-        ];
+    $all_data = get_movies_fields();
 
-        $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
+    $genre_enum = get_books_movies_genres();
+    $certification_enum = get_movies_certifications();
 
-        $certification_enum = [
-            'Tous publics',
-            '-12',
-            '-16',
-            '-18',
-        ];
-        
-        if (is_post()) {
+    if (is_post()) {
+        if (isset($_POST['csrf_token'])) {
+            verify_csrf_token($_POST['csrf_token']);
+        }
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -178,43 +131,16 @@ function admin_add_game()
 {
     $errors = [];
     $game_data = [];
+    $all_data = get_games_fields();
+    $genre_enum = get_games_genres();
+    $plateform_enum = get_games_plateforms();
+    $pegi_enum = get_games_pegis();
+    
+    if (is_post()) {
+        if (isset($_POST['csrf_token'])) {
+            verify_csrf_token($_POST['csrf_token']);
+        }
 
-
-
-    $all_data = [
-        "title",
-        "genre",
-        "stock",
-        "editor",
-        "plateform",
-        "pegi",
-        "description","cover_img",
-        ];
-
-        $genre_enum = [
-            'FPS',
-            'MMO',
-            'MOBA',
-            'RPG'
-        ];
-
-        $plateform_enum = [
-            'PC',
-            'PlayStation',
-            'Xbox',
-            'Nintendo',
-            'Mobile',
-        ];
-
-        $pegi_enum = [
-            '3',
-            '7',
-            '12',
-            '16',
-            '18',
-        ];
-        
-        if (is_post()) {
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
 
@@ -299,40 +225,19 @@ function admin_edit_book()
     $errors = [];
     //todo check if exist
     $book_data = get_book_by_id($id);
+    $all_data = get_books_fields();
+    $genre_enum = get_books_movies_genres();
 
-    $all_data = [
-            "title",
-            "genre",
-            "stock",
-            "author",
-            "isbn",
-            "pages",
-            "published_year",
-            "summary",
-        ];
-
-    $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
-
-        if (is_post()) {
+    if (is_post()) {
+        if (isset($_POST['csrf_token'])) {
+            verify_csrf_token($_POST['csrf_token']);
+        }
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
                 continue;
             }
-            // VALIDATION DES CHAMPS PRÉREMPLIS SAUF ISBN UNIQUE
+            // VALIDATION DES CHAMPS PRÉREMPLIS
             $temp = clean_input($_POST[$key]);
             if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
                 $errors['title'] = 'Titre invalide (nombre de caractères)';
@@ -382,41 +287,14 @@ function admin_edit_movie()
     //todo check if exist
     $movie_data = get_movie_by_id($id);
 
-
-    $all_data = [
-        "title",
-            "genre",
-            "stock",
-            "director",
-            "duration",
-            "published_year",
-            "synopsis",
-            "certification",
-        ];
-
-        $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
-
-        $certification_enum = [
-            'Tous publics',
-            '-12',
-            '-16',
-            '-18',
-        ];
-        
-        if (is_post()) {
+    $all_data = get_movies_fields();
+    $genre_enum = get_books_movies_genres();
+    $certification_enum = get_movies_certifications();
+    
+    if (is_post()) {
+        if (isset($_POST['csrf_token'])) {
+            verify_csrf_token($_POST['csrf_token']);
+        }
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
@@ -469,83 +347,65 @@ function admin_edit_game()
 {
     //TODO validation id from GET 
     $id = $_GET['id'];
-    $errors = [];
+
     //todo check if exist
     $game_data = get_game_by_id($id);
+    $errors = [];
+    $all_data = get_games_fields();
 
-    $all_data = [
-        "title",
-        "genre",
-        "stock",
-        "editor",
-        "plateform",
-        "pegi",
-        "description",
-        ];
+    $genre_enum = get_games_genres();
+    $plateform_enum = get_games_plateforms(); 
+    $pegi_enum = get_games_pegis();
 
-        $genre_enum = [
-            'FPS',
-            'MMO',
-            'MOBA',
-            'RPG'
-        ];
-        
-        $plateform_enum = [
-            'PC',
-            'Playstation',
-            'Xbox',
-            'Nintendo',
-            'Mobile',
-        ];
-        
-        $pegi_enum = [
-            '3',
-            '7',
-            '12',
-            '16',
-            '18',
-        ];
-        
-        if (is_post()) {
+    if (is_post()) {
+        if (isset($_POST['csrf_token'])) {
+            verify_csrf_token($_POST['csrf_token']);
+        }
         foreach ($all_data as $key) {
-            if (!isset($_POST[$key])) {
-                $errors[$key] = "$key n'est pas renseigné";
-                continue;
-            }
-            $game_data[$key] = clean_input($_POST[$key]);
-            if ($key === 'title' && !(strlen($game_data[$key]) > 1 && strlen($game_data[$key]) < 200)) {
-                $errors['title'] = 'Titre invalide (nombre de caractères)';
-            } elseif ($key === 'genre' && !in_array($game_data[$key], $genre_enum)) {
-                $errors['genre'] = 'Genre invalide';
-            } elseif ($key === 'stock' && !($game_data[$key] >= 1 && filter_var($game_data[$key], FILTER_VALIDATE_INT))) {
-                $errors['stock'] = 'Le stock doit être un entier positif';
-            } elseif ($key === 'editor' && !(strlen($game_data[$key]) >= 2 && strlen($game_data[$key]) <= 100)) {
-                $errors['editor'] = 'Éditeur invalide (nombre de caractères)';
-            } elseif ($key === 'plateform' && !in_array($game_data[$key], $plateform_enum)) {
-                $errors['plateform'] = "Plateforme invalide";
-            } elseif ($key === 'pegi' && !in_array($game_data[$key], $pegi_enum)) {
-                $errors['pegi'] = 'Public cible invalide';
-            } elseif ($key === 'description' && !(strlen($game_data[$key]) <= 3000)) {
-                $errors['description'] = "Description: maximum 3000 caractères";
+            if (isset($_POST[$key])) {
+
+                $temp = clean_input($_POST[$key]);
+
+                if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
+                    $errors['title'] = 'Titre invalide (nombre de caractères)';
+                } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
+                    $errors['genre'] = 'Genre invalide';
+                } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+                    $errors['stock'] = 'Le stock doit être un entier positif';
+                } elseif ($key === 'editor' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
+                    $errors['editor'] = 'Éditeur invalide (nombre de caractères)';
+                } elseif ($key === 'plateform' && !in_array($temp, $plateform_enum)) {
+                    $errors['plateform'] = "Plateforme invalide";
+                } elseif ($key === 'pegi' && !in_array($temp, $pegi_enum)) {
+                    $errors['pegi'] = 'Public cible invalide';
+                } elseif ($key === 'description' && !(strlen($temp) <= 3000)) {
+                    $errors['description'] = "Description: maximum 3000 caractères";
+                }
+                $game_data[$key] = $temp;
+            } else {
+                set_flash("error", "Veuillez remplir tous les champs");
             }
         }
         if (empty($errors)) {
-            if (update_media($game_data,  'update_game')) {
-                redirect(path: 'admin/medias');
-            }
+
+            $game_data['type'] = 'Game';
+            insert_new_media($game_data, 'insert_new_game');
+            redirect('admin/medias');
+            exit();
         } else {
             foreach ($errors as $key => $msg) {
                 set_flash('error', $msg);
             }
         }
     }
-    $data = [
-        "action" => 'Modifier',
-        "entries" => $game_data,
-        "genres_enum" => $genre_enum,
-        "plateform_enum"=> $plateform_enum,
-        "pegi_enum" => $pegi_enum,
-    ];
+        $data = [
+            "action" => 'Modifier',
+            "entries" => $game_data,
+            "genres_enum" => get_games_genres(),
+            "plateform_enum"=> get_games_plateforms(),
+            "pegi_enum" => get_games_pegis(),
+        ];
+
     load_view_with_layout('admin/add_game', $data);
 }
 

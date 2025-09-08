@@ -479,3 +479,107 @@ function upload_cover_from_url(string $url): ?string
 
     return $filename;
 }
+
+function get_books_movies_genres()
+{
+            $genre_enum = [
+            'Action',
+            'Comedy',
+            'Documentary',
+            'Drama',
+            'Fantasy',
+            'Horror',
+            'Musical',
+            'Mystery',
+            'Romance',
+            'Science Fiction',
+            'Thriller',
+            'Western',
+        ];
+        return $genre_enum;
+}
+function get_books_fields()
+{
+        $all_data = [
+            "title",
+            "genre",
+            "stock",
+            "author",
+            "isbn",
+            "pages",
+            "published_year",
+            "summary",
+        ];
+        return $all_data;
+}
+function get_games_fields()
+{
+        $all_data = [
+        "title",
+        "genre",
+        "stock",
+        "editor",
+        "plateform",
+        "pegi",
+        "description",
+        ];
+        return $all_data;
+}
+function get_games_genres()
+{
+            $genre_enum = [
+            'FPS',
+            'MMO',
+            'MOBA',
+            'RPG'
+        ];
+        return $genre_enum;
+}
+
+function get_games_plateforms()
+{
+            $plateform_enum = [
+            'PC',
+            'PlayStation',
+            'Xbox',
+            'Nintendo',
+            'Mobile',
+        ];
+        return $plateform_enum;
+}
+function get_games_pegis()
+{
+            $pegi_enum = [
+            '3',
+            '7',
+            '12',
+            '16',
+            '18',
+        ];
+        return $pegi_enum;
+}
+
+function get_movies_fields()
+{
+        $all_data = [
+            "title",
+            "genre",
+            "stock",
+            "director",
+            "duration",
+            "published_year",
+            "synopsis",
+            "certification",
+        ];
+        return $all_data;
+}
+function get_movies_certifications()
+{
+            $certification_enum = [
+            'Tous publics',
+            '-12',
+            '-16',
+            '-18',
+        ];
+        return $certification_enum;
+}
