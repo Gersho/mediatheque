@@ -398,6 +398,7 @@ function get_page_url(int $page): string
 {
     $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
     $get = $_GET;
+    unset($get['url']);
     if (isset($get['page']) && $page == 1) {
         unset($get['page']);
     } else {
