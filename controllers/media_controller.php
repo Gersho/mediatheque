@@ -63,3 +63,52 @@ function media_borrow()
 
     load_view_with_layout('home/profile', $data);
 }
+
+function media_return()
+{
+
+    // TODO: REMPLACER LES GET PAR POST
+
+    // $_POST["id"] is media id
+    if (/* !is_post() || */ !isset($_GET["id"])) {
+        redirect('errors/404');
+    }
+
+    error_logging(ErrorType::Debug, "in media_borrow with MEDIA id " . $_GET["id"]);
+    $media_id = $_GET['id'];
+    $user_id = null;
+    if (!is_logged_in()) {
+        set_flash("error", "you must be logged in");
+        redirect("auth/login");
+    } else {
+        $user_id = current_user_id();
+    }
+
+    error_logging(ErrorType::Debug, "in media_borrow with USER id " . $user_id);
+
+    //check if media is already borrowed by user
+    if (!is_media_already_borrowed_by_user($media_id, $user_id)) {
+        set_flash("error", "You didn't borrow this media : " . $media_id);
+        redirect('home/profile');
+    }
+
+
+    if (!return_media($media_id, $user_id)) {
+        //failure
+        set_flash("error", "Something went wrong");
+        error_logging(ErrorType::Error, "Failed to borrow media" . $media_id . " by user " . $user_id);
+        redirect("home");
+    }
+
+
+    //TODO rework this part
+    $msg = "OK media returned: " . $media_id;
+    $data = [
+        'title' => 'Profile',
+        'message' => $msg,
+        'content' => 'Merci pour votre retour'
+    ];
+
+    load_view_with_layout('home/profile', $data);
+
+}

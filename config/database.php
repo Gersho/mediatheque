@@ -7,7 +7,7 @@ define('DB_PASS', '');
 define('DB_CHARSET', 'utf8');
 
 // Configuration générale de l'application
-define('BASE_URL', 'http://localhost/mediatheque-lyn-grp05/public/');
+define('BASE_URL', 'http://localhost/public/');
 define('APP_NAME', 'PHP MVC Starter');
 define('APP_VERSION', '1.0.0');
 
@@ -23,7 +23,7 @@ define('PUBLIC_PATH', ROOT_PATH . '/public');
 
 // Added configuratinons
 define('LOG_PATH', ROOT_PATH . '/logs');
-define('UPLOAD_URL', 'http://localhost/mediatheque-lyn-grp05/uploads/covers');
+define('UPLOAD_URL', 'http://localhost/uploads/covers');
 define('UPLOAD_PATH', ROOT_PATH . '/uploads/covers');
 define('UPLOAD_MAX_SIZE', 2000000);
 define('MAX_MEDIA_PER_PAGE', 12);
