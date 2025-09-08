@@ -49,3 +49,15 @@ function is_media_already_borrowed_by_user(int $media_id, int $user_id)
     $ret = db_select_one($query, [$user_id, $media_id]);
     return (bool) $ret;
 }
+
+function get_current_borrow_list_by_user_id(int $user_id)
+{
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NULL";
+    return db_select($query, [$user_id]);
+}
+
+function get_borrow_history_list_by_user_id(int $user_id)
+{
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL";
+    return db_select($query, [$user_id]);
+}
