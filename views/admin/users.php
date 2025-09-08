@@ -57,9 +57,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- </div> -->
                     </td>
-                    <td><button type="submit" class="btn btn-delete">Supprimer</button></td>
+                    <form method="post">
+                        <td><button type="submit" class="btn btn-delete" name="delete_user"
+                                value="<?= $user['id'] ?>">Supprimer</button></td>
+                    </form>
                 </tr>
             <?php endforeach; ?>
         </tbody>

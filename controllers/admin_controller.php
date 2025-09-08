@@ -382,6 +382,7 @@ function admin_users()
             'assets/css/user.css',
         ]
     ];
+
     $data['current_page'] = get_current_page();
     $limit = 10;
     $data['pages'] = ceil(count_users() / $limit);
@@ -389,6 +390,7 @@ function admin_users()
     $users = get_all_users($limit, $offset);
     $data['users'] = $users;
     $data['fields'] = ['id', 'nom', 'email', 'création'];
+
     load_view_with_layout('admin/users', $data);
 }
 
