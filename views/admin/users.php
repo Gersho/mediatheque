@@ -11,45 +11,58 @@
         <tbody>
             <?php foreach ($users as $user): ?>
                 <tr>
-                    <?php foreach ($user as $value): ?>
-                        <td><?php e($value) ?></td>
+                    <?php foreach ($user as $field => $value): ?>
+                        <?php if ($field === "created_at"): ?>
+                            <td><?= format_date($value) ?></td>
+                        <?php else: ?>
+                            <td><?php e($value) ?></td>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     <td>
-                        <button popovertarget="borrow-list">(number of borrow) button Details</button>
-                        <!-- <div class="borrow-list-container"> -->
-                        <!-- get borrows -->
-                        <div id="borrow-list" popover>Contenu du popover
+                        <?php
+                        $borrow_count = get_borrow_count_by_user_id($user["id"]);
+                        $popover_id = "popover_" . $user["id"];
+                        ?>
+                        <div class="borrow_count_and_detail_btn">
+                            <?php if ($borrow_count > 0): ?>
+                                <button class="btn btn-primary" popovertarget="<?= $popover_id ?>"><?= $borrow_count ?></button>
+                            <?php else: ?>
+                                <p><?= $borrow_count ?></p>
+                            <?php endif; ?>
+                        </div>
+                        <?php $borrows = get_borrows_details_by_user($user["id"]); ?>
+                        <div id="<?= $popover_id ?>" class="borrow-list" popover>
+                            <p>Liste d'emprunts de <?php e($user['name']) ?></p>
                             <table class="user-table">
                                 <thead>
-
-                                    <th>Title</th>
-                                    <th>Borrow date</th>
-                                    <th>Expected return</th>
+                                    <th>Media id</th>
+                                    <th>Type</th>
+                                    <th>Titre</th>
+                                    <th>Date d'emprunt</th>
+                                    <th>Date de Retour Attendue</th>
+                                    <th>Forcer le retour</th>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Test</td>
-                                        <td>Test</td>
-                                        <td>Test</td>
-                                    </tr>
-                                    <tr>
-                                        <td>alibaba</td>
-                                        <td>21/10/2021</td>
-                                        <td>1 day</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Marvel super hero</td>
-                                        <td>21/10/2021</td>
-                                        <td>retard de 12 jours</td>
-                                    </tr>
+                                    <?php foreach ($borrows as $borrow): ?>
+                                        <?php $estimated_return = get_estimated_return_date($borrow['start']); ?>
+                                        <tr>
+                                            <td><?php e($borrow['media_id']) ?></td>
+                                            <td><?php e($borrow['type']) ?></td>
+                                            <td><?php e($borrow['title']) ?></td>
+                                            <td><?= format_date($borrow['start']) ?></td>
+                                            <td><?php e($estimated_return) ?></td>
+                                            <td><button class="btn btn-delete">Rendre</button></td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
                         <!-- </div> -->
                     </td>
-                    <td><button type="submit" class="btn btn-delete">Delete</button></td>
+                    <td><button type="submit" class="btn btn-delete">Supprimer</button></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php include_once VIEW_PATH . '/medias/pagination.php' ?>
 </div>

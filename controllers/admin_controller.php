@@ -376,12 +376,22 @@ function admin_edit_book()
 
 function admin_users()
 {
-    $data = ['stylesheets' => ['assets/css/user.css']];
-    $users = get_all_users();
+    $data = [
+        'stylesheets' => [
+            'assets/css/pagination.css',
+            'assets/css/user.css',
+        ]
+    ];
+    $data['current_page'] = get_current_page();
+    $limit = 10;
+    $data['pages'] = ceil(count_users() / $limit);
+    $offset = ($data['current_page'] - 1) * $limit;
+    $users = get_all_users($limit, $offset);
     $data['users'] = $users;
     $data['fields'] = ['id', 'nom', 'email', 'création'];
     load_view_with_layout('admin/users', $data);
 }
+
 function admin_edit_movie()
 {
     //TODO validation id from GET 
@@ -469,9 +479,6 @@ function admin_edit_movie()
     ];
     load_view_with_layout('admin/add_movie', $data);
 }
-
-
-
 
 function admin_edit_game()
 {

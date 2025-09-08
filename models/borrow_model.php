@@ -49,3 +49,34 @@ function is_media_already_borrowed_by_user(int $media_id, int $user_id)
     $ret = db_select_one($query, [$user_id, $media_id]);
     return (bool) $ret;
 }
+
+function get_borrows_details_by_user(int $user_id): array
+{
+    $query = "SELECT b.id, b.media_id, b.start, m.title, m.type FROM borrowed as b LEFT JOIN medias m ON m.id = media_id WHERE user_id = ? AND return_date is NULL";
+    return db_select($query, [$user_id]);
+}
+
+function get_estimated_return_date(string $borrow_date)
+{
+    $return_date = date_create($borrow_date)->modify("+14 days");
+    $now = date_create();
+    $time_left = date_diff($now, $return_date);
+    $late = $time_left->invert ? "Il y a" : "Dans";
+    $units = [
+        'y' => ['an', 'ans'],
+        'm' => ['mois', 'mois'],
+        'd' => ['jour', 'jours'],
+        'h' => ['heure', 'heures'],
+        'i' => ['minute', 'minutes'],
+        's' => ['seconde', 'secondes'],
+    ];
+
+    foreach ($units as $key => [$singular, $plural]) {
+        $value = $time_left->$key;
+        if ($value > 0) {
+            $label = $value === 1 ? $singular : $plural;
+            return "$late $value $label";
+        }
+    }
+    return "maintenant";
+}
