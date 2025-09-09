@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p><?=$action?> un film</p>
+            <p><?= $action ?> un film</p>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -9,7 +9,8 @@
 
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required placeholder="Titre du film" value="<?php if (isset($entries['title'])) echo $entries['title'];?>">
+                <input type="text" id="title" name="title" required placeholder="Titre du film" value="<?php if (isset($entries['title']))
+                    echo $entries['title']; ?>">
             </div>
 
             <div class="form-group">
@@ -17,35 +18,42 @@
                 <select id="genre" name="genre" required>
                     <option value="">Genre du film</option>
                     <?php foreach ($data['genre_enum'] as $genre): ?>
-                    <option  <?php if (isset($entries['genre']) && $entries['genre'] === $genre) echo 'selected';?> value="<?= $genre ?>"><?= $genre ?></option>
+                        <option <?php if (isset($entries['genre']) && $entries['genre'] === $genre)
+                            echo 'selected'; ?>
+                            value="<?= $genre ?>"><?= $genre ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock'])) echo $entries['stock'];?>">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock']))
+                    echo $entries['stock']; ?>">
             </div>
 
             <div class="form-group">
                 <label for="director">Réalisateur</label>
-                <input type="text" id="director" name="director" required placeholder="Réalisateur" value="<?php if (isset($entries['director'])) echo $entries['director'];?>">
+                <input type="text" id="director" name="director" required placeholder="Réalisateur" value="<?php if (isset($entries['director']))
+                    echo $entries['director']; ?>">
             </div>
 
             <div class="form-group">
                 <label for="duration">Durée (minutes)</label>
-                <input type="number" id="duration" name="duration" required placeholder="Durée" min="1" max="999" value="<?php if (isset($entries['duration'])) echo $entries['duration'];?>">
+                <input type="number" id="duration" name="duration" required placeholder="Durée" min="1" max="999" value="<?php if (isset($entries['duration']))
+                    echo $entries['duration']; ?>">
             </div>
 
             <div class="form-group">
                 <label for="published_year">Date de publication</label>
                 <input type="number" id="published_year" name="published_year" required
-                    placeholder="Date de publication" min="1900" value="<?php if (isset($entries['published_year'])) echo $entries['published_year'];?>">
+                    placeholder="Date de publication" min="1900" value="<?php if (isset($entries['published_year']))
+                        echo $entries['published_year']; ?>">
             </div>
 
             <div class="form-group">
                 <label for="synopsis">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film"><?php if (isset($entries['synopsis'])) echo $entries['synopsis'];?></textarea>
+                <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film"><?php if (isset($entries['synopsis']))
+                    echo $entries['synopsis']; ?></textarea>
             </div>
 
             <div class="form-group">
@@ -53,19 +61,20 @@
                 <select id="certification" name="certification" required>
                     <option value="">Certification</option>
                     <?php foreach ($data['certification_enum'] as $certification): ?>
-                    <option <?php if (isset($entries['certification']) && $entries['certification'] === $certification) echo 'selected';?> value="<?= $certification ?>"><?= $certification ?></option>
+                        <option <?php if (isset($entries['certification']) && $entries['certification'] === $certification)
+                            echo 'selected'; ?> value="<?= $certification ?>"><?= $certification ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="cover">Upload cover</label>
-                <input type="file" id="cover" name="cover">
+                <input type="file" id="cover" name="cover_img">
             </div>
 
             <button type="submit" class="btn btn-primary btn-full">
                 <i class="fas fa-user-plus"></i>
-                <?=$action?>
+                <?= $action ?>
             </button>
         </form>
 

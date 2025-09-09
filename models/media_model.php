@@ -33,19 +33,15 @@ function insert_new_media(array $data, callable $insert_func)
 function update_media(array $data, callable $update_func)
 {
     db_begin_transaction();
-
+    extract($data);
     try {
-        // Récupérer les champs obligatoires avec fallback
-        $id = $data['id'] ?? null;
-        $title = $data['title'] ?? '';
-        $type = $data['type'] ?? '';
-        $genre = $data['genre'] ?? '';
-        $stock = $data['stock'] ?? 1;
-
         // Gestion image : si pas de nouvel upload, garder l’ancien
-        $cover_img = upload_cover_image();
-        if (!$cover_img && isset($data['cover_img'])) {
-            $cover_img = $data['cover_img'];
+        $new_cover = upload_cover_image();
+        if ($new_cover) {
+            if ($cover_img && file_exists(UPLOAD_PATH . "/$cover_img")) {
+                unlink(UPLOAD_PATH . "/$cover_img");
+            }
+            $cover_img = $new_cover;
         }
 
         // Mise à jour de la table "medias"
