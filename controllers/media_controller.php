@@ -20,6 +20,13 @@ function media_borrow()
 
     error_logging(ErrorType::Debug, "in media_borrow with USER id " . $user_id);
 
+    // Verification du CSRF
+    if (!verify_csrf_token($_POST['csrf_token'])) {
+        set_flash('error', "Token CSRF invalide");
+        error_logging(ErrorType::Error, "Invalid CSRF token while borrowing media: " . $_POST['id'] . 'by user: ' . $user_id);
+        redirect('error/403');
+    }
+
     //check if media is available
     $media_id = intval(escape($_POST["id"]));
     $ret = get_media_stock_by_id($media_id);

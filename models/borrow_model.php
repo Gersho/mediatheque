@@ -102,7 +102,7 @@ function get_borrow_history_list_by_user_id(int $user_id)
 // au moment de l'update de la table ???
 function return_borrowed_media($media_id, $user_id)
 {
-    $query = "UPDATE borrowed SET return_date = NOW() WHERE media_id = ? AND user_id = ?";
+    $query = "UPDATE borrowed SET return_date = NOW() WHERE media_id = ? AND user_id = ? AND return_date is NULL";
     db_execute($query, [$media_id, $user_id]);
 }
 

@@ -36,6 +36,7 @@
 <div popover id="my-popover">Are you sure ?
 
     <form action="<?= url("media/borrow") ?>" method="post">
+        <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
         <button name="id" value="<?php e($media_id); ?>">YES</button>
     </form>
     <form action="" method="get">

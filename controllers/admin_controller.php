@@ -11,6 +11,7 @@ function admin_add_book()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to add book without valid token");
             redirect('home/profile');
         }
         
@@ -81,6 +82,7 @@ function admin_add_movie()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to add movie without valid token");
             redirect('home/profile');
         }
 
@@ -145,6 +147,7 @@ function admin_add_game()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to add game without valid token");
             redirect('home/profile');
         }
 
@@ -199,7 +202,13 @@ function admin_add_game()
 }
 function admin_index()
 {
-    load_view_with_layout("admin/index");
+    $data = [
+        'title' => 'Admin Medias Dashboard',
+        'stylesheets' => [
+            'assets/css/admin.css'
+        ],
+    ];
+    load_view_with_layout("admin/index", $data);
 }
 function admin_medias()
 {
@@ -240,6 +249,7 @@ function admin_edit_book()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to edit book without valid token");
             redirect('home/profile');
         }
 
@@ -326,6 +336,7 @@ function admin_edit_movie()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to edit movie without valid token");
             redirect('home/profile');
         }
 
@@ -394,6 +405,7 @@ function admin_edit_game()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to edit game without valid token");
             redirect('home/profile');
         }
 
@@ -451,7 +463,7 @@ function admin_edit_game()
 function admin_delete_media()
 {
     $id = $_GET['id'];
-
+    
     // check if not borrowed
     delete_media_from_db($id);
 }

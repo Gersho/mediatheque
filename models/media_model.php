@@ -270,3 +270,25 @@ function delete_media_from_db(int $media_id)
     $query = "DELETE FROM medias WHERE id = ?";
     return db_execute($query, [$media_id]);
 }
+
+function get_books_count() 
+{
+    $query = 'SELECT COUNT(id) FROM books';
+    return db_select_one($query)['COUNT(id)'];
+
+}
+
+function get_movies_count() 
+{
+    $query = 'SELECT COUNT(id) FROM movies';
+    return db_select_one($query)['COUNT(id)'];
+
+}
+
+function get_games_count()
+{
+    $query = 'SELECT COUNT(id) FROM games';
+    return db_select_one($query)['COUNT(id)'];
+
+
+}
