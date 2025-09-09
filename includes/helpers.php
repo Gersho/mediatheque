@@ -301,7 +301,7 @@ function validate_upload($file): array
     if (!in_array($file_extension, $allowed_types) || !in_array($file_mime_type, $allowed_types)) {
         throw new Exception("Type de fichier non valide (formats acceptés : jpg, png, gif).");
     }
-    $file_info["ext"] = $file_mime_type;
+    $file_info["ext"] = $file_extension;
     return $file_info;
 }
 
