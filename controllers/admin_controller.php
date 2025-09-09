@@ -7,13 +7,13 @@ function admin_add_book()
 
     $all_data = get_books_fields();
     $genre_enum = get_books_movies_genres();
-    
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
             redirect('home/profile');
         }
-        
+
 
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
@@ -141,7 +141,7 @@ function admin_add_game()
     $genre_enum = get_games_genres();
     $plateform_enum = get_games_plateforms();
     $pegi_enum = get_games_pegis();
-    
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
@@ -303,8 +303,7 @@ function admin_users()
     $limit = 10;
     $data['pages'] = ceil(count_users() / $limit);
     $offset = ($data['current_page'] - 1) * $limit;
-    $users = get_all_users($limit, $offset);
-    $data['users'] = $users;
+    $data['users'] = get_all_users($limit, $offset);
     $data['fields'] = ['id', 'nom', 'email', 'création'];
 
     load_view_with_layout('admin/users', $data);
@@ -322,7 +321,7 @@ function admin_edit_movie()
     $all_data = get_movies_fields();
     $genre_enum = get_books_movies_genres();
     $certification_enum = get_movies_certifications();
-    
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
@@ -370,7 +369,7 @@ function admin_edit_movie()
         "entries" => $movie_data,
 
         "genre_enum" => $genre_enum,
-        "certification_enum"=> $certification_enum,
+        "certification_enum" => $certification_enum,
 
     ];
     load_view_with_layout('admin/add_movie', $data);
@@ -388,7 +387,7 @@ function admin_edit_game()
 
 
     $genre_enum = get_games_genres();
-    $plateform_enum = get_games_plateforms(); 
+    $plateform_enum = get_games_plateforms();
     $pegi_enum = get_games_pegis();
 
     if (is_post()) {
@@ -435,13 +434,13 @@ function admin_edit_game()
         }
     }
 
-        $data = [
-            "action" => 'Modifier',
-            "entries" => $game_data,
-            "genre_enum" => get_games_genres(),
-            "plateform_enum"=> get_games_plateforms(),
-            "pegi_enum" => get_games_pegis(),
-        ];
+    $data = [
+        "action" => 'Modifier',
+        "entries" => $game_data,
+        "genre_enum" => get_games_genres(),
+        "plateform_enum" => get_games_plateforms(),
+        "pegi_enum" => get_games_pegis(),
+    ];
 
 
     load_view_with_layout('admin/add_game', $data);
@@ -454,4 +453,29 @@ function admin_delete_media()
 
     // check if not borrowed
     delete_media_from_db($id);
+}
+
+function admin_delete_user()
+{
+    if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT)) {
+        $redirect_url = $_POST['redirect'] ?? '';
+        if (!verify_csrf_token(post('csrf_token', ''))) {
+            redirect($redirect_url);
+        }
+        try {
+            $id = (int) $_POST['id'];
+            if (delete_user($id)) {
+                set_flash('success', 'Utilisateur supprimé');
+                error_logging(ErrorType::Info, "User with id: $id deleted");
+                http_response_code(204);
+            } else {
+                set_flash("error", "Echec de la suppression de l'utilisateur");
+                error_logging(ErrorType::Error, "Failed to delete user with id: $id");
+            }
+        } catch (Exception $e) {
+            set_flash('error', $e->getMessage());
+            error_logging(ErrorType::Error, '' . $e->getMessage());
+        }
+    }
+    redirect($redirect_url ?? '');
 }

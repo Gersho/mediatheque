@@ -63,6 +63,7 @@ function debug_index()
             }
         } elseif (isset($_POST['clean_users'])) {
             try {
+                db_execute('DELETE FROM borrowed');
                 db_execute('DELETE FROM users');
                 set_flash('success', 'Users cleaned');
             } catch (Exception $e) {
