@@ -24,6 +24,10 @@ a {
   align-items: center;
 }
 
+.show-card h1 {
+  color: var(--secondary-color);
+}
+
 /* Boutons */
 .btn {
   gap: 0;

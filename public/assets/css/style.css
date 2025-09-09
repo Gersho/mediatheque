@@ -530,7 +530,3 @@ code {
     flex-direction: column;
   }
 }
-
-.page-title {
-  color: var(--secondary-color);
-}

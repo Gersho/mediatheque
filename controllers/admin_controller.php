@@ -5,34 +5,34 @@ function admin_add_book()
     $errors = [];
     $book_data = [];
 
-    
-    $all_data = [
-            "title",
-            "genre",
-            "stock",
-            "author",
-            "isbn",
-            "pages",
-            "published_year",
-            "summary",
-        ];
 
-        $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
-        
-        if (is_post()) {
+    $all_data = [
+        "title",
+        "genre",
+        "stock",
+        "author",
+        "isbn",
+        "pages",
+        "published_year",
+        "summary",
+    ];
+
+    $genre_enum = [
+        'Action',
+        'Comedy',
+        'Documentary',
+        'Drama',
+        'Fantasy',
+        'Horror',
+        'Musical',
+        'Mystery',
+        'Romance',
+        'Science Fiction',
+        'Thriller',
+        'Western',
+    ];
+
+    if (is_post()) {
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -92,38 +92,38 @@ function admin_add_movie()
 
     $all_data = [
         "title",
-            "genre",
-            "stock",
-            "director",
-            "duration",
-            "published_year",
-            "synopsis",
-            "certification",
-        ];
+        "genre",
+        "stock",
+        "director",
+        "duration",
+        "published_year",
+        "synopsis",
+        "certification",
+    ];
 
-        $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
+    $genre_enum = [
+        'Action',
+        'Comedy',
+        'Documentary',
+        'Drama',
+        'Fantasy',
+        'Horror',
+        'Musical',
+        'Mystery',
+        'Romance',
+        'Science Fiction',
+        'Thriller',
+        'Western',
+    ];
 
-        $certification_enum = [
-            'Tous publics',
-            '-12',
-            '-16',
-            '-18',
-        ];
-        
-        if (is_post()) {
+    $certification_enum = [
+        'Tous publics',
+        '-12',
+        '-16',
+        '-18',
+    ];
+
+    if (is_post()) {
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -145,12 +145,11 @@ function admin_add_movie()
                     $errors['certification'] = 'Public cible invalide';
                 }
                 $movie_data[$key] = $temp;
-            }
-             else {
+            } else {
                 set_flash("error", "Veuillez remplir tous les champs");
             }
         }
-            if (empty($errors)) {
+        if (empty($errors)) {
 
             $movie_data['type'] = 'Movie';
             insert_new_media($movie_data, 'insert_new_movie');
@@ -168,10 +167,10 @@ function admin_add_movie()
         "genre_enum" => $genre_enum,
         "certification_enum" => $certification_enum,
     ];
-    
-    
+
+
     load_view_with_layout("admin/add_movie", $data);
-    
+
 }
 
 function admin_add_game()
@@ -188,33 +187,34 @@ function admin_add_game()
         "editor",
         "plateform",
         "pegi",
-        "description","cover_img",
-        ];
+        "description",
+        "cover_img",
+    ];
 
-        $genre_enum = [
-            'FPS',
-            'MMO',
-            'MOBA',
-            'RPG'
-        ];
+    $genre_enum = [
+        'FPS',
+        'MMO',
+        'MOBA',
+        'RPG'
+    ];
 
-        $plateform_enum = [
-            'PC',
-            'PlayStation',
-            'Xbox',
-            'Nintendo',
-            'Mobile',
-        ];
+    $plateform_enum = [
+        'PC',
+        'PlayStation',
+        'Xbox',
+        'Nintendo',
+        'Mobile',
+    ];
 
-        $pegi_enum = [
-            '3',
-            '7',
-            '12',
-            '16',
-            '18',
-        ];
-        
-        if (is_post()) {
+    $pegi_enum = [
+        '3',
+        '7',
+        '12',
+        '16',
+        '18',
+    ];
+
+    if (is_post()) {
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
 
@@ -252,15 +252,15 @@ function admin_add_game()
             }
         }
     }
-        
-        $data = [
+
+    $data = [
         "entries" => $game_data,
         "action" => 'Ajouter',
         "genres_enum" => $genre_enum,
         "plateform_enum" => $plateform_enum,
         "pegi_enum" => $pegi_enum,
     ];
-    
+
     load_view_with_layout("admin/add_game", $data);
 }
 function admin_index()
@@ -269,7 +269,7 @@ function admin_index()
 }
 function admin_medias()
 {
-        $data = [
+    $data = [
         'title' => 'Admin Medias Dashboard',
         'stylesheets' => [
             'assets/css/search_bar.css',
@@ -301,32 +301,32 @@ function admin_edit_book()
     $book_data = get_book_by_id($id);
 
     $all_data = [
-            "title",
-            "genre",
-            "stock",
-            "author",
-            "isbn",
-            "pages",
-            "published_year",
-            "summary",
-        ];
+        "title",
+        "genre",
+        "stock",
+        "author",
+        "isbn",
+        "pages",
+        "published_year",
+        "summary",
+    ];
 
     $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
+        'Action',
+        'Comedy',
+        'Documentary',
+        'Drama',
+        'Fantasy',
+        'Horror',
+        'Musical',
+        'Mystery',
+        'Romance',
+        'Science Fiction',
+        'Thriller',
+        'Western',
+    ];
 
-        if (is_post()) {
+    if (is_post()) {
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
@@ -357,7 +357,7 @@ function admin_edit_book()
             $book_data[$key] = $temp;
         }
         if (empty($errors)) {
-            if (update_media($book_data,  'update_book')) {
+            if (update_media($book_data, 'update_book')) {
                 redirect(path: 'admin/medias');
             }
         } else {
@@ -374,6 +374,26 @@ function admin_edit_book()
     load_view_with_layout('admin/add_book', $data);
 }
 
+function admin_users()
+{
+    $data = [
+        'stylesheets' => [
+            'assets/css/pagination.css',
+            'assets/css/user.css',
+        ]
+    ];
+
+    $data['current_page'] = get_current_page();
+    $limit = 10;
+    $data['pages'] = ceil(count_users() / $limit);
+    $offset = ($data['current_page'] - 1) * $limit;
+    $users = get_all_users($limit, $offset);
+    $data['users'] = $users;
+    $data['fields'] = ['id', 'nom', 'email', 'création'];
+
+    load_view_with_layout('admin/users', $data);
+}
+
 function admin_edit_movie()
 {
     //TODO validation id from GET 
@@ -385,66 +405,66 @@ function admin_edit_movie()
 
     $all_data = [
         "title",
-            "genre",
-            "stock",
-            "director",
-            "duration",
-            "published_year",
-            "synopsis",
-            "certification",
-        ];
+        "genre",
+        "stock",
+        "director",
+        "duration",
+        "published_year",
+        "synopsis",
+        "certification",
+    ];
 
-        $genre_enum = [
-            'Action',
-            'Comedy',
-            'Documentary',
-            'Drama',
-            'Fantasy',
-            'Horror',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Science Fiction',
-            'Thriller',
-            'Western',
-        ];
+    $genre_enum = [
+        'Action',
+        'Comedy',
+        'Documentary',
+        'Drama',
+        'Fantasy',
+        'Horror',
+        'Musical',
+        'Mystery',
+        'Romance',
+        'Science Fiction',
+        'Thriller',
+        'Western',
+    ];
 
-        $certification_enum = [
-            'Tous publics',
-            '-12',
-            '-16',
-            '-18',
-        ];
-        
-        if (is_post()) {
+    $certification_enum = [
+        'Tous publics',
+        '-12',
+        '-16',
+        '-18',
+    ];
+
+    if (is_post()) {
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
                 continue;
             }
-                $temp = clean_input($_POST[$key]);
-                if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
-                    $errors['title'] = 'Titre invalide (nombre de caractères)';
-                } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
-                    $errors['genre'] = 'Genre invalide';
-                } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
-                    $errors['stock'] = 'Le stock doit être un entier positif';
-                } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
-                    $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
-                } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
-                    $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
-                } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
-                    $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
-                } elseif ($key === 'synopsis' && !(strlen($temp) <= 3000)) {
-                    $errors['summary'] = "Synopsis: maximum 3000 caractères";
-                } elseif ($key === 'certification' && !in_array($temp, $certification_enum)) {
-                    $errors['certification'] = 'Public cible invalide';
-                }
-                $movie_data[$key] = $temp;
- 
+            $temp = clean_input($_POST[$key]);
+            if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
+                $errors['title'] = 'Titre invalide (nombre de caractères)';
+            } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
+                $errors['genre'] = 'Genre invalide';
+            } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+                $errors['stock'] = 'Le stock doit être un entier positif';
+            } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
+                $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
+            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+                $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
+            } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
+                $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
+            } elseif ($key === 'synopsis' && !(strlen($temp) <= 3000)) {
+                $errors['summary'] = "Synopsis: maximum 3000 caractères";
+            } elseif ($key === 'certification' && !in_array($temp, $certification_enum)) {
+                $errors['certification'] = 'Public cible invalide';
+            }
+            $movie_data[$key] = $temp;
+
         }
         if (empty($errors)) {
-            if (update_media($movie_data,  'update_movie')) {
+            if (update_media($movie_data, 'update_movie')) {
                 redirect(path: 'admin/medias');
             }
         } else {
@@ -457,13 +477,10 @@ function admin_edit_movie()
         "action" => 'Modifier',
         "entries" => $movie_data,
         "genres_enum" => $genre_enum,
-        "certification_enum"=> $certification_enum,
+        "certification_enum" => $certification_enum,
     ];
     load_view_with_layout('admin/add_movie', $data);
 }
-
-
-
 
 function admin_edit_game()
 {
@@ -481,32 +498,32 @@ function admin_edit_game()
         "plateform",
         "pegi",
         "description",
-        ];
+    ];
 
-        $genre_enum = [
-            'FPS',
-            'MMO',
-            'MOBA',
-            'RPG'
-        ];
-        
-        $plateform_enum = [
-            'PC',
-            'Playstation',
-            'Xbox',
-            'Nintendo',
-            'Mobile',
-        ];
-        
-        $pegi_enum = [
-            '3',
-            '7',
-            '12',
-            '16',
-            '18',
-        ];
-        
-        if (is_post()) {
+    $genre_enum = [
+        'FPS',
+        'MMO',
+        'MOBA',
+        'RPG'
+    ];
+
+    $plateform_enum = [
+        'PC',
+        'Playstation',
+        'Xbox',
+        'Nintendo',
+        'Mobile',
+    ];
+
+    $pegi_enum = [
+        '3',
+        '7',
+        '12',
+        '16',
+        '18',
+    ];
+
+    if (is_post()) {
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
@@ -530,7 +547,7 @@ function admin_edit_game()
             }
         }
         if (empty($errors)) {
-            if (update_media($game_data,  'update_game')) {
+            if (update_media($game_data, 'update_game')) {
                 redirect(path: 'admin/medias');
             }
         } else {
@@ -543,7 +560,7 @@ function admin_edit_game()
         "action" => 'Modifier',
         "entries" => $game_data,
         "genres_enum" => $genre_enum,
-        "plateform_enum"=> $plateform_enum,
+        "plateform_enum" => $plateform_enum,
         "pegi_enum" => $pegi_enum,
     ];
     load_view_with_layout('admin/add_game', $data);
