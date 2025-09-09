@@ -480,3 +480,11 @@ function upload_cover_from_url(string $url): ?string
 
     return $filename;
 }
+
+function is_admin()
+{
+    if (is_logged_in() && isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+        return true;
+    }
+    return false;
+}
