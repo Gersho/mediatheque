@@ -64,3 +64,9 @@ td {
   border: dashed 1px white;
   padding: 1rem;
 }
+
+
+.data-container {
+  display: flex;
+  justify-content: center;
+}
