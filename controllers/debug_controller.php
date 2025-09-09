@@ -71,4 +71,5 @@ function debug_index()
         }
     }
     load_view_with_layout('debug/debug');
+
 }

@@ -30,6 +30,55 @@ function insert_new_media(array $data, callable $insert_func)
     return false;
 }
 
+function update_media(array $data, callable $update_func)
+{
+    db_begin_transaction();
+
+    try {
+        // Récupérer les champs obligatoires avec fallback
+        $id = $data['id'] ?? null;
+        $title = $data['title'] ?? '';
+        $type = $data['type'] ?? '';
+        $genre = $data['genre'] ?? '';
+        $stock = $data['stock'] ?? 1;
+
+        // Gestion image : si pas de nouvel upload, garder l’ancien
+        $cover_img = upload_cover_image();
+        if (!$cover_img && isset($data['cover_img'])) {
+            $cover_img = $data['cover_img'];
+        }
+
+        // Mise à jour de la table "medias"
+        $query = "UPDATE medias SET 
+            title = ?,
+            genre = ?,
+            cover_img = ?,
+            stock = ?
+            WHERE id = ?";
+
+        db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
+        db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
+        // Vérification callback
+        if (is_callable($update_func)) {
+            $update_func($id, $data);
+        }
+
+        db_commit();
+        set_flash('success', 'Média modifié avec succès');
+        return true;
+    } catch (Exception $e) {
+        db_rollback();
+        if ($e instanceof PDOException) {
+            $msg = "Insert Error. Media Type: $type | Media title: $title | Type: PDOException | Message: " . $e->getMessage();
+        } else {
+            $msg = $e->getMessage();
+        }
+        set_flash('error', $msg);
+        error_logging(ErrorType::Error, $msg);
+
+        return false;
+    }
+}
 /**
  * Return the current page number from $_GET['page'] or default 1
  * @throws Exception If the $_GET['page'] value is not a positive Int
@@ -210,4 +259,18 @@ function get_genre_values(): array
     $type = db_select_one($sql)['Type'];
     preg_match_all("/'([^']*)'/", $type, $matches);
     return $matches[1];
+}
+
+function get_edit_url(int $id, string $type)
+{
+    return url("admin/edit_$type?id=$id");
+}
+function get_delete_url(int $id)
+{
+    return url("admin/delete_media?id=$id");
+}
+function delete_media_from_db(int $media_id)
+{
+    $query = "DELETE FROM medias WHERE id = ?";
+    return db_execute($query, [$media_id]);
 }

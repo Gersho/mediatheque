@@ -7,7 +7,6 @@
   line-height: 2;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   padding: 4rem;
-  
 }
 
 section {
@@ -32,7 +31,7 @@ button {
   width: 10rem;
   height: 3rem;
   font-size: 1rem;
-margin: 2rem;
+  margin: 2rem;
 }
 
 .textfield {
@@ -51,13 +50,10 @@ margin: 2rem;
 }
 
 .placement-button {
-  padding: 10px ;
+  padding: 10px;
   margin-bottom: 2rem;
   gap: 2rem;
- 
-  
 }
-
 
 .scroll-box {
   height: 20rem;
@@ -70,10 +66,47 @@ margin: 2rem;
   /* font-family:sans-serif; */
   padding: 10px;
 }
-.message{
-  font-size:x-large;
+.message {
+  font-size: x-large;
   font-style: italic;
 }
-.louer{
+.louer {
   justify-content: center;
+}
+
+.format-button{
+  overflow: visible;
+  transform: translate(790px, 300px);
+  position: fixed;
+  width: 28rem;
+  height: 10rem;
+  background-color: rgba(0, 0, 0, 0.934);
+  backdrop-filter: blur(2px);
+  color: white;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: x-large;
+  font-style: oblique;
+  text-align: center;
+}
+.yes{
+  font-weight: bold;
+  background-color: white;
+  border-radius: 10px;
+}
+.no{
+    font-weight: bold;
+  background-color: rgb(143, 134, 134);
+    border-radius: 10px;
+
+}
+.yes:hover {
+  background-color: rgb(99, 180, 99);
+}
+.no:hover {
+background-color: rgb(235, 113, 113);
+}
+.espacement{
+  display: flex;
+  justify-content:center;
+  gap: 2px;
 }

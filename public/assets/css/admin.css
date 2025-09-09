@@ -1,0 +1,66 @@
+a {
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.text-white {
+  text-decoration: none;
+  color: white;
+}
+
+.flex {
+  display: flex;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  justify-content: center;
+}
+
+.show-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.show-card h1 {
+  color: var(--secondary-color);
+}
+
+/* Boutons */
+.btn {
+  gap: 0;
+  margin: 0;
+  padding: 0.5rem 0.5rem;
+}
+
+.margin-1 {
+  margin: 1rem;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.btn-alert {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.btn-alert:hover {
+  background: var(--error-color);
+  color: var(--primary-color);
+}
+
+td {
+  border: dashed 1px white;
+  padding: 1rem;
+}
