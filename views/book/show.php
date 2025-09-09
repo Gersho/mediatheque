@@ -18,7 +18,7 @@
         </div>
         <div class="textfield">
             <div class="titlefield">
-                <h1><?php e($title); ?></h1>
+                <h1><?= $title; ?></h1>
             </div>
             <div class="auteur">
                 <p>par <?php e($author); ?> en <?php e($published_year); ?></p>
@@ -33,12 +33,13 @@
 </div>
 
 <!-- Modal popover -->
-<div popover id="my-popover">Are you sure ?
-
-    <form action="<?= url("media/borrow") ?>" method="post">
-        <button name="id" value="<?php e($media_id); ?>">YES</button>
-    </form>
-    <form action="" method="get">
-        <button name="id" value="<?php e($media_id); ?>">NO</button>
-    </form>
+<div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
+    <div class="espacement">
+        <form action="<?= url("media/borrow") ?>" method="post">
+            <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
+        </form>
+        <form action="" method="get">
+            <button class="no" name="id" value="<?php e($media_id); ?>">NON</button>
+        </form>
+    </div>
 </div>
