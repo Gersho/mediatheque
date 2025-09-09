@@ -53,6 +53,18 @@ function increment_media_stock(int $media_id) {
     $query = "UPDATE medias SET stock = stock + 1 WHERE id = ?";
     return db_execute($query, [$media_id]);
 }
+
+function get_current_borrow_list_by_user_id(int $user_id)
+{
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NULL";
+    return db_select($query, [$user_id]);
+}
+
+function get_borrow_history_list_by_user_id(int $user_id)
+{
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL";
+    return db_select($query, [$user_id]);
+
 // MAJ de la table borrowed sans rien changer car MAJ automatique de la valeur DATE DE RETOUR
 // au moment de l'update de la table ???
 function return_borrowed_media($media_id, $user_id)
@@ -79,4 +91,5 @@ function return_media(int $media_id, int $user_id)
         db_rollback();
     }
     return false;
+
 }
