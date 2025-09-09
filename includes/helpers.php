@@ -398,6 +398,7 @@ function get_page_url(int $page): string
 {
     $uri = explode('?', $_SERVER['REQUEST_URI'])[0];
     $get = $_GET;
+    unset($get['url']);
     if (isset($get['page']) && $page == 1) {
         unset($get['page']);
     } else {
@@ -479,6 +480,7 @@ function upload_cover_from_url(string $url): ?string
 
     return $filename;
 }
+
 
 function get_books_movies_genres()
 {
@@ -582,4 +584,12 @@ function get_movies_certifications()
             '-18',
         ];
         return $certification_enum;
+
+function is_admin()
+{
+    if (is_logged_in() && isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+        return true;
+    }
+    return false;
+
 }

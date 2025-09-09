@@ -48,6 +48,11 @@ function dispatch()
         return;
     }
 
+    // Protect admin routes
+    if ($controller_name === 'admin' && !is_admin()) {
+        redirect('auth/login');
+    }
+
     // Charger le contrôleur
     require_once $controller_file;
 

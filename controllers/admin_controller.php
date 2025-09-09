@@ -1,9 +1,10 @@
 <?php
-//TODO : VERIFIER SI ADMIN=true
+
 function admin_add_book()
 {
     $errors = [];
     $book_data = [];
+
     $all_data = get_books_fields();
     $genre_enum = get_books_movies_genres();
     
@@ -13,6 +14,7 @@ function admin_add_book()
             redirect('home/profile');
         }
         
+
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -70,6 +72,7 @@ function admin_add_movie()
     $errors = [];
     $movie_data = [];
 
+
     $all_data = get_movies_fields();
 
     $genre_enum = get_books_movies_genres();
@@ -80,6 +83,7 @@ function admin_add_movie()
             set_flash('error', "Token CSRF invalide");
             redirect('home/profile');
         }
+
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -101,12 +105,11 @@ function admin_add_movie()
                     $errors['certification'] = 'Public cible invalide';
                 }
                 $movie_data[$key] = $temp;
-            }
-             else {
+            } else {
                 set_flash("error", "Veuillez remplir tous les champs");
             }
         }
-            if (empty($errors)) {
+        if (empty($errors)) {
 
             $movie_data['type'] = 'Movie';
             insert_new_media($movie_data, 'insert_new_movie');
@@ -124,10 +127,10 @@ function admin_add_movie()
         "genre_enum" => $genre_enum,
         "certification_enum" => $certification_enum,
     ];
-    
-    
+
+
     load_view_with_layout("admin/add_movie", $data);
-    
+
 }
 
 function admin_add_game()
@@ -144,6 +147,7 @@ function admin_add_game()
             set_flash('error', "Token CSRF invalide");
             redirect('home/profile');
         }
+
 
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
@@ -182,15 +186,15 @@ function admin_add_game()
             }
         }
     }
-        
-        $data = [
+
+    $data = [
         "entries" => $game_data,
         "action" => 'Ajouter',
         "genre_enum" => $genre_enum,
         "plateform_enum" => $plateform_enum,
         "pegi_enum" => $pegi_enum,
     ];
-    
+
     load_view_with_layout("admin/add_game", $data);
 }
 function admin_index()
@@ -199,7 +203,7 @@ function admin_index()
 }
 function admin_medias()
 {
-        $data = [
+    $data = [
         'title' => 'Admin Medias Dashboard',
         'stylesheets' => [
             'assets/css/search_bar.css',
@@ -232,11 +236,13 @@ function admin_edit_book()
     $all_data = get_books_fields();
     $genre_enum = get_books_movies_genres();
 
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
             redirect('home/profile');
         }
+
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
@@ -267,7 +273,7 @@ function admin_edit_book()
             $book_data[$key] = $temp;
         }
         if (empty($errors)) {
-            if (update_media($book_data,  'update_book')) {
+            if (update_media($book_data, 'update_book')) {
                 redirect(path: 'admin/medias');
             }
         } else {
@@ -284,6 +290,26 @@ function admin_edit_book()
     load_view_with_layout('admin/add_book', $data);
 }
 
+function admin_users()
+{
+    $data = [
+        'stylesheets' => [
+            'assets/css/pagination.css',
+            'assets/css/user.css',
+        ]
+    ];
+
+    $data['current_page'] = get_current_page();
+    $limit = 10;
+    $data['pages'] = ceil(count_users() / $limit);
+    $offset = ($data['current_page'] - 1) * $limit;
+    $users = get_all_users($limit, $offset);
+    $data['users'] = $users;
+    $data['fields'] = ['id', 'nom', 'email', 'création'];
+
+    load_view_with_layout('admin/users', $data);
+}
+
 function admin_edit_movie()
 {
     //TODO validation id from GET 
@@ -291,6 +317,7 @@ function admin_edit_movie()
     $errors = [];
     //todo check if exist
     $movie_data = get_movie_by_id($id);
+
 
     $all_data = get_movies_fields();
     $genre_enum = get_books_movies_genres();
@@ -301,34 +328,35 @@ function admin_edit_movie()
             set_flash('error', "Token CSRF invalide");
             redirect('home/profile');
         }
+
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
                 $errors[$key] = "$key n'est pas renseigné";
                 continue;
             }
-                $temp = clean_input($_POST[$key]);
-                if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
-                    $errors['title'] = 'Titre invalide (nombre de caractères)';
-                } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
-                    $errors['genre'] = 'Genre invalide';
-                } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
-                    $errors['stock'] = 'Le stock doit être un entier positif';
-                } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
-                    $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
-                } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
-                    $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
-                } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
-                    $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
-                } elseif ($key === 'synopsis' && !(strlen($temp) <= 3000)) {
-                    $errors['summary'] = "Synopsis: maximum 3000 caractères";
-                } elseif ($key === 'certification' && !in_array($temp, $certification_enum)) {
-                    $errors['certification'] = 'Public cible invalide';
-                }
-                $movie_data[$key] = $temp;
- 
+            $temp = clean_input($_POST[$key]);
+            if ($key === 'title' && !(strlen($temp) > 1 && strlen($temp) < 200)) {
+                $errors['title'] = 'Titre invalide (nombre de caractères)';
+            } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
+                $errors['genre'] = 'Genre invalide';
+            } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+                $errors['stock'] = 'Le stock doit être un entier positif';
+            } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
+                $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
+            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+                $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
+            } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
+                $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
+            } elseif ($key === 'synopsis' && !(strlen($temp) <= 3000)) {
+                $errors['summary'] = "Synopsis: maximum 3000 caractères";
+            } elseif ($key === 'certification' && !in_array($temp, $certification_enum)) {
+                $errors['certification'] = 'Public cible invalide';
+            }
+            $movie_data[$key] = $temp;
+
         }
         if (empty($errors)) {
-            if (update_media($movie_data,  'update_movie')) {
+            if (update_media($movie_data, 'update_movie')) {
                 redirect(path: 'admin/medias');
             }
         } else {
@@ -340,14 +368,13 @@ function admin_edit_movie()
     $data = [
         "action" => 'Modifier',
         "entries" => $movie_data,
+
         "genre_enum" => $genre_enum,
         "certification_enum"=> $certification_enum,
+
     ];
     load_view_with_layout('admin/add_movie', $data);
 }
-
-
-
 
 function admin_edit_game()
 {
@@ -359,6 +386,7 @@ function admin_edit_game()
     $errors = [];
     $all_data = get_games_fields();
 
+
     $genre_enum = get_games_genres();
     $plateform_enum = get_games_plateforms(); 
     $pegi_enum = get_games_pegis();
@@ -368,6 +396,7 @@ function admin_edit_game()
             set_flash('error', "Token CSRF invalide");
             redirect('home/profile');
         }
+
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
 
@@ -395,16 +424,17 @@ function admin_edit_game()
         }
         if (empty($errors)) {
 
-            $game_data['type'] = 'Game';
-            insert_new_media($game_data, 'insert_new_game');
-            redirect('admin/medias');
-            exit();
+            if (update_media($game_data, 'update_game')) {
+                redirect(path: 'admin/medias');
+            }
+
         } else {
             foreach ($errors as $key => $msg) {
                 set_flash('error', $msg);
             }
         }
     }
+
         $data = [
             "action" => 'Modifier',
             "entries" => $game_data,
@@ -412,6 +442,7 @@ function admin_edit_game()
             "plateform_enum"=> get_games_plateforms(),
             "pegi_enum" => get_games_pegis(),
         ];
+
 
     load_view_with_layout('admin/add_game', $data);
 }

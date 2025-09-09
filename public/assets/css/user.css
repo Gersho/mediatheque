@@ -1,0 +1,76 @@
+.user-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  gap: 3rem;
+}
+
+.user-page h1 {
+  color: var(--secondary-color);
+}
+
+.user-table {
+  border-collapse: collapse;
+  border-style: hidden;
+}
+
+.user-table td,
+.user-table th {
+  /* border: solid 0.1rem white; */
+  border: 0.1rem solid;
+  border-color: white;
+  padding: 0.8rem;
+}
+
+.btn-delete:hover {
+  background-color: rgb(128, 15, 15);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.borrow-list-container {
+  display: flex;
+  width: 100%;
+  background-color: aqua;
+  justify-content: center;
+}
+
+.borrow-list {
+  background-color: var(--background-color);
+  color: white;
+  align-self: center;
+  justify-self: center;
+  padding: 2rem;
+  border-radius: .6rem;
+}
+
+.borrow-list p {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.borrow_count_and_detail_btn {
+  display: flex;
+  justify-content: center;
+}
+
+.borrow_count_and_detail_btn p {
+  font-weight: bold;
+}
+
+.borrow_count_and_detail_btn .btn-primary {
+  font-weight: bold;
+  padding: .6rem 2rem;
+  border-radius: 1rem;
+  background-color: white;
+  color: black
+}
+
+.borrow_count_and_detail_btn .btn-primary:hover {
+  background-color: var(--secondary-color);
+  color: white;
+}

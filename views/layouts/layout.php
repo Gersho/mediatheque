@@ -21,10 +21,12 @@
                 <a href="<?php echo url(); ?>"><?php echo APP_NAME; ?></a>
             </div>
             <ul class="nav-menu">
+                <?php if (is_admin()): ?>
+                    <li><a href="<?php echo url('admin'); ?>">Admin Dashboard</a></li>
+                <?php endif; ?>
                 <li><a href="<?php echo url(); ?>">Accueil</a></li>
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
                 <li><a href="<?php echo url('home/contact'); ?>">Contact</a></li>
-                <li><a href="<?php echo url('admin'); ?>">Admin</a></li>
                 <?php if (is_logged_in()): ?>
                     <li><a href="<?php echo url('auth/logout'); ?>">Déconnexion</a></li>
                 <?php else: ?>

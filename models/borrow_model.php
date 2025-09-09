@@ -41,11 +41,86 @@ function borrow_media(int $media_id, int $user_id)
     }
     return false;
 }
-
-
 function is_media_already_borrowed_by_user(int $media_id, int $user_id)
 {
     $query = "SELECT id FROM borrowed WHERE user_id = ? AND media_id = ? AND return_date is NULL";
     $ret = db_select_one($query, [$user_id, $media_id]);
     return (bool) $ret;
+
+}
+// Incrémente le stock 1 par 1 dans la table medias
+function increment_media_stock(int $media_id) {
+    $query = "UPDATE medias SET stock = stock + 1 WHERE id = ?";
+    return db_execute($query, [$media_id]);
+}
+
+function get_current_borrow_list_by_user_id(int $user_id)
+{
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NULL";
+    return db_select($query, [$user_id]);
+}
+
+function get_borrows_details_by_user(int $user_id): array
+{
+    $query = "SELECT b.id, b.media_id, b.start, m.title, m.type FROM borrowed as b LEFT JOIN medias m ON m.id = media_id WHERE user_id = ? AND return_date is NULL";
+    return db_select($query, [$user_id]);
+}
+
+function get_estimated_return_date(string $borrow_date)
+{
+    $return_date = date_create($borrow_date)->modify("+14 days");
+    $now = date_create();
+    $time_left = date_diff($now, $return_date);
+    $late = $time_left->invert ? "Il y a" : "Dans";
+    $units = [
+        'y' => ['an', 'ans'],
+        'm' => ['mois', 'mois'],
+        'd' => ['jour', 'jours'],
+        'h' => ['heure', 'heures'],
+        'i' => ['minute', 'minutes'],
+        's' => ['seconde', 'secondes'],
+    ];
+
+    foreach ($units as $key => [$singular, $plural]) {
+        $value = $time_left->$key;
+        if ($value > 0) {
+            $label = $value === 1 ? $singular : $plural;
+            return "$late $value $label";
+        }
+    }
+    return "maintenant";
+
+function get_borrow_history_list_by_user_id(int $user_id)
+{
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL";
+    return db_select($query, [$user_id]);
+
+// MAJ de la table borrowed sans rien changer car MAJ automatique de la valeur DATE DE RETOUR
+// au moment de l'update de la table ???
+function return_borrowed_media($media_id, $user_id)
+{
+    $query = "UPDATE borrowed SET return_date = NOW() WHERE media_id = ? AND user_id = ?";
+    db_execute($query, [$media_id, $user_id]); 
+}
+
+// Fonction qui gere les deux updates des deux tables MAJ
+// dans le cadre d'un retour média
+// Si probleme, on rollback
+function return_media(int $media_id, int $user_id)
+{
+    db_begin_transaction();
+    try {
+        return_borrowed_media($media_id, $user_id);
+        increment_media_stock($media_id);
+        db_commit();
+        return true;
+    } catch (Exception $e) {
+        $msg = $e->getMessage();
+        set_flash('error', $msg);
+        error_logging(ErrorType::Error, $msg);
+        db_rollback();
+    }
+    return false;
+
+
 }
