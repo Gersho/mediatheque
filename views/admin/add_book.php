@@ -16,7 +16,7 @@
                 <label for="genre">Genre</label>
                 <select id="genre" name="genre" required>
                     <option>Genre du livre</option>
-                    <?php foreach ($data['genres_enum'] as $genre): ?>
+                    <?php foreach ($data['genre_enum'] as $genre): ?>
                     <option <?php if (isset($entries['genre']) && $entries['genre'] === $genre) echo 'selected';?> value="<?= $genre ?>"><?= $genre ?></option>
                     <?php endforeach; ?>
                 </select>
