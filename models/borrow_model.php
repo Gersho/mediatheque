@@ -49,7 +49,8 @@ function is_media_already_borrowed_by_user(int $media_id, int $user_id)
 
 }
 // Incrémente le stock 1 par 1 dans la table medias
-function increment_media_stock(int $media_id) {
+function increment_media_stock(int $media_id)
+{
     $query = "UPDATE medias SET stock = stock + 1 WHERE id = ?";
     return db_execute($query, [$media_id]);
 }
@@ -89,18 +90,20 @@ function get_estimated_return_date(string $borrow_date)
         }
     }
     return "maintenant";
+}
 
 function get_borrow_history_list_by_user_id(int $user_id)
 {
     $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL";
     return db_select($query, [$user_id]);
+}
 
 // MAJ de la table borrowed sans rien changer car MAJ automatique de la valeur DATE DE RETOUR
 // au moment de l'update de la table ???
 function return_borrowed_media($media_id, $user_id)
 {
     $query = "UPDATE borrowed SET return_date = NOW() WHERE media_id = ? AND user_id = ?";
-    db_execute($query, [$media_id, $user_id]); 
+    db_execute($query, [$media_id, $user_id]);
 }
 
 // Fonction qui gere les deux updates des deux tables MAJ
@@ -121,6 +124,4 @@ function return_media(int $media_id, int $user_id)
         db_rollback();
     }
     return false;
-
-
 }
