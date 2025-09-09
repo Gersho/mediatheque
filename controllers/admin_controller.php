@@ -8,9 +8,11 @@ function admin_add_book()
     $genre_enum = get_books_movies_genres();
     
     if (is_post()) {
-        if (isset($_POST['csrf_token'])) {
-            verify_csrf_token($_POST['csrf_token']);
+        if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+            set_flash('error', "Token CSRF invalide");
+            redirect('home/profile');
         }
+        
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
                 $temp = clean_input($_POST[$key]);
@@ -74,8 +76,9 @@ function admin_add_movie()
     $certification_enum = get_movies_certifications();
 
     if (is_post()) {
-        if (isset($_POST['csrf_token'])) {
-            verify_csrf_token($_POST['csrf_token']);
+        if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+            set_flash('error', "Token CSRF invalide");
+            redirect('home/profile');
         }
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
@@ -137,8 +140,9 @@ function admin_add_game()
     $pegi_enum = get_games_pegis();
     
     if (is_post()) {
-        if (isset($_POST['csrf_token'])) {
-            verify_csrf_token($_POST['csrf_token']);
+        if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+            set_flash('error', "Token CSRF invalide");
+            redirect('home/profile');
         }
 
         foreach ($all_data as $key) {
@@ -182,7 +186,7 @@ function admin_add_game()
         $data = [
         "entries" => $game_data,
         "action" => 'Ajouter',
-        "genres_enum" => $genre_enum,
+        "genre_enum" => $genre_enum,
         "plateform_enum" => $plateform_enum,
         "pegi_enum" => $pegi_enum,
     ];
@@ -229,8 +233,9 @@ function admin_edit_book()
     $genre_enum = get_books_movies_genres();
 
     if (is_post()) {
-        if (isset($_POST['csrf_token'])) {
-            verify_csrf_token($_POST['csrf_token']);
+        if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+            set_flash('error', "Token CSRF invalide");
+            redirect('home/profile');
         }
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
@@ -274,7 +279,7 @@ function admin_edit_book()
     $data = [
         "action" => 'Modifier',
         "entries" => $book_data,
-        "genres_enum" => $genre_enum,
+        "genre_enum" => $genre_enum,
     ];
     load_view_with_layout('admin/add_book', $data);
 }
@@ -292,8 +297,9 @@ function admin_edit_movie()
     $certification_enum = get_movies_certifications();
     
     if (is_post()) {
-        if (isset($_POST['csrf_token'])) {
-            verify_csrf_token($_POST['csrf_token']);
+        if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+            set_flash('error', "Token CSRF invalide");
+            redirect('home/profile');
         }
         foreach ($all_data as $key) {
             if (!isset($_POST[$key])) {
@@ -334,7 +340,7 @@ function admin_edit_movie()
     $data = [
         "action" => 'Modifier',
         "entries" => $movie_data,
-        "genres_enum" => $genre_enum,
+        "genre_enum" => $genre_enum,
         "certification_enum"=> $certification_enum,
     ];
     load_view_with_layout('admin/add_movie', $data);
@@ -358,8 +364,9 @@ function admin_edit_game()
     $pegi_enum = get_games_pegis();
 
     if (is_post()) {
-        if (isset($_POST['csrf_token'])) {
-            verify_csrf_token($_POST['csrf_token']);
+        if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+            set_flash('error', "Token CSRF invalide");
+            redirect('home/profile');
         }
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
@@ -401,7 +408,7 @@ function admin_edit_game()
         $data = [
             "action" => 'Modifier',
             "entries" => $game_data,
-            "genres_enum" => get_games_genres(),
+            "genre_enum" => get_games_genres(),
             "plateform_enum"=> get_games_plateforms(),
             "pegi_enum" => get_games_pegis(),
         ];
