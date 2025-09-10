@@ -4,21 +4,16 @@ function media_borrow()
 {
 
     // $_POST["id"] is media id
-    if (!is_post() || !isset($_POST["id"])) {
+    if (!is_post() || !isset($_POST["id"]) || filter_var($_POST["id"], FILTER_VALIDATE_INT)) {
         redirect('errors/404');
     }
 
-    error_logging(ErrorType::Debug, "in media_borrow with MEDIA id " . $_POST["id"]);
-
-    $user_id = null;
     if (!is_logged_in()) {
         set_flash("error", "Veuillez vous connecter");
         redirect("auth/login");
-    } else {
-        $user_id = current_user_id();
     }
-
-    error_logging(ErrorType::Debug, "in media_borrow with USER id " . $user_id);
+    $media_id = (int) ($_POST["id"]);
+    $user_id = current_user_id();
 
     // Verification du CSRF
     if (!verify_csrf_token($_POST['csrf_token'])) {
@@ -28,18 +23,9 @@ function media_borrow()
     }
 
     //check if media is available
-    $media_id = intval(escape($_POST["id"]));
     $ret = get_media_stock_by_id($media_id);
     if (!$ret || $ret <= 0) {
         set_flash("error", "Ce média n'est pas disponible");
-        redirect("home");
-    }
-
-    error_logging(ErrorType::Debug, "get_borrow_count_by_user_id " . $user_id . "|| count: " . get_borrow_count_by_user_id($user_id));
-
-    //check media already borrowed by this user
-    if (is_media_already_borrowed_by_user($media_id, $user_id)) {
-        set_flash("error", "Vous avez déjà emprunté ce média");
         redirect("home");
     }
 
@@ -58,64 +44,30 @@ function media_borrow()
         error_logging(ErrorType::Error, "Failed to borrow media" . $media_id . " by user " . $user_id);
         redirect("home");
     }
-
-
-    //TODO rework this part
-    $msg = "Média emprunté avec succès " . $media_id;
-    $data = [
-        'title' => 'Profile',
-        'message' => $msg,
-        'content' => "Merci d'avoir emprunté chez nous"
-    ];
-
-    load_view_with_layout('home/profile', $data);
+    redirect("user/profile");
 }
 
 function media_return()
 {
-
-    // TODO: REMPLACER LES GET PAR POST
-
-    // $_POST["id"] is media id
-    if (!is_post() || !isset($_POST["id"])) {
+    if (!is_post() || !isset($_POST["id"]) || !filter_var($_POST["id"], FILTER_VALIDATE_INT)) {
         redirect('errors/404');
     }
 
-    error_logging(ErrorType::Debug, "in media_borrow with MEDIA id " . $_POST["id"]);
-    $media_id = $_POST['id'];
-    $user_id = null;
+    $media_id = (int) $_POST['id'];
+
     if (!is_logged_in()) {
         set_flash("error", "you must be logged in");
         redirect("auth/login");
-    } else {
-        $user_id = current_user_id();
     }
 
-    error_logging(ErrorType::Debug, "in media_borrow with USER id " . $user_id);
-
-    //check if media is already borrowed by user
-    if (!is_media_already_borrowed_by_user($media_id, $user_id)) {
-        set_flash("error", "Vous ne pouvez pas rendre ce média : " . $media_id);
-        redirect('home/profile');
-    }
-
+    $user_id = current_user_id();
 
     if (!return_media($media_id, $user_id)) {
         //failure
         set_flash("error", "Quelque chose s'est mal passé");
-        error_logging(ErrorType::Error, "Failed to borrow media" . $media_id . " by user " . $user_id);
         redirect("home");
     }
 
-
-    //TODO rework this part
-    $msg = "Le média a bien été rendu: " . $media_id;
-    $data = [
-        'title' => 'Profile',
-        'message' => $msg,
-        'content' => 'Merci pour votre retour'
-    ];
-
-    load_view_with_layout('home/profile', $data);
-
+    set_flash("success", "Le media a bien été rendu");
+    redirect("user/profile");
 }

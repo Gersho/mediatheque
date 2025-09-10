@@ -51,7 +51,13 @@
                                             <td><?php e($borrow['title']) ?></td>
                                             <td><?= format_date($borrow['start']) ?></td>
                                             <td><?php e($estimated_return) ?></td>
-                                            <td><button class="btn btn-delete">Rendre</button></td>
+                                            <form action="<?= url("admin/force_return") ?>" method="post">
+                                                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                                                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                                                <input type="hidden" name="media_id" value="<?= $borrow['media_id'] ?>">
+                                                <input type="hidden" name="redirect" value="admin/users">
+                                                <td><button type="submit" class="btn btn-delete">Rendre</button></td>
+                                            </form>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
