@@ -479,3 +479,25 @@ function admin_delete_user()
     }
     redirect($redirect_url ?? '');
 }
+
+function admin_force_return()
+{
+    if (
+        !is_post() || !isset($_POST['user_id']) || !isset($_POST['media_id']) ||
+        !filter_var($_POST['user_id'], FILTER_VALIDATE_INT) ||
+        !filter_var($_POST['media_id'], FILTER_VALIDATE_INT)
+    ) {
+        set_flash('error', 'Echec du retour');
+        redirect("admin/users");
+    }
+    $redirect_url = $_POST['redirect'] ?? '';
+    $media_id = (int) $_POST['media_id'];
+    $user_id = (int) $_POST['user_id'];
+
+    if (!return_media($media_id, $user_id)) {
+        set_flash('error', "Une erreur est survenue. Veuillez réessayer.");
+    } else {
+        set_flash("success", "Le media a été rendu");
+    }
+    redirect($redirect_url);
+}

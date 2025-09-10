@@ -29,6 +29,10 @@ function borrow_media(int $media_id, int $user_id)
 {
     db_begin_transaction();
     try {
+        //check media already borrowed by this user
+        if (is_media_already_borrowed_by_user($media_id, $user_id)) {
+            throw new Exception("Media deja emprunté");
+        }
         decrement_media_stock($media_id);
         add_borrowed_media($media_id, $user_id);
         db_commit();
@@ -113,13 +117,16 @@ function return_media(int $media_id, int $user_id)
 {
     db_begin_transaction();
     try {
+        // check if media is not already borrowed by user
+        if (!is_media_already_borrowed_by_user($media_id, $user_id)) {
+            throw new Exception("Media not borrowed : $media_id");
+        }
         return_borrowed_media($media_id, $user_id);
         increment_media_stock($media_id);
         db_commit();
         return true;
     } catch (Exception $e) {
-        $msg = $e->getMessage();
-        set_flash('error', $msg);
+        $msg = "Failed to borrow media" . $media_id . " by user " . $user_id . " | " . $e->getMessage();
         error_logging(ErrorType::Error, $msg);
         db_rollback();
     }
