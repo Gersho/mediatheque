@@ -285,15 +285,21 @@ function validate_upload($file): array
         throw new Exception("Le fichier upload ne vient pas d'une requête POST");
     }
     if ($file["size"] > UPLOAD_MAX_SIZE) {
-        throw new Exception("Le fichier est trop volumineux. Taille max: " . UPLOAD_MAX_SIZE / 1000000 . 'mo.');
+        throw new Exception("Erreur lors de l'upload de l'image. Vérifiez le format et la taille.");
     }
 
     // get the image infos
     $file_info = getimagesize($_FILES["cover_img"]["tmp_name"]);
+
     if ($file_info === false) {
-        throw new Exception("Le fichier upload n'est pas une image");
+        throw new Exception("Erreur lors de l'upload de l'image. Vérifiez le format et la taille.");
     }
 
+    $width = $file_info[0];
+    $height = $file_info[1];
+    if ($width < 100 || $height < 100) {
+        throw new Exception("Erreur lors de l'upload de l'image. Vérifiez le format et la taille.");
+    }
     $file_extension = explode("/", $file["type"])[1];
     $file_mime_type = explode("/", $file_info["mime"])[1];
     $allowed_types = ["jpeg", "jpg", "png", "gif"];
