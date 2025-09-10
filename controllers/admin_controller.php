@@ -309,14 +309,19 @@ function admin_users()
         ]
     ];
 
-    $data['current_page'] = get_current_page();
-    $limit = 10;
-    $data['pages'] = ceil(count_users() / $limit);
-    $offset = ($data['current_page'] - 1) * $limit;
-    $data['users'] = get_all_users($limit, $offset);
-    $data['fields'] = ['id', 'nom', 'email', 'création'];
+    try {
+        $data['current_page'] = get_current_page();
+        $limit = 10;
+        $data['pages'] = ceil(count_users() / $limit);
+        $offset = ($data['current_page'] - 1) * $limit;
+        $data['users'] = get_all_users($limit, $offset);
+        $data['fields'] = ['id', 'nom', 'email', 'création'];
 
-    load_view_with_layout('admin/users', $data);
+        load_view_with_layout('admin/users', $data);
+    } catch (Exception $e) {
+        error_logging(ErrorType::Error, $e->getMessage());
+        redirect('admin/users');
+    }
 }
 
 function admin_edit_movie()
@@ -462,15 +467,14 @@ function admin_edit_game()
 function admin_delete_media()
 {
     $id = $_POST['id'];
-    
+
     // check if not borrowed
-    if(is_media_already_borrowed($id)){
-        set_flash("error","Impossible de supprimer ce média car emprunt en cours");
+    if (is_media_already_borrowed($id)) {
+        set_flash("error", "Impossible de supprimer ce média car emprunt en cours");
         error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
-    }
-    else {
+    } else {
         delete_media_from_db($id);
-        set_flash("success","Média supprimé avec succes");
+        set_flash("success", "Média supprimé avec succes");
         error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
     }
     redirect('admin/medias');
@@ -482,6 +486,7 @@ function admin_delete_user()
     if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT)) {
         $redirect_url = $_POST['redirect'] ?? '';
         if (!verify_csrf_token(post('csrf_token', ''))) {
+            error_logging(ErrorType::Warning, 'Wrong csrf token');
             redirect($redirect_url);
         }
         try {
@@ -489,13 +494,11 @@ function admin_delete_user()
             if (delete_user($id)) {
                 set_flash('success', 'Utilisateur supprimé');
                 error_logging(ErrorType::Info, "User with id: $id deleted");
-                http_response_code(204);
             } else {
                 set_flash("error", "Echec de la suppression de l'utilisateur");
                 error_logging(ErrorType::Error, "Failed to delete user with id: $id");
             }
         } catch (Exception $e) {
-            set_flash('error', $e->getMessage());
             error_logging(ErrorType::Error, '' . $e->getMessage());
         }
     }
