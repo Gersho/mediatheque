@@ -50,7 +50,7 @@ function dispatch()
 
     // Protect admin routes
     if ($controller_name === 'admin' && !is_admin()) {
-        redirect('auth/login');
+        logout();
     }
 
     // Charger le contrôleur
