@@ -26,7 +26,6 @@ function auth_login()
             // Rechercher l'utilisateur
             $user = get_user_by_email($email);
 
-
             if ($user && verify_password($password, $user['password'])) {
                 // Connexion réussie
                 $_SESSION['user_id'] = $user['id'];

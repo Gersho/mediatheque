@@ -37,6 +37,7 @@
 <div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
     <div class="espacement">
         <form action="<?= url("media/borrow") ?>" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
         </form>
         <form action="" method="get">

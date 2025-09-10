@@ -7,13 +7,14 @@ function admin_add_book()
 
     $all_data = get_books_fields();
     $genre_enum = get_books_movies_genres();
-    
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to add book without valid token");
             redirect('home/profile');
         }
-        
+
 
         foreach ($all_data as $key) {
             if (isset($_POST[$key])) {
@@ -81,6 +82,7 @@ function admin_add_movie()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to add movie without valid token");
             redirect('home/profile');
         }
 
@@ -141,10 +143,11 @@ function admin_add_game()
     $genre_enum = get_games_genres();
     $plateform_enum = get_games_plateforms();
     $pegi_enum = get_games_pegis();
-    
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to add game without valid token");
             redirect('home/profile');
         }
 
@@ -199,7 +202,13 @@ function admin_add_game()
 }
 function admin_index()
 {
-    load_view_with_layout("admin/index");
+    $data = [
+        'title' => 'Admin Medias Dashboard',
+        'stylesheets' => [
+            'assets/css/admin.css'
+        ],
+    ];
+    load_view_with_layout("admin/index", $data);
 }
 function admin_medias()
 {
@@ -240,6 +249,7 @@ function admin_edit_book()
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to edit book without valid token");
             redirect('home/profile');
         }
 
@@ -299,15 +309,19 @@ function admin_users()
         ]
     ];
 
-    $data['current_page'] = get_current_page();
-    $limit = 10;
-    $data['pages'] = ceil(count_users() / $limit);
-    $offset = ($data['current_page'] - 1) * $limit;
-    $users = get_all_users($limit, $offset);
-    $data['users'] = $users;
-    $data['fields'] = ['id', 'nom', 'email', 'création'];
+    try {
+        $data['current_page'] = get_current_page();
+        $limit = 10;
+        $data['pages'] = ceil(count_users() / $limit);
+        $offset = ($data['current_page'] - 1) * $limit;
+        $data['users'] = get_all_users($limit, $offset);
+        $data['fields'] = ['id', 'nom', 'email', 'création'];
 
-    load_view_with_layout('admin/users', $data);
+        load_view_with_layout('admin/users', $data);
+    } catch (Exception $e) {
+        error_logging(ErrorType::Error, $e->getMessage());
+        redirect('admin/users');
+    }
 }
 
 function admin_edit_movie()
@@ -322,10 +336,11 @@ function admin_edit_movie()
     $all_data = get_movies_fields();
     $genre_enum = get_books_movies_genres();
     $certification_enum = get_movies_certifications();
-    
+
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to edit movie without valid token");
             redirect('home/profile');
         }
 
@@ -370,7 +385,7 @@ function admin_edit_movie()
         "entries" => $movie_data,
 
         "genre_enum" => $genre_enum,
-        "certification_enum"=> $certification_enum,
+        "certification_enum" => $certification_enum,
 
     ];
     load_view_with_layout('admin/add_movie', $data);
@@ -388,12 +403,13 @@ function admin_edit_game()
 
 
     $genre_enum = get_games_genres();
-    $plateform_enum = get_games_plateforms(); 
+    $plateform_enum = get_games_plateforms();
     $pegi_enum = get_games_pegis();
 
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
             set_flash('error', "Token CSRF invalide");
+            error_logging(ErrorType::Error, "Tried to edit game without valid token");
             redirect('home/profile');
         }
 
@@ -435,13 +451,13 @@ function admin_edit_game()
         }
     }
 
-        $data = [
-            "action" => 'Modifier',
-            "entries" => $game_data,
-            "genre_enum" => get_games_genres(),
-            "plateform_enum"=> get_games_plateforms(),
-            "pegi_enum" => get_games_pegis(),
-        ];
+    $data = [
+        "action" => 'Modifier',
+        "entries" => $game_data,
+        "genre_enum" => get_games_genres(),
+        "plateform_enum" => get_games_plateforms(),
+        "pegi_enum" => get_games_pegis(),
+    ];
 
 
     load_view_with_layout('admin/add_game', $data);
@@ -450,8 +466,63 @@ function admin_edit_game()
 
 function admin_delete_media()
 {
-    $id = $_GET['id'];
+    $id = $_POST['id'];
 
     // check if not borrowed
-    delete_media_from_db($id);
+    if (is_media_already_borrowed($id)) {
+        set_flash("error", "Impossible de supprimer ce média car emprunt en cours");
+        error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
+    } else {
+        delete_media_from_db($id);
+        set_flash("success", "Média supprimé avec succes");
+        error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
+    }
+    redirect('admin/medias');
+
+}
+
+function admin_delete_user()
+{
+    if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT)) {
+        $redirect_url = $_POST['redirect'] ?? '';
+        if (!verify_csrf_token(post('csrf_token', ''))) {
+            error_logging(ErrorType::Warning, 'Wrong csrf token');
+            redirect($redirect_url);
+        }
+        try {
+            $id = (int) $_POST['id'];
+            if (delete_user($id)) {
+                set_flash('success', 'Utilisateur supprimé');
+                error_logging(ErrorType::Info, "User with id: $id deleted");
+            } else {
+                set_flash("error", "Echec de la suppression de l'utilisateur");
+                error_logging(ErrorType::Error, "Failed to delete user with id: $id");
+            }
+        } catch (Exception $e) {
+            error_logging(ErrorType::Error, '' . $e->getMessage());
+        }
+    }
+    redirect($redirect_url ?? '');
+}
+
+function admin_force_return()
+{
+    if (
+        !is_post() || !isset($_POST['user_id']) || !isset($_POST['media_id']) ||
+        !filter_var($_POST['user_id'], FILTER_VALIDATE_INT) ||
+        !filter_var($_POST['media_id'], FILTER_VALIDATE_INT)
+    ) {
+        set_flash('error', 'Echec du retour');
+        redirect("admin/users");
+    }
+    $redirect_url = $_POST['redirect'] ?? '';
+    $media_id = (int) $_POST['media_id'];
+    $user_id = (int) $_POST['user_id'];
+
+    if (!return_media($media_id, $user_id)) {
+        set_flash('error', "Une erreur est survenue. Veuillez réessayer.");
+    } else {
+        set_flash("success", "Le media a été rendu");
+    }
+    redirect($redirect_url);
 }

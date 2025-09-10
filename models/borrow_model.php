@@ -29,6 +29,10 @@ function borrow_media(int $media_id, int $user_id)
 {
     db_begin_transaction();
     try {
+        //check media already borrowed by this user
+        if (is_media_already_borrowed_by_user($media_id, $user_id)) {
+            throw new Exception("Media deja emprunté");
+        }
         decrement_media_stock($media_id);
         add_borrowed_media($media_id, $user_id);
         db_commit();
@@ -46,8 +50,14 @@ function is_media_already_borrowed_by_user(int $media_id, int $user_id)
     $query = "SELECT id FROM borrowed WHERE user_id = ? AND media_id = ? AND return_date is NULL";
     $ret = db_select_one($query, [$user_id, $media_id]);
     return (bool) $ret;
-
 }
+function is_media_already_borrowed(int $media_id)
+{
+    $query = "SELECT id FROM borrowed WHERE media_id = ? AND return_date is NULL";
+    $ret = db_select_one($query, [$media_id]);
+    return (bool) $ret;
+}
+
 // Incrémente le stock 1 par 1 dans la table medias
 function increment_media_stock(int $media_id)
 {
@@ -107,7 +117,7 @@ function get_borrow_history_list_by_user_id(int $user_id, $limit = null, $offset
 // au moment de l'update de la table ???
 function return_borrowed_media($media_id, $user_id)
 {
-    $query = "UPDATE borrowed SET return_date = NOW() WHERE media_id = ? AND user_id = ?";
+    $query = "UPDATE borrowed SET return_date = NOW() WHERE media_id = ? AND user_id = ? AND return_date is NULL";
     db_execute($query, [$media_id, $user_id]);
 }
 
@@ -118,13 +128,16 @@ function return_media(int $media_id, int $user_id)
 {
     db_begin_transaction();
     try {
+        // check if media is not already borrowed by user
+        if (!is_media_already_borrowed_by_user($media_id, $user_id)) {
+            throw new Exception("Media not borrowed : $media_id");
+        }
         return_borrowed_media($media_id, $user_id);
         increment_media_stock($media_id);
         db_commit();
         return true;
     } catch (Exception $e) {
-        $msg = $e->getMessage();
-        set_flash('error', $msg);
+        $msg = "Failed to borrow media" . $media_id . " by user " . $user_id . " | " . $e->getMessage();
         error_logging(ErrorType::Error, $msg);
         db_rollback();
     }
