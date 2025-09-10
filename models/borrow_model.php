@@ -102,9 +102,14 @@ function get_estimated_return_date(string $borrow_date)
     return "maintenant";
 }
 
-function get_borrow_history_list_by_user_id(int $user_id)
+function get_borrow_history_list_by_user_id(int $user_id, $limit = null, $offset = 0)
 {
-    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL";
+    $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL ORDER BY start DESC";
+    if ($limit !== null) {
+        $query .= " LIMIT $offset, $limit";
+    }
+
+
     return db_select($query, [$user_id]);
 }
 
@@ -138,3 +143,12 @@ function return_media(int $media_id, int $user_id)
     }
     return false;
 }
+
+
+function get_borrow_history_count_by_user_id(int $user_id)
+{
+    $query = "SELECT COUNT(b.id) FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL ORDER BY start DESC";
+    return db_select_one($query, [$user_id])["COUNT(b.id)"];
+}
+
+

@@ -19,10 +19,10 @@
         </div>
         <div class="textfield">
             <div class="titlefield">
-                <h1><?php e($title); ?></h1>
+                <h1><?= $title; ?></h1>
             </div>
             <div class="auteur">
-                <p>en <?php e($published_year); ?> par <?php e($director); ?></p>
+                <p>par <?php e($director); ?> en <?php e($published_year); ?></p>
             </div>
             <p>durée: <?php e($duration); ?></p>
             <p>genre: <?php e($genre); ?></p>
