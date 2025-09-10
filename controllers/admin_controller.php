@@ -462,8 +462,18 @@ function admin_edit_game()
 
 function admin_delete_media()
 {
-    $id = $_GET['id'];
+    $id = $_POST['id'];
     
     // check if not borrowed
-    delete_media_from_db($id);
+    if(is_media_already_borrowed($id)){
+        set_flash("error","Impossible de supprimer ce média car emprunt en cours");
+        error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
+    }
+    else {
+        delete_media_from_db($id);
+        set_flash("success","Média supprimé avec succes");
+        error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
+    }
+    redirect('admin/medias');
+
 }

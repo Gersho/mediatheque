@@ -54,7 +54,15 @@
                         <td class="text-white"><?= $media['type'] ?></td>
                         <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
                         <td><a class="btn btn-primary margin-1" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a></td>
-                        <td><a class="btn btn-alert margin-1" href="<?= get_delete_url($media['id']) ?>">Supprimer</a></td>
+
+
+                        <td>
+                            <form action="<?=url('admin/delete_media') ?>" method="post">
+                            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                            <input type="hidden" name="id" value="<?= $media['id'] ?>">
+                            <input type="hidden" name="redirect" value="admin/medias">
+                            <button type="submit" class="btn btn-alert">Supprimer</button>
+                        </form></td>
                     </tr>
                 </tbody>
             <?php endforeach; ?>

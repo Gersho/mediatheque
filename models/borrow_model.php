@@ -46,8 +46,14 @@ function is_media_already_borrowed_by_user(int $media_id, int $user_id)
     $query = "SELECT id FROM borrowed WHERE user_id = ? AND media_id = ? AND return_date is NULL";
     $ret = db_select_one($query, [$user_id, $media_id]);
     return (bool) $ret;
-
 }
+function is_media_already_borrowed(int $media_id)
+{
+    $query = "SELECT id FROM borrowed WHERE media_id = ? AND return_date is NULL";
+    $ret = db_select_one($query, [$media_id]);
+    return (bool) $ret;
+}
+
 // Incrémente le stock 1 par 1 dans la table medias
 function increment_media_stock(int $media_id)
 {
