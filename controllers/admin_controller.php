@@ -495,7 +495,7 @@ function admin_delete_user()
                 set_flash('success', 'Utilisateur supprimé');
                 error_logging(ErrorType::Info, "User with id: $id deleted");
             } else {
-                set_flash("error", "Echec de la suppression de l'utilisateur");
+                set_flash("error", "L'utilisateur a des emprunts");
                 error_logging(ErrorType::Error, "Failed to delete user with id: $id");
             }
         } catch (Exception $e) {
