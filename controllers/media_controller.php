@@ -74,6 +74,12 @@ function media_return()
         redirect('errors/404');
     }
 
+    if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
+        set_flash('error', "Token CSRF invalide");
+        error_logging(ErrorType::Error, "Tried to add book without valid token");
+        redirect('home/profile');
+    }
+
     error_logging(ErrorType::Debug, "in media_borrow with MEDIA id " . $_POST["id"]);
     $media_id = $_POST['id'];
     $user_id = null;

@@ -16,7 +16,6 @@ function user_profile()
         redirect('errors/404');
     }
 
-
     $has_borrowed_current = false;
     try {
         $borrow_current_info = get_current_borrow_list_by_user_id($user_id);
@@ -25,6 +24,9 @@ function user_profile()
             $has_borrowed_current = false;
         } else {
             $has_borrowed_current = true;
+            foreach ($borrow_current_info as &$elem) {
+                $elem["estimated_return"] = get_estimated_return_date($elem['start']);
+            }
         }
     } catch (Exception $e) {
         $msg = $e->getMessage();
@@ -34,7 +36,13 @@ function user_profile()
 
     $has_borrow_history = false;
     try {
-        $borrow_history_info = get_borrow_history_list_by_user_id($user_id);
+
+        $current_page = get_current_page();
+        $limit = 10;
+        $offset = ($current_page - 1) * $limit;
+        $borrow_history_info = get_borrow_history_list_by_user_id($user_id, $limit, $offset);
+
+
         if (!$borrow_history_info) {
             $borrow_history_info = [];
             $has_borrow_history = false;
@@ -48,18 +56,21 @@ function user_profile()
     }
 
     $data = [
-        // 'id' => $user_info["id"],
         'name' => $user_info["name"],
         'email' => $user_info["email"],
-        // TODO better date format
         'created_at' => $user_info["created_at"],
         'has_borrow_current' => $has_borrowed_current,
         'borrow_current_info' => $borrow_current_info,
         'has_borrow_history' => $has_borrow_history,
         'borrow_history_info' => $borrow_history_info,
-        'stylesheets' => ['assets/css/media.css']
+        'current_page' => $current_page,
+        'pages' => ceil(get_borrow_history_count_by_user_id($user_id) / $limit),
+        'stylesheets' => [
+            'assets/css/media.css',
+            'assets/css/user.css',
+            'assets/css/user-profile.css',
+            'assets/css/pagination.css',
+        ]
     ];
-
-
     load_view_with_layout('user/profile', $data);
 }
