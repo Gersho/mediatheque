@@ -58,17 +58,14 @@ function update_user_password($id, $password)
  */
 function delete_user($id)
 {
-    if (get_user_by_id($id)) {
+    if (current_user_id() != $id && get_user_by_id($id)) {
         if (get_borrow_count_by_user_id($id) > 0) {
-            throw new Exception("L'utilisateur a des emprunts");
+            return false;
         }
         $query = "UPDATE users SET name = ?, email = ?, password = ?, updated_at = NOW(), active = FALSE WHERE id = ?";
-        $res = db_execute($query, ["", $id, "", $id]);
-        if ($res && current_user_id() == $id) {
-            logout();
-        }
+        return db_execute($query, ["", $id, "", $id]);
     }
-    return $res;
+    return false;
 }
 
 /**

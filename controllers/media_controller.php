@@ -2,9 +2,7 @@
 
 function media_borrow()
 {
-
-    // $_POST["id"] is media id
-    if (!is_post() || !isset($_POST["id"]) || filter_var($_POST["id"], FILTER_VALIDATE_INT)) {
+    if (!is_post() || !isset($_POST["id"]) || !filter_var($_POST["id"], FILTER_VALIDATE_INT)) {
         redirect('errors/404');
     }
 
