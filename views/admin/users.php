@@ -58,9 +58,11 @@
                             </table>
                         </div>
                     </td>
-                    <form method="post">
-                        <td><button type="submit" class="btn btn-delete" name="delete_user"
-                                value="<?= $user['id'] ?>">Supprimer</button></td>
+                    <form action="<?= url("admin/delete_user") ?>" method="post">
+                        <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                        <input type="hidden" name="redirect" value="admin/users">
+                        <td><button type="submit" class="btn btn-delete">Supprimer</button></td>
                     </form>
                 </tr>
             <?php endforeach; ?>
