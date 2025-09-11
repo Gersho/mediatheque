@@ -10,7 +10,7 @@ function home_index()
         'title' => 'Accueil',
         'stylesheets' => [
             'assets/css/home.css',
-            'assets/css/search_bar.css',
+            'assets/css/search-bar.css',
             'assets/css/pagination.css'
         ]
     ];

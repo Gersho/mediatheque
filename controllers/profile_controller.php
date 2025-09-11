@@ -1,6 +1,6 @@
 <?php
 
-function user_profile()
+function profile_index()
 {
     $user_id = null;
     if (!is_logged_in()) {
@@ -68,9 +68,9 @@ function user_profile()
         'stylesheets' => [
             'assets/css/media.css',
             'assets/css/user.css',
-            'assets/css/user-profile.css',
+            'assets/css/profile.css',
             'assets/css/pagination.css',
         ]
     ];
-    load_view_with_layout('user/profile', $data);
+    load_view_with_layout('profile/index', $data);
 }

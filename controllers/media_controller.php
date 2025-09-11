@@ -42,7 +42,7 @@ function media_borrow()
         error_logging(ErrorType::Error, "Failed to borrow media" . $media_id . " by user " . $user_id);
         redirect("home");
     }
-    redirect("user/profile");
+    redirect("profile");
 }
 
 function media_return()
@@ -56,9 +56,9 @@ function media_return()
         error_logging(ErrorType::Error, "Tried to add book without valid token");
         redirect('home/profile');
     }
-  
+
     $media_id = (int) $_POST['id'];
-  
+
     if (!is_logged_in()) {
         set_flash("error", "you must be logged in");
         redirect("auth/login");
@@ -73,5 +73,5 @@ function media_return()
     }
 
     set_flash("success", "Le media a bien été rendu");
-    redirect("user/profile");
+    redirect("profile");
 }

@@ -11,7 +11,7 @@
                 <label for="title">Titre</label>
                 <input type="text" id="title" name="title" required placeholder="Titre du livre"
                     value="<?php if (isset($entries['title']))
-                        echo htmlspecialchars($entries['title']); ?>">
+                        echo e($entries['title']); ?>">
             </div>
 
             <div class="form-group">
@@ -30,28 +30,28 @@
                 <label for="stock">Stock</label>
                 <input type="number" id="stock" name="stock" required placeholder="Stock" min="1"
                     value="<?php if (isset($entries['stock']))
-                        echo htmlspecialchars($entries['stock']); ?>">
+                        echo e($entries['stock']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="author">Auteur</label>
                 <input type="text" id="author" name="author" required placeholder="Auteur"
                     value="<?php if (isset($entries['author']))
-                        echo htmlspecialchars($entries['author']); ?>">
+                        echo e($entries['author']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="isbn">ISBN</label>
                 <input type="text" id="isbn" name="isbn" required placeholder="ISBN"
                     value="<?php if (isset($entries['isbn']))
-                        echo htmlspecialchars($entries['isbn']); ?>">
+                        echo e($entries['isbn']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="pages">Pages</label>
                 <input type="number" id="pages" name="pages" required placeholder="Nombre de pages" min="1" max="9999"
                     value="<?php if (isset($entries['pages']))
-                        echo htmlspecialchars($entries['pages']); ?>">
+                        echo e($entries['pages']); ?>">
             </div>
 
             <div class="form-group">
@@ -59,14 +59,14 @@
                 <input type="number" id="published_year" name="published_year" required
                     placeholder="Date de publication" min="1900"
                     value="<?php if (isset($entries['published_year']))
-                        echo htmlspecialchars($entries['published_year']); ?>">
+                        echo e($entries['published_year']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="summary">Résumé</label>
                 <textarea id="summary" name="summary" required placeholder="Résumé du livre" maxlength="3000"
                     autocomplete="on"><?php if (isset($entries['summary']))
-                        echo htmlspecialchars($entries['summary']); ?></textarea>
+                        echo e($entries['summary']); ?></textarea>
             </div>
 
             <div class="form-group">

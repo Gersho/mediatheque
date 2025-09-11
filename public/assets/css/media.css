@@ -74,39 +74,39 @@ button {
   justify-content: center;
 }
 
-.format-button{
+.format-button {
   overflow: visible;
-  transform: translate(790px, 300px);
+  justify-self: center;
+  align-self: center;
   position: fixed;
   width: 28rem;
   height: 10rem;
   background-color: rgba(0, 0, 0, 0.934);
   backdrop-filter: blur(2px);
   color: white;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: x-large;
   font-style: oblique;
   text-align: center;
 }
-.yes{
+.yes {
   font-weight: bold;
   background-color: white;
   border-radius: 10px;
 }
-.no{
-    font-weight: bold;
+.no {
+  font-weight: bold;
   background-color: rgb(143, 134, 134);
-    border-radius: 10px;
-
+  border-radius: 10px;
 }
 .yes:hover {
   background-color: rgb(99, 180, 99);
 }
 .no:hover {
-background-color: rgb(235, 113, 113);
+  background-color: rgb(235, 113, 113);
 }
-.espacement{
+.espacement {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   gap: 2px;
 }
