@@ -1,6 +1,6 @@
 <?php
 
-function user_profile()
+function profile_index()
 {
     $user_id = null;
     if (!is_logged_in()) {
@@ -72,5 +72,5 @@ function user_profile()
             'assets/css/pagination.css',
         ]
     ];
-    load_view_with_layout('user/profile', $data);
+    load_view_with_layout('profile/index', $data);
 }
