@@ -11,7 +11,7 @@
                 <label for="title">Titre</label>
                 <input type="text" id="title" name="title" required placeholder="Titre du jeu"
                     value="<?php if (isset($entries['title']))
-                        echo htmlspecialchars($entries['title']); ?>">
+                        echo e($entries['title']); ?>">
             </div>
 
             <div class="form-group">
@@ -30,14 +30,14 @@
                 <label for="stock">Stock</label>
                 <input type="number" id="stock" name="stock" required placeholder="Stock" min="1"
                     value="<?php if (isset($entries['stock']))
-                        echo htmlspecialchars($entries['stock']); ?>">
+                        echo e($entries['stock']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="editor">Éditeur</label>
                 <input type="text" id="editor" name="editor" required placeholder="Éditeur"
                     value="<?php if (isset($entries['editor']))
-                        echo htmlspecialchars($entries['editor']); ?>">
+                        echo e($entries['editor']); ?>">
             </div>
 
             <div class="form-group">
@@ -69,7 +69,7 @@
                 <label for="description">Description</label>
                 <textarea id="description" name="description"
                     placeholder="Description"><?php if (isset($entries['description']))
-                        echo htmlspecialchars($entries['description']); ?></textarea>
+                        echo e($entries['description']); ?></textarea>
             </div>
 
             <div class="form-group">

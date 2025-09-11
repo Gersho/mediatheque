@@ -230,7 +230,7 @@ function admin_medias()
 
 function admin_edit_book()
 {
-    if (!isset($_GET['id'])) {
+    if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
         set_flash('error', "ID média invalide");
         redirect('admin/medias');
     }
@@ -328,7 +328,7 @@ function admin_users()
 
 function admin_edit_movie()
 {
-    if (!isset($_GET['id'])) {
+    if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
         set_flash('error', "ID média invalide");
         redirect('admin/medias');
     }
@@ -401,7 +401,7 @@ function admin_edit_movie()
 
 function admin_edit_game()
 {
-    if (!isset($_GET['id'])) {
+    if (!isset($_GET['id']) || !filter_var($_GET['id'], FILTER_VALIDATE_INT)) {
         set_flash('error', "ID média invalide");
         redirect('admin/medias');
     }
@@ -479,7 +479,7 @@ function admin_edit_game()
 
 function admin_delete_media()
 {
-    if (is_post() && isset($_POST['id']) && get_media_stock_by_id($_POST['id'])) {
+    if (is_post() && isset($_POST['id']) && get_media_stock_by_id($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT)) {
 
         $id = $_POST['id'];
 
