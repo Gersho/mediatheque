@@ -207,7 +207,7 @@ function admin_medias()
     $data = [
         'title' => 'Admin Medias Dashboard',
         'stylesheets' => [
-            'assets/css/search_bar.css',
+            'assets/css/search-bar.css',
             'assets/css/pagination.css',
             'assets/css/admin.css'
         ],
