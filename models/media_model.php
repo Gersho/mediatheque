@@ -23,7 +23,7 @@ function insert_new_media(array $data, callable $insert_func)
         } else {
             $msg = $e->getMessage();
         }
-        set_flash('error', $msg);
+        set_flash('error', "Erreur lors de l'insertion dans la base de données");
         error_logging(ErrorType::Error, $msg);
         db_rollback();
     }
@@ -68,7 +68,7 @@ function update_media(array $data, callable $update_func)
         } else {
             $msg = $e->getMessage();
         }
-        set_flash('error', $msg);
+        set_flash('error', "Erreur lors de la modification dans la base de données");
         error_logging(ErrorType::Error, $msg);
 
         return false;
