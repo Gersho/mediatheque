@@ -64,12 +64,14 @@
                             </table>
                         </div>
                     </td>
-                    <form action="<?= url("admin/delete_user") ?>" method="post">
-                        <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                        <input type="hidden" name="redirect" value="admin/users">
-                        <td><button type="submit" class="btn btn-delete">Supprimer</button></td>
-                    </form>
+                    <?php if ($user['id'] != current_user_id()): ?>
+                        <form action="<?= url("admin/delete_user") ?>" method="post">
+                            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                            <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                            <input type="hidden" name="redirect" value="admin/users">
+                            <td><button type="submit" class="btn btn-delete">Supprimer</button></td>
+                        </form>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
