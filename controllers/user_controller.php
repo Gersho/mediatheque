@@ -68,7 +68,7 @@ function user_profile()
         'stylesheets' => [
             'assets/css/media.css',
             'assets/css/user.css',
-            'assets/css/user-profile.css',
+            'assets/css/profile.css',
             'assets/css/pagination.css',
         ]
     ];
