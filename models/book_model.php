@@ -31,12 +31,28 @@ function get_book_by_id($id)
 }
 
 
-function check_isbn_unique(string $isbn)
+
+
+function check_isbn_unique(string $isbn, $id = null)
 {
+
     $query = "SELECT id FROM books WHERE isbn = ?";
     $result = db_select_one($query, [$isbn]);
+    
 
-    return empty($result);
+    // Si ISBN non présent dans la DB, retourne vrai
+    // Si présent mais correspondant à l'ID donné, retourne vrai
+    // Sinon, retourne faux, isbn déja  utilisé
+    
+    if (empty($result)) {
+        return true;
+    }
+    elseif ($result['id'] === intval($id)) {   
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 function update_book(int $book_id, array $book_data) {

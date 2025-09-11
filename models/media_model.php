@@ -53,7 +53,6 @@ function update_media(array $data, callable $update_func)
             WHERE id = ?";
 
         db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
-        db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
         // Vérification callback
         if (is_callable($update_func)) {
             $update_func($id, $data);
@@ -262,7 +261,7 @@ function get_edit_url(int $id, string $type)
     return strtolower(url("admin/edit_$type?id=$id"));
 }
 
-function delete_media_from_db(int $media_id)
+function delete_media(int $media_id)
 {
     $query = "DELETE FROM medias WHERE id = ?";
     return db_execute($query, [$media_id]);
