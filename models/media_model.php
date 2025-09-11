@@ -192,7 +192,11 @@ function get_medias(array $filters = []): array
         "current_page" => $current_page
     ];
 }
-
+function get_media_by_id($media_id)
+{
+    $query = "SELECT * FROM medias WHERE id = ?";
+    return db_select_one ($query, [$media_id]);
+}
 
 /**
  * Get the total number of rows in the `medias` table.
