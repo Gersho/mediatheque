@@ -480,7 +480,9 @@ function admin_edit_game()
 
 function admin_delete_media()
 {
-    if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT) && get_media_stock_by_id($_POST['id'])) {
+
+    // Validation de l'id
+    if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT) && get_media_by_id($_POST['id'])) {
         $id = $_POST['id'];
 
         // Verification si déjà emprunté par un utilisateur
@@ -489,9 +491,9 @@ function admin_delete_media()
             error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
         } else {
             // On supprime l'image associée au média
-            $cover_path = get_media_cover_db($id);
-            if ($cover_path !== (UPLOAD_PATH . "/")) {
-                if (unlink($cover_path)) {
+            $cover_path = get_media_by_id($id)['cover_img'];
+            if ($cover_path) {
+                if (unlink(UPLOAD_PATH . "/" . $cover_path)) {
                     set_flash('success', "Jaquette supprimée");
                 }
                 else {
@@ -508,7 +510,7 @@ function admin_delete_media()
             error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
         }
     } else {
-        set_flash('error', "ID média invalide");
+        set_flash('error', "ID média invalide ou inexistant");
     }
     redirect('admin/medias');
 }
