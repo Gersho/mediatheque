@@ -35,7 +35,7 @@ function admin_add_book()
                     !check_isbn_unique($temp))
             ) {
                 $errors['isbn'] = 'ISBN invalide (10 ou 13 chiffres) ou déjà utilisé';
-            } elseif ($key === 'pages' && !($temp >= 1 && $temp <= 9999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+            } elseif ($key === 'pages' && !($temp >= 1 && $temp <= 9999) || !filter_var($temp, FILTER_VALIDATE_INT)) {
                 $errors['pages'] = 'Le nombre de pages doit être un entier entre 1 et 9999';
             } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
                 $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
@@ -97,7 +97,7 @@ function admin_add_movie()
                 $errors['stock'] = 'Le stock doit être un entier positif';
             } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                 $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
-            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) || !filter_var($temp, FILTER_VALIDATE_INT)) {
                 $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
             } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
                 $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
@@ -276,7 +276,7 @@ function admin_edit_book()
                     !check_isbn_unique($temp, $id))
             ) {
                 $errors['isbn'] = 'ISBN invalide (10 ou 13 chiffres) ou déjà utilisé';
-            } elseif ($key === 'pages' && !($temp >= 1 && $temp <= 9999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+            } elseif ($key === 'pages' && !($temp >= 1 && $temp <= 9999) || !filter_var($temp, FILTER_VALIDATE_INT)) {
                 $errors['pages'] = 'Le nombre de pages doit être un entier entre 1 et 9999';
             } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
                 $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
@@ -368,7 +368,7 @@ function admin_edit_movie()
                 $errors['stock'] = 'Le stock doit être un entier positif';
             } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                 $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
-            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) && !filter_var($temp, FILTER_VALIDATE_INT)) {
+            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) || !filter_var($temp, FILTER_VALIDATE_INT)) {
                 $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
             } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
                 $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
