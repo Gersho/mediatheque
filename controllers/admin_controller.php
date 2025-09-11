@@ -209,7 +209,8 @@ function admin_medias()
         'stylesheets' => [
             'assets/css/search-bar.css',
             'assets/css/pagination.css',
-            'assets/css/admin.css'
+            'assets/css/admin.css',
+            'assets/css/media.css',
         ],
     ];
     $filter_list = ["title", "type", "genre", "available"];
@@ -479,8 +480,7 @@ function admin_edit_game()
 
 function admin_delete_media()
 {
-    if (is_post() && isset($_POST['id']) && get_media_stock_by_id($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT)) {
-
+    if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT) && get_media_stock_by_id($_POST['id'])) {
         $id = $_POST['id'];
 
         // Verification si déjà emprunté par un utilisateur
@@ -488,6 +488,21 @@ function admin_delete_media()
             set_flash("error", "Impossible de supprimer ce média car emprunt en cours");
             error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
         } else {
+            // On supprime l'image associée au média
+            $cover_path = get_media_cover_db($id);
+            if ($cover_path !== (UPLOAD_PATH . "/")) {
+                if (unlink($cover_path)) {
+                    set_flash('success', "Jaquette supprimée");
+                }
+                else {
+                    set_flash('error', "Erreur lors de la suppression de la jaquette");
+                    error_logging(ErrorType::Error, "Can't delete cover_img at " . $cover_path);
+                }
+            }
+            else {
+                set_flash('success', "Pas de jaquette à supprimer");
+            }
+            // On supprime le média de la BDD
             delete_media($id);
             set_flash("success", "Média supprimé avec succes");
             error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
