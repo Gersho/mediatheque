@@ -264,9 +264,12 @@ function get_edit_url(int $id, string $type)
 function delete_media(int $media_id)
 {
     $query = "DELETE FROM medias WHERE id = ?";
-    return db_execute($query, [$media_id]);
+    return db_select_one($query, [$media_id]);
 }
-
+function get_media_cover_db(int $media_id) {
+    $query = "SELECT cover_img FROM medias WHERE id = ?";
+    return UPLOAD_PATH . "/" .db_select_one($query, [$media_id])['cover_img'];
+}
 function get_books_count() 
 {
     $query = 'SELECT COUNT(id) FROM books';
