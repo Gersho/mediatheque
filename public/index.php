@@ -34,5 +34,11 @@ require_once MODEL_PATH . '/borrow_model.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Check session activity, logout if inactive more than SESSION_TIMEOUT
+if (is_logged_in() && isset($_SESSION['LAST_ACTIVITY']) && time() - $_SESSION['LAST_ACTIVITY'] > SESSION_TIMEOUT) {
+    logout();
+}
+$_SESSION['LAST_ACTIVITY'] = time();
+
 // Lancer le système de routing
 dispatch();
