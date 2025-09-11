@@ -482,35 +482,36 @@ function admin_delete_media()
 {
 
     // Validation de l'id
-    if (is_post() && isset($_POST['id']) && filter_var($_POST['id'], FILTER_VALIDATE_INT) && get_media_by_id($_POST['id'])) {
-        $id = $_POST['id'];
+    if (!is_post() || !isset($_POST['id']) || !filter_var($_POST['id'], FILTER_VALIDATE_INT)) {
+        set_flash('error', "ID média invalide");
+        redirect('admin/medias');
+    }
 
-        // Verification si déjà emprunté par un utilisateur
-        if (is_media_already_borrowed($id)) {
-            set_flash("error", "Impossible de supprimer ce média car emprunt en cours");
-            error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
-        } else {
-            // On supprime l'image associée au média
-            $cover_path = get_media_by_id($id)['cover_img'];
-            if ($cover_path) {
-                if (unlink(UPLOAD_PATH . "/" . $cover_path)) {
-                    set_flash('success', "Jaquette supprimée");
-                }
-                else {
-                    set_flash('error', "Erreur lors de la suppression de la jaquette");
-                    error_logging(ErrorType::Error, "Can't delete cover_img at " . $cover_path);
-                }
-            }
-            else {
-                set_flash('success', "Pas de jaquette à supprimer");
-            }
-            // On supprime le média de la BDD
-            delete_media($id);
-            set_flash("success", "Média supprimé avec succes");
-            error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
-        }
+    $id = (int) $_POST['id'];
+    $media = get_media_by_id($id);
+
+    if (!$media) {
+        set_flash('error', "Média inexistant");
+        redirect('admin/medias');
+    }
+
+    // Verification si déjà emprunté par un utilisateur
+    if (is_media_already_borrowed($id)) {
+        set_flash("error", "Impossible de supprimer ce média car emprunt en cours");
+        error_logging(ErrorType::Warning, "Tried to delete borrowed media: " . $id);
     } else {
-        set_flash('error', "ID média invalide ou inexistant");
+        // On supprime l'image associée au média
+        $cover_path = $media['cover_img'];
+        if ($cover_path) {
+            if (!unlink(UPLOAD_PATH . "/" . $cover_path)) {
+                set_flash('error', "Erreur lors de la suppression de la jaquette");
+                error_logging(ErrorType::Error, "Can't delete cover_img at " . $cover_path);
+            }
+        }
+        // On supprime le média de la BDD
+        delete_media($id);
+        set_flash("success", "Média supprimé avec succes");
+        error_logging(ErrorType::Info, "Successfull deleted media: " . $id);
     }
     redirect('admin/medias');
 }
