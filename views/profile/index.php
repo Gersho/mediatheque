@@ -29,7 +29,7 @@
                                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
                                 <button class="yes" name="id" value="<?php e($elem["media_id"]); ?>">OUI</button>
                             </form>
-                            <form action="<?= url("user/profile") ?>" method="get">
+                            <form action="<?= url("profile") ?>" method="get">
                                 <button class="no">NON</button>
                             </form>
                         </div>

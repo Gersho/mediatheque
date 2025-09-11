@@ -1,6 +1,10 @@
 .return {
   margin: 0;
   justify-content: center;
+  /* background-color: blue; */
+  max-width: fit-content;
+  /* max-width: 20%; */
+  /* color: blue; */
 }
 
 .user-page div p {

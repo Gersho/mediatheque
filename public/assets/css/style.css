@@ -491,11 +491,11 @@ code {
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    gap: 1rem;
+    /* gap: 1rem; */
   }
 
   .nav-menu {
-    flex-direction: column;
+    flex-direction: row;
     text-align: center;
     gap: 1rem;
   }
