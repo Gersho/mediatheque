@@ -1,12 +1,12 @@
 <div class="user-page">
     <h1>Gestion des utilisateurs</h1>
-    <!-- TODO stats: total of borrows, average borrow per months?, average late return per months? -->
     <table class="user-table">
         <thead>
             <?php foreach ($fields as $field): ?>
                 <th><?= $field ?></th>
             <?php endforeach; ?>
             <th>Emprunts en cours</th>
+            <th>Stats</th>
         </thead>
         <tbody>
             <?php foreach ($users as $user): ?>
@@ -21,45 +21,71 @@
                     <td>
                         <?php
                         $borrow_count = get_borrow_count_by_user_id($user["id"]);
-                        $popover_id = "popover_" . $user["id"];
+                        $borrow_popover_id = "borrow_popover_" . $user["id"];
                         ?>
                         <div class="borrow_count_and_detail_btn">
                             <?php if ($borrow_count > 0): ?>
-                                <button class="btn btn-primary" popovertarget="<?= $popover_id ?>"><?= $borrow_count ?></button>
+                                <button class="btn btn-primary" popovertarget="<?= $borrow_popover_id ?>"><?= $borrow_count ?></button>
+                                <!-- Popover of the user borrow list -->
+                                <div id="<?= $borrow_popover_id ?>" class="borrow-list" popover>
+                                    <?php $borrows = get_borrows_details_by_user($user["id"]); ?>
+                                    <p>Liste d'emprunts de <?php e($user['name']) ?></p>
+                                    <table class="user-table">
+                                        <thead>
+                                            <th>Media id</th>
+                                            <th>Type</th>
+                                            <th>Titre</th>
+                                            <th>Date d'emprunt</th>
+                                            <th>Date de Retour Attendue</th>
+                                            <th>Forcer le retour</th>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($borrows as $borrow): ?>
+                                                <?php $estimated_return = get_estimated_return_date($borrow['start']); ?>
+                                                <tr>
+                                                    <td><?php e($borrow['media_id']) ?></td>
+                                                    <td><?php e($borrow['type']) ?></td>
+                                                    <td><?php e($borrow['title']) ?></td>
+                                                    <td><?= format_date($borrow['start']) ?></td>
+                                                    <td><?php e($estimated_return) ?></td>
+                                                    <form action="<?= url("admin/force_return") ?>" method="post">
+                                                        <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                                                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                                                        <input type="hidden" name="media_id" value="<?= $borrow['media_id'] ?>">
+                                                        <input type="hidden" name="redirect" value="admin/users">
+                                                        <td><button type="submit" class="btn btn-delete">Rendre</button></td>
+                                                    </form>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             <?php else: ?>
                                 <p><?= $borrow_count ?></p>
                             <?php endif; ?>
                         </div>
-                        <?php $borrows = get_borrows_details_by_user($user["id"]); ?>
-                        <div id="<?= $popover_id ?>" class="borrow-list" popover>
-                            <p>Liste d'emprunts de <?php e($user['name']) ?></p>
+                    </td>
+                    <td>
+                        <?php $stats_popover_id = "stats_popover_" . $user["id"]; ?>
+                        <button class="btn btn-primary" popovertarget="<?= $stats_popover_id ?>">Voir</button>
+                        <!-- Popover of the user stats -->
+                        <div id="<?= $stats_popover_id ?>" class="borrow-list" popover>
+                            <p>Statistiques de <?php e($user['name']) ?></p>
                             <table class="user-table">
                                 <thead>
-                                    <th>Media id</th>
-                                    <th>Type</th>
-                                    <th>Titre</th>
-                                    <th>Date d'emprunt</th>
-                                    <th>Date de Retour Attendue</th>
-                                    <th>Forcer le retour</th>
+                                    <th>Total d'emprunts</th>
+                                    <th>Taux de retard (%)</th>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($borrows as $borrow): ?>
-                                        <?php $estimated_return = get_estimated_return_date($borrow['start']); ?>
-                                        <tr>
-                                            <td><?php e($borrow['media_id']) ?></td>
-                                            <td><?php e($borrow['type']) ?></td>
-                                            <td><?php e($borrow['title']) ?></td>
-                                            <td><?= format_date($borrow['start']) ?></td>
-                                            <td><?php e($estimated_return) ?></td>
-                                            <form action="<?= url("admin/force_return") ?>" method="post">
-                                                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                                                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                                <input type="hidden" name="media_id" value="<?= $borrow['media_id'] ?>">
-                                                <input type="hidden" name="redirect" value="admin/users">
-                                                <td><button type="submit" class="btn btn-delete">Rendre</button></td>
-                                            </form>
-                                        </tr>
-                                    <?php endforeach; ?>
+                                    <?php
+                                    $total_borrow = get_total_borrow_count_by_user_id($user['id']);
+                                    $total_late_return = get_late_return_total_by_user_id($user['id']);
+                                    $late_ret_percent = $total_borrow > 0 ? round($total_late_return * 100 / $total_borrow) : 0;
+                                    ?>
+                                    <tr>
+                                        <td><?= $total_borrow ?></td>
+                                        <td><?= $late_ret_percent ?></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

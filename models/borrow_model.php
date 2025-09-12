@@ -79,7 +79,7 @@ function get_borrows_details_by_user(int $user_id): array
 
 function get_estimated_return_date(string $borrow_date)
 {
-    $return_date = date_create($borrow_date)->modify("+14 days");
+    $return_date = date_create($borrow_date)->modify("+" . RETURN_DELAY . "days");
     $now = date_create();
     $time_left = date_diff($now, $return_date);
     $late = $time_left->invert ? "Il y a" : "Dans";
@@ -147,8 +147,21 @@ function return_media(int $media_id, int $user_id)
 
 function get_borrow_history_count_by_user_id(int $user_id)
 {
-    $query = "SELECT COUNT(b.id) FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL ORDER BY start DESC";
+    $query = "SELECT COUNT(b.id) FROM borrowed b WHERE b.user_id = ? AND return_date is NOT NULL";
     return db_select_one($query, [$user_id])["COUNT(b.id)"];
 }
 
+function get_total_borrow_count_by_user_id(int $user_id)
+{
+    $query = "SELECT COUNT(id) FROM borrowed WHERE user_id = ?";
+    return db_select_one($query, [$user_id])["COUNT(id)"];
+}
 
+function get_late_return_total_by_user_id(int $user_id)
+{
+    $query = "SELECT COUNT(id) 
+    FROM borrowed 
+    WHERE DATEDIFF(NOW(), start) > ? AND return_date is NULL AND user_id = ?
+    OR DATEDIFF(return_date, start) > ? AND user_id = ?";
+    return db_select_one($query, [RETURN_DELAY, $user_id, RETURN_DELAY, $user_id])["COUNT(id)"];
+}
