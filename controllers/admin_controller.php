@@ -197,7 +197,8 @@ function admin_index()
     $data = [
         'title' => 'Admin Medias Dashboard',
         'stylesheets' => [
-            'assets/css/admin.css'
+            'assets/css/admin.css',
+            'assets/css/user.css'
         ],
         'list' => get_late_return_list()
     ];
