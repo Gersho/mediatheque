@@ -25,7 +25,7 @@
                         <td class="text-white"><?= $media['type'] ?></td>
                         <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
                         <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a></td>
-                        <td><button popovertarget="my-popover-<?= $media['id'] ?>" class="btn btn-delete">Supprimer</button></td>
+                        <td><button popovertarget="my-popover-<?= $media['id'] ?>" class="btn btn-alert">Supprimer</button></td>
                 </tr>
                         <!-- Modal popover -->
                         <div class="format-button" popover id="my-popover-<?= $media['id'] ?>">Confirmer la suppression ?
