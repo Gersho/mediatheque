@@ -210,6 +210,7 @@ function admin_medias()
         'stylesheets' => [
             'assets/css/search-bar.css',
             'assets/css/pagination.css',
+            'medias/css/media.css',
             'assets/css/admin.css',
             'assets/css/user.css',
         ],
