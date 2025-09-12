@@ -39,12 +39,23 @@ a {
   margin: 1rem;
 }
 
-td {
-  border: dashed 1px white;
-  padding: 1rem;
+.btn-primary {
+  background: var(--primary-color);
+  color: var(--white);
 }
 
-.data-container {
-  display: flex;
-  justify-content: center;
+.btn-primary:hover {
+  background: var(--primary-hover);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.btn-alert {
+  background: var(--primary-color);
+  color: var(--white);
+}
+
+.btn-alert:hover {
+  background: var(--error-color);
+  color: var(--primary-color);
 }

@@ -60,3 +60,7 @@
   padding: 0.6rem 2rem;
   border-radius: 1rem;
 }
+
+a {
+  text-decoration: none;
+}

@@ -1,5 +1,5 @@
 <div class="user-page">
-    <h1>Gestion des utilisateurs</h1>
+    <a href="users"><h1>Gestion des utilisateurs</h1></a>
     <table class="user-table">
         <thead>
             <?php foreach ($fields as $field): ?>
