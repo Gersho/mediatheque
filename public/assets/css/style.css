@@ -7,7 +7,7 @@
 
 :root {
   --primary-color: #000000;
-  --secondary-color: #e2bb3a;
+  --secondary-color: #e2b23a;
   --primary-hover: var(--secondary-color);
   --success-color: #10b981;
   --error-color: #ef4444;
@@ -153,23 +153,31 @@ body {
   font-size: 1rem;
 }
 
-.btn-primary {
-  background: var(--primary-color);
-  color: var(--white);
+.btn-primary,
+.btn-alert {
+  background: var(--white);
+  color: var(--primary-color);
 }
 
 .btn-primary:hover {
   background: var(--primary-hover);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.btn-alert:hover {
+  background-color: rgb(128, 15, 15);
+  color: var(--white);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: var(--secondary-color);
+  background: var(--primary-color);
   color: var(--white);
 }
 
 .btn-secondary:hover {
-  background: #4b5563;
+  background: var(--secondary-color);
   transform: translateY(-1px);
 }
 
