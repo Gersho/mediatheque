@@ -22,7 +22,8 @@
 
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required placeholder="Au moins 8 caractères">
+                <input type="password" id="password" name="password" required
+                       placeholder="Au moins 8 caractères">
             </div>
 
             <div class="form-group">

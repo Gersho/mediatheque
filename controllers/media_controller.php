@@ -29,7 +29,7 @@ function media_borrow()
 
     //check user has rented less than 3
     if (get_borrow_count_by_user_id($user_id) >= 3) {
-        set_flash("error", "Vous avez atteint le maximum d'emprunts par utilisateur (3)");
+        set_flash("error", "Vous avez déja atteint la limite de 3 emprunts simultanés");
         redirect("home");
     }
 

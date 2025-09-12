@@ -75,7 +75,7 @@ et chiffres.");
         } elseif ($password !== $confirm_password) {
             set_flash('error', 'Les mots de passe ne correspondent pas.');
         } elseif (get_user_by_email($email)) {
-            set_flash('error', 'Cette adresse email est déjà utilisée.');
+            set_flash('error', "l'email est déjà utilisé par un autre compte.");
         } else {
             $name = ucwords($name, "- ");
             // Créer l'utilisateur
@@ -84,7 +84,7 @@ et chiffres.");
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
                 redirect('auth/login');
             } else {
-                set_flash('error', 'Erreur lors de l\'inscription.');
+                set_flash('error', 'Une erreur est survenue. Veuillez réessayer.');
             }
         }
     }
