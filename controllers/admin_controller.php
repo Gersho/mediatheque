@@ -211,7 +211,6 @@ function admin_medias()
             'assets/css/search-bar.css',
             'assets/css/pagination.css',
             'assets/css/admin.css',
-            'assets/css/media.css',
             'assets/css/user.css',
         ],
     ];
