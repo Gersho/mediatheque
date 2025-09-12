@@ -69,8 +69,9 @@ function auth_register()
             set_flash('error', 'Tous les champs sont obligatoires.');
         } elseif (!validate_email($email)) {
             set_flash('error', 'Adresse email invalide.');
-        } elseif (strlen($password) < 6) {
-            set_flash('error', 'Le mot de passe doit contenir au moins 6 caractères.');
+        } elseif (!validate_password($password)) {
+            set_flash('error', "Le mot de passe doit contenir au moins 8 caractères avec majuscules, minuscules
+et chiffres.");
         } elseif ($password !== $confirm_password) {
             set_flash('error', 'Les mots de passe ne correspondent pas.');
         } elseif (get_user_by_email($email)) {
