@@ -59,9 +59,3 @@ a {
   background: var(--error-color);
   color: var(--primary-color);
 }
-
-
-.data-container {
-  display: flex;
-  justify-content: center;
-}
