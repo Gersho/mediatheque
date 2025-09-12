@@ -165,3 +165,13 @@ function get_late_return_total_by_user_id(int $user_id)
     OR DATEDIFF(return_date, start) > ? AND user_id = ?";
     return db_select_one($query, [RETURN_DELAY, $user_id, RETURN_DELAY, $user_id])["COUNT(id)"];
 }
+
+function get_late_return_list()
+{
+    $query = "SELECT b.start ,m.title, u.name
+    FROM borrowed b
+    LEFT JOIN medias m ON m.id = b.media_id
+    LEFT JOIN users u ON u.id = b.user_id
+    WHERE DATEDIFF(NOW(), start) > ? AND b.return_date is NULL";
+    return db_select($query, [RETURN_DELAY]);
+}
