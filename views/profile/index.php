@@ -1,9 +1,9 @@
 <div class="user-page">
+    <a href="profile"><h1>Profil</h1></a>
     <div>
-        <p>Emprunts en cour</p>
         <?php
-        if ($has_borrow_current):
-            ?>
+        if ($has_borrow_current):?>
+            <p>Emprunts en cours</p>
             <table class="user-table">
                 <tr>
                     <th>Titre</th>
@@ -37,7 +37,7 @@
                 <?php endforeach ?>
             </table>
         <?php else: ?>
-            <p>Aucun emprunts en cour</p>
+            <p>Aucun emprunt en cours</p>
         <?php endif ?>
     </div>
 

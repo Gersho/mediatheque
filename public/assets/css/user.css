@@ -74,3 +74,6 @@
   background-color: var(--secondary-color);
   color: white;
 }
+a {
+  text-decoration: none;
+}
