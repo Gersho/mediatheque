@@ -19,7 +19,7 @@
         </div>
         <div class="textfield">
             <div class="titlefield">
-                <h1><?= $title; ?></h1>
+                <h1><?= e($title) ?></h1>
             </div>
             <div class="auteur">
                 <p>par <?php e($director); ?> en <?php e($published_year); ?></p>

@@ -18,7 +18,7 @@
         </div>
         <div class="textfield">
             <div class="titlefield">
-                <h1><?= $title; ?></h1>
+                <h1><?= e($title); ?></h1>
             </div>
             <div class="auteur">
                 <p>par <?php e($author); ?> en <?php e($published_year); ?></p>
@@ -36,7 +36,7 @@
 <div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
     <div class="espacement">
         <form action="<?= url("media/borrow") ?>" method="post">
-           <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
         </form>
         <form action="" method="get">
