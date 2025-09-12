@@ -1,9 +1,8 @@
 <div class="user-page">
-    <a href="profile"><h1>Profil</h1></a>
     <div>
+        <h2>Emprunts en cours</h2>
         <?php
-        if ($has_borrow_current):?>
-            <p>Emprunts en cours</p>
+        if ($has_borrow_current): ?>
             <table class="user-table">
                 <tr>
                     <th>Titre</th>
@@ -43,7 +42,7 @@
 
 
     <div>
-        <p>Historique des emprunts</p>
+        <h2>Historique des emprunts</h2>
         <?php
         if ($has_borrow_history):
             ?>

@@ -110,3 +110,42 @@ button {
   justify-content: center;
   gap: 2px;
 }
+
+@media (max-width: 768px) {
+  /* .image {
+    align-self: center;
+    justify-self: auto;
+  } */
+
+  /* body {
+    justify-content: center;
+  } */
+
+  section div div {
+    /* margin: auto; */
+    text-align: center;
+    background-color: blue;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  section div {
+    /* text-align: center; */
+    justify-content: space-evenly;
+  }
+
+  .scroll-box {
+    height: 20rem;
+    width: auto;
+    border-radius: 15px;
+    overflow: auto;
+    /* background-color: rgb(71, 110, 123); */
+    /* color: rgb(9, 7, 7); */
+    color: white;
+    /* font-family:sans-serif; */
+    padding: 10px;
+  }
+}
