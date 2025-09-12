@@ -77,9 +77,9 @@ et chiffres.");
         } elseif (get_user_by_email($email)) {
             set_flash('error', 'Cette adresse email est déjà utilisée.');
         } else {
+            $name = ucwords($name, "- ");
             // Créer l'utilisateur
             $user_id = create_user($name, $email, $password);
-
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
                 redirect('auth/login');
