@@ -39,27 +39,6 @@ a {
   margin: 1rem;
 }
 
-.btn-primary {
-  background: var(--primary-color);
-  color: var(--white);
-}
-
-.btn-primary:hover {
-  background: var(--primary-hover);
-  color: var(--primary-color);
-  transform: translateY(-1px);
-}
-
-.btn-alert {
-  background: var(--primary-color);
-  color: var(--white);
-}
-
-.btn-alert:hover {
-  background: var(--error-color);
-  color: var(--primary-color);
-}
-
 .data-container {
   display: flex;
   justify-content: center;
