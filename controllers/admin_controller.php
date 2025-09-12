@@ -197,11 +197,12 @@ function admin_index()
     $data = [
         'title' => 'Admin Medias Dashboard',
         'stylesheets' => [
-            'assets/css/admin.css'
+            'assets/css/admin.css',
         ],
     ];
     load_view_with_layout("admin/index", $data);
 }
+
 function admin_medias()
 {
     $data = [
@@ -211,6 +212,7 @@ function admin_medias()
             'assets/css/pagination.css',
             'assets/css/admin.css',
             'assets/css/media.css',
+            'assets/css/user.css',
         ],
     ];
     $filter_list = ["title", "type", "genre", "available"];

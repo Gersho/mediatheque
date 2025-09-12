@@ -4,7 +4,7 @@ function profile_index()
 {
     $user_id = null;
     if (!is_logged_in()) {
-        set_flash("error", "you must be logged in");
+        set_flash("error", "Vous devez vous connecter");
         redirect("auth/login");
     } else {
         $user_id = current_user_id();
