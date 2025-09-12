@@ -600,3 +600,26 @@ function is_admin()
     return false;
 
 }
+
+function validate_password(string $str): bool
+{
+    $has_uppercase = false;
+    $has_lowercase = false;
+    $has_numeric = false;
+    $str_array = mb_str_split($str);
+
+    if (strlen($str) < 8)
+        return false;
+
+    foreach ($str_array as $c) {
+        if (ctype_upper($c)) {
+            $has_uppercase = true;
+        } else if (ctype_lower($c)) {
+            $has_lowercase = true;
+        } else if (ctype_digit($c)) {
+            $has_numeric = true;
+        }
+    }
+
+    return $has_uppercase && $has_lowercase && $has_numeric;
+}

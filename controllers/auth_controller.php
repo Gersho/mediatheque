@@ -69,16 +69,17 @@ function auth_register()
             set_flash('error', 'Tous les champs sont obligatoires.');
         } elseif (!validate_email($email)) {
             set_flash('error', 'Adresse email invalide.');
-        } elseif (strlen($password) < 8) {
-            set_flash('error', 'Le mot de passe doit contenir au moins 8 caractères.');
+        } elseif (!validate_password($password)) {
+            set_flash('error', "Le mot de passe doit contenir au moins 8 caractères avec majuscules, minuscules
+et chiffres.");
         } elseif ($password !== $confirm_password) {
             set_flash('error', 'Les mots de passe ne correspondent pas.');
         } elseif (get_user_by_email($email)) {
             set_flash('error', "l'email est déjà utilisé par un autre compte.");
         } else {
+            $name = ucwords($name, "- ");
             // Créer l'utilisateur
             $user_id = create_user($name, $email, $password);
-
             if ($user_id) {
                 set_flash('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
                 redirect('auth/login');
