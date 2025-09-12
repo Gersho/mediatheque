@@ -204,6 +204,7 @@ function admin_index()
     ];
     load_view_with_layout("admin/index", $data);
 }
+
 function admin_medias()
 {
     $data = [
@@ -212,7 +213,7 @@ function admin_medias()
             'assets/css/search-bar.css',
             'assets/css/pagination.css',
             'assets/css/admin.css',
-            'assets/css/media.css',
+            'assets/css/user.css',
         ],
     ];
     $filter_list = ["title", "type", "genre", "available"];

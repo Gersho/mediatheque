@@ -18,16 +18,9 @@
 
 .user-table td,
 .user-table th {
-  /* border: solid 0.1rem white; */
   border: 0.1rem solid;
   border-color: white;
   padding: 0.8rem;
-}
-
-.btn-delete:hover {
-  background-color: rgb(128, 15, 15);
-  color: white;
-  transform: translateY(-1px);
 }
 
 .borrow-list-container {
@@ -43,7 +36,7 @@
   align-self: center;
   justify-self: center;
   padding: 2rem;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
 }
 
 .borrow-list p {
@@ -64,13 +57,10 @@
 
 .borrow_count_and_detail_btn .btn-primary {
   font-weight: bold;
-  padding: .6rem 2rem;
+  padding: 0.6rem 2rem;
   border-radius: 1rem;
-  background-color: white;
-  color: black
 }
 
-.borrow_count_and_detail_btn .btn-primary:hover {
-  background-color: var(--secondary-color);
-  color: white;
+a {
+  text-decoration: none;
 }
