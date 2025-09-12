@@ -6,7 +6,7 @@ function admin_add_book()
     $book_data = [];
 
     $all_data = get_books_fields();
-    $genre_enum = get_books_movies_genres();
+    $genre_enum = get_books_genres();
 
     if (is_post()) {
         if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
@@ -73,7 +73,7 @@ function admin_add_movie()
 
     $all_data = get_movies_fields();
 
-    $genre_enum = get_books_movies_genres();
+    $genre_enum = get_movies_genres();
     $certification_enum = get_movies_certifications();
 
     if (is_post()) {
@@ -245,7 +245,7 @@ function admin_edit_book()
 
     $errors = [];
     $all_data = get_books_fields();
-    $genre_enum = get_books_movies_genres();
+    $genre_enum = get_books_genres();
 
 
     if (is_post()) {
@@ -266,7 +266,7 @@ function admin_edit_book()
                 $errors['title'] = 'Titre invalide (nombre de caractères)';
             } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
                 $errors['genre'] = "Genre invalide";
-            } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+            } elseif ($key === 'stock' && (!($temp >= 0) && (!filter_var($temp, FILTER_VALIDATE_INT) || $temp === 0 ))) {
                 $errors['stock'] = 'Le stock doit être un entier positif';
             } elseif ($key === 'author' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                 $errors['author'] = 'Auteur invalide (nombre de caractères)';
@@ -344,7 +344,7 @@ function admin_edit_movie()
 
     $errors = [];
     $all_data = get_movies_fields();
-    $genre_enum = get_books_movies_genres();
+    $genre_enum = get_movies_genres();
     $certification_enum = get_movies_certifications();
 
     if (is_post()) {
@@ -368,7 +368,7 @@ function admin_edit_movie()
                 $errors['stock'] = 'Le stock doit être un entier positif';
             } elseif ($key === 'director' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                 $errors['director'] = 'Réalisateur invalide (nombre de caractères)';
-            } elseif ($key === 'duration' && !($temp >= 1 && $temp <= 999) || !filter_var($temp, FILTER_VALIDATE_INT)) {
+            } elseif ($key === 'stock' && (!($temp >= 0) && (!filter_var($temp, FILTER_VALIDATE_INT) || $temp === 0 ))) {
                 $errors['duration'] = 'La durée du film doit être un entier entre 1 et 999';
             } elseif ($key === 'published_year' && !($temp >= 1900 && $temp <= date('Y'))) {
                 $errors['published_year'] = "L'année de publication doit être comprise entre 1900 et l'année actuelle";
@@ -440,7 +440,7 @@ function admin_edit_game()
                 $errors['title'] = 'Titre invalide (nombre de caractères)';
             } elseif ($key === 'genre' && !in_array($temp, $genre_enum)) {
                 $errors['genre'] = 'Genre invalide';
-            } elseif ($key === 'stock' && !($temp >= 1 && filter_var($temp, FILTER_VALIDATE_INT))) {
+            } elseif ($key === 'stock' && (!($temp >= 0) && (!filter_var($temp, FILTER_VALIDATE_INT) || $temp === 0 ))) {
                 $errors['stock'] = 'Le stock doit être un entier positif';
             } elseif ($key === 'editor' && !(strlen($temp) >= 2 && strlen($temp) <= 100)) {
                 $errors['editor'] = 'Éditeur invalide (nombre de caractères)';

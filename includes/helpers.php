@@ -488,7 +488,7 @@ function upload_cover_from_url(string $url): ?string
 }
 
 
-function get_books_movies_genres()
+function get_books_genres()
 {
     $genre_enum = [
         'Action',
@@ -519,6 +519,25 @@ function get_books_fields()
         "summary",
     ];
     return $all_data;
+}
+
+function get_movies_genres()
+{
+    $genre_enum = [
+        'Action',
+        'Comedy',
+        'Documentary',
+        'Drama',
+        'Fantasy',
+        'Horror',
+        'Musical',
+        'Mystery',
+        'Romance',
+        'Science Fiction',
+        'Thriller',
+        'Western',
+    ];
+    return $genre_enum;
 }
 function get_games_fields()
 {

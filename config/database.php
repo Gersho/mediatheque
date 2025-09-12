@@ -10,7 +10,7 @@ define('DB_CHARSET', 'utf8');
 
 define('BASE_URL', 'http://localhost/mediatheque-lyn-grp05/public');
 
-define('APP_NAME', 'PHP MVC Starter');
+define('APP_NAME', 'Médiathèque Lyon 5');
 define('APP_VERSION', '1.0.0');
 
 // Configuration des chemins
