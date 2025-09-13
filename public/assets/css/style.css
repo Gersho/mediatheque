@@ -161,7 +161,6 @@ body {
 
 .btn-primary,
 .btn-alert {
-  /* font-weight: bold; */
   background: var(--white);
   color: var(--primary-color);
 }

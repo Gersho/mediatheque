@@ -7,8 +7,6 @@
             <?php foreach ($fields as $field): ?>
                 <th><?= $field ?></th>
             <?php endforeach; ?>
-            <th>Emprunts en cours</th>
-            <th>Stats</th>
         </thead>
         <tbody>
             <?php foreach ($users as $user): ?>

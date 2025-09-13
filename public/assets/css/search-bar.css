@@ -10,7 +10,7 @@
   background-color: var(--white);
   color: var(--primary-color);
   border-radius: 2rem;
-  border: 0.1rem solid var(--secondary-color);
+  border: 0.2rem solid var(--primary-color);
 }
 
 .filter-wrapper {

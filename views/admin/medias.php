@@ -2,16 +2,16 @@
     <a href="medias">
         <h1>Gestion des médias</h1>
     </a>
-    <div class="flex">
-        <a href="add_book" class="btn btn-primary margin-1">Ajouter un livre</a>
-        <a href="add_movie" class="btn btn-primary margin-1">Ajouter un film</a>
-        <a href="add_game" class="btn btn-primary margin-1">Ajouter un jeu</a>
+    <div class="add-media-container">
+        <a href="add_book" class="btn btn-primary">Ajouter un livre</a>
+        <a href="add_movie" class="btn btn-primary">Ajouter un film</a>
+        <a href="add_game" class="btn btn-primary">Ajouter un jeu</a>
     </div>
 
     <?php include VIEW_PATH . '/search-bar/search-bar.php' ?>
     <table class="user-table">
         <thead>
-            <th class="text-white">ID</th>
+            <th class="text-white">Id</th>
             <th class="text-white">Stock</th>
             <th class="text-white">Type</th>
             <th class="text-white">Titre</th>
@@ -22,7 +22,8 @@
                     <td class="text-white"><?= $media['id'] ?></td>
                     <td class="text-white"><?= $media['stock'] ?></td>
                     <td class="text-white"><?= $media['type'] ?></td>
-                    <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
+                    <td><a class="table-ref"
+                            href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
                     <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a>
                     </td>
                     <td>

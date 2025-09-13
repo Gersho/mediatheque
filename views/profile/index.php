@@ -1,5 +1,5 @@
 <div class="user-page">
-    <div>
+    <div class="table-container">
         <h2>Emprunts en cours</h2>
         <?php
         if ($has_borrow_current): ?>
@@ -42,7 +42,7 @@
     </div>
 
 
-    <div>
+    <div class="table-container">
         <h2>Historique des emprunts</h2>
         <?php
         if ($has_borrow_history):

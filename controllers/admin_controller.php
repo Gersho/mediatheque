@@ -323,7 +323,7 @@ function admin_users()
         $data['pages'] = ceil(count_users() / $limit);
         $offset = ($data['current_page'] - 1) * $limit;
         $data['users'] = get_all_users($limit, $offset);
-        $data['fields'] = ['id', 'nom', 'email', 'création'];
+        $data['fields'] = ['Id', 'Nom', 'Email', 'Création', 'Emprunts en cours', 'Stats'];
 
         load_view_with_layout('admin/users', $data);
     } catch (Exception $e) {
