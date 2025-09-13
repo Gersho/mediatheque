@@ -212,7 +212,7 @@ function admin_medias()
         'stylesheets' => [
             'assets/css/search-bar.css',
             'assets/css/pagination.css',
-            'assets/css/media.css',
+            'assets/css/confirm-popover.css',
             'assets/css/admin.css',
             'assets/css/user.css',
         ],
@@ -313,6 +313,7 @@ function admin_users()
         'stylesheets' => [
             'assets/css/pagination.css',
             'assets/css/user.css',
+            'assets/css/confirm-popover.css'
         ]
     ];
 

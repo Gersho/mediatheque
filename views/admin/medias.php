@@ -23,23 +23,27 @@
                     <td class="text-white"><?= $media['stock'] ?></td>
                     <td class="text-white"><?= $media['type'] ?></td>
                     <td><a href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
-                    <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a></td>
-                    <td><button popovertarget="my-popover-<?= $media['id'] ?>" class="btn btn-alert">Supprimer</button></td>
+                    <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a>
+                    </td>
+                    <td>
+                        <button popovertarget="confirm-popover-<?= $media['id'] ?>" class="btn btn-alert">Supprimer</button>
+                        <div class="confirm-popover" popover="hint" id="confirm-popover-<?= $media['id'] ?>">
+                            <div class="confirm-container">
+                                <div class="confirm-title">Confirmer la suppression ?</div>
+                                <div class="confirm-buttons">
+                                    <form class="btn btn-primary" action="<?= url("admin/delete_media") ?>" method="post">
+                                        <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                                        <button name="id" value="<?= $media['id'] ?>">OUI</button>
+                                    </form>
+                                    <button class="btn btn-alert" popovertarget="confirm-popover-<?= $media['id'] ?>"
+                                        popovertargetaction="hide">NON</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
-                <!-- Modal popover -->
-                <div class="format-button" popover id="my-popover-<?= $media['id'] ?>">Confirmer la suppression ?
-                    <div class="espacement">
-                        <form action="<?= url("admin/delete_media") ?>" method="post">
-                            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                            <button class="yes" name="id" value="<?php e($media['id']); ?>">OUI</button>
-                        </form>
-                        <form action="" method="get">
-                            <button class="no" name="no">NON</button>
-                        </form>
-
-                    <?php endforeach; ?>
+            <?php endforeach; ?>
         </tbody>
     </table>
     <?php include_once VIEW_PATH . '/medias/pagination.php' ?>
-</div>
 </div>

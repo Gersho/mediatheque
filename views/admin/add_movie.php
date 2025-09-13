@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p><?= $action ?> un film</p>
+            <h2><?= $action ?> un film</h2>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -72,7 +72,7 @@
                 <input type="file" id="cover" name="cover_img">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">
+            <button type="submit" class="btn btn-secondary btn-full">
                 <i class="fas fa-user-plus"></i>
                 <?= $action ?>
             </button>

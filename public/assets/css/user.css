@@ -14,6 +14,7 @@
 .user-table {
   border-collapse: collapse;
   border-style: hidden;
+  text-align: center;
 }
 
 .user-table td,
@@ -59,8 +60,4 @@
   font-weight: bold;
   padding: 0.6rem 2rem;
   border-radius: 1rem;
-}
-
-a {
-  text-decoration: none;
 }

@@ -66,10 +66,10 @@ function profile_index()
         'current_page' => $current_page,
         'pages' => ceil(get_borrow_history_count_by_user_id($user_id) / $limit),
         'stylesheets' => [
-            'assets/css/media.css',
             'assets/css/user.css',
             'assets/css/profile.css',
             'assets/css/pagination.css',
+            'assets/css/confirm-popover.css'
         ]
     ];
     load_view_with_layout('profile/index', $data);

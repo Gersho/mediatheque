@@ -1,5 +1,7 @@
 <div class="user-page">
-    <a href="users"><h1>Gestion des utilisateurs</h1></a>
+    <a href="users">
+        <h1>Gestion des utilisateurs</h1>
+    </a>
     <table class="user-table">
         <thead>
             <?php foreach ($fields as $field): ?>
@@ -25,7 +27,8 @@
                         ?>
                         <div class="borrow_count_and_detail_btn">
                             <?php if ($borrow_count > 0): ?>
-                                <button class="btn btn-primary" popovertarget="<?= $borrow_popover_id ?>"><?= $borrow_count ?></button>
+                                <button class="btn btn-primary"
+                                    popovertarget="<?= $borrow_popover_id ?>"><?= $borrow_count ?></button>
                                 <!-- Popover of the user borrow list -->
                                 <div id="<?= $borrow_popover_id ?>" class="borrow-list" popover>
                                     <?php $borrows = get_borrows_details_by_user($user["id"]); ?>
@@ -91,12 +94,23 @@
                         </div>
                     </td>
                     <?php if ($user['id'] != current_user_id()): ?>
-                        <form action="<?= url("admin/delete_user") ?>" method="post">
-                            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                            <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                            <input type="hidden" name="redirect" value="admin/users">
-                            <td><button type="submit" class="btn btn-alert">Supprimer</button></td>
-                        </form>
+                        <td>
+                            <button popovertarget="confirm-popover-<?= $user['id'] ?>" class="btn btn-alert">Supprimer</button>
+                            <div class="confirm-popover" popover="hint" id="confirm-popover-<?= $user['id'] ?>">
+                                <div class="confirm-container">
+                                    <div class="confirm-title">Confirmer la suppression ?</div>
+                                    <div class="confirm-buttons">
+                                        <form class="btn btn-primary" action="<?= url("admin/delete_user") ?>" method="post">
+                                            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                                            <input type="hidden" name="redirect" value="admin/users">
+                                            <button name="id" value="<?= $user['id'] ?>">OUI</button>
+                                        </form>
+                                        <button class="btn btn-alert" popovertarget="confirm-popover-<?= $user['id'] ?>"
+                                            popovertargetaction="hide">NON</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     <?php endif; ?>
                 </tr>
             <?php endforeach; ?>

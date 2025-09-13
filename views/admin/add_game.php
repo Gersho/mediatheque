@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p><?= $data['action'] ?> un jeu</p>
+            <h2><?= $data['action'] ?> un jeu</h2>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -9,9 +9,8 @@
 
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required placeholder="Titre du jeu"
-                    value="<?php if (isset($entries['title']))
-                        echo e($entries['title']); ?>">
+                <input type="text" id="title" name="title" required placeholder="Titre du jeu" value="<?php if (isset($entries['title']))
+                    echo e($entries['title']); ?>">
             </div>
 
             <div class="form-group">
@@ -28,16 +27,14 @@
 
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1"
-                    value="<?php if (isset($entries['stock']))
-                        echo e($entries['stock']); ?>">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock']))
+                    echo e($entries['stock']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="editor">Éditeur</label>
-                <input type="text" id="editor" name="editor" required placeholder="Éditeur"
-                    value="<?php if (isset($entries['editor']))
-                        echo e($entries['editor']); ?>">
+                <input type="text" id="editor" name="editor" required placeholder="Éditeur" value="<?php if (isset($entries['editor']))
+                    echo e($entries['editor']); ?>">
             </div>
 
             <div class="form-group">
@@ -53,9 +50,8 @@
 
             <div class="form-group">
                 <label for="pegi">Pegi</label>
-                <select id="pegi" name="pegi" required
-                    value="<?php if (isset($entries['pegi']))
-                        echo $entries['pegi']; ?>">
+                <select id="pegi" name="pegi" required value="<?php if (isset($entries['pegi']))
+                    echo $entries['pegi']; ?>">
                     <option value="pegi">Pegi</option>
                     <?php foreach ($data['pegi_enum'] as $pegi): ?>
                         <option <?php if (isset($entries['pegi']) && $entries['pegi'] === $pegi)
@@ -67,9 +63,8 @@
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" name="description"
-                    placeholder="Description"><?php if (isset($entries['description']))
-                        echo e($entries['description']); ?></textarea>
+                <textarea id="description" name="description" placeholder="Description"><?php if (isset($entries['description']))
+                    echo e($entries['description']); ?></textarea>
             </div>
 
             <div class="form-group">
@@ -77,7 +72,7 @@
                 <input type="file" id="cover" name="cover_img">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">
+            <button type="submit" class="btn btn-secondary btn-full">
                 <i class="fas fa-user-plus"></i>
                 <?= $data['action'] ?>
             </button>

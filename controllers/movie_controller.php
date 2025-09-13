@@ -31,7 +31,7 @@ function movie_show()
         'stock' => $movie_info["stock"],
         'media_id' => $movie_id,
         'already_rented' => $already_rented,
-        'stylesheets' => ['assets/css/media.css']
+        'stylesheets' => ['assets/css/media.css', 'assets/css/confirm-popover.css']
     ];
 
     load_view_with_layout('movie/show', $data);

@@ -17,22 +17,23 @@
                         <td><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
                         <td><?= $elem["estimated_return"] ?></td>
                         <td>
-                            <button popovertarget="my-popover-<?php e($elem["media_id"]); ?>"
-                                class="btn btn-primary return">Retour</button>
+                            <button popovertarget="confirm-popover-<?php e($elem["media_id"]); ?>"
+                                class="btn btn-alert return">Retour</button>
+                            <div class="confirm-popover" popover="hint" id="confirm-popover-<?= $elem['media_id'] ?>">
+                                <div class="confirm-container">
+                                    <div class="confirm-title">Confirmer le retour ?</div>
+                                    <div class="confirm-buttons">
+                                        <form class="btn btn-primary" action="<?= url("media/return") ?>" method="post">
+                                            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                                            <button type="submit" name="id" value="<?= $elem["media_id"] ?>">OUI</button>
+                                        </form>
+                                        <button class="btn btn-alert" popovertarget="confirm-popover-<?= $elem['media_id'] ?>"
+                                            popovertargetaction="hide">NON</button>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
-
-                    <div class="format-button" popover id="my-popover-<?php e($elem["media_id"]); ?>">Confirmer le retour ?
-                        <div class="espacement">
-                            <form action="<?= url("media/return") ?>" method="post">
-                                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                                <button class="yes" name="id" value="<?php e($elem["media_id"]); ?>">OUI</button>
-                            </form>
-                            <form action="<?= url("profile") ?>" method="get">
-                                <button class="no">NON</button>
-                            </form>
-                        </div>
-                    </div>
                 <?php endforeach ?>
             </table>
         <?php else: ?>

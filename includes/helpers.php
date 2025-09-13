@@ -642,3 +642,11 @@ function validate_password(string $str): bool
 
     return $has_uppercase && $has_lowercase && $has_numeric;
 }
+
+function crop_string(string $str, int $max_len)
+{
+    if (strlen($str) > $max_len) {
+        return substr($str, 0, $max_len) . "...";
+    }
+    return $str;
+}

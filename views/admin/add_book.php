@@ -1,7 +1,7 @@
 <div class="auth-container">
     <div class="auth-card">
         <div class="auth-header">
-            <p><?= $data['action'] ?> un livre</p>
+            <h2><?= $data['action'] ?> un livre</h2>
         </div>
 
         <form method="POST" class="auth-form" enctype="multipart/form-data">
@@ -9,9 +9,8 @@
 
             <div class="form-group">
                 <label for="title">Titre</label>
-                <input type="text" id="title" name="title" required placeholder="Titre du livre"
-                    value="<?php if (isset($entries['title']))
-                        echo e($entries['title']); ?>">
+                <input type="text" id="title" name="title" required placeholder="Titre du livre" value="<?php if (isset($entries['title']))
+                    echo e($entries['title']); ?>">
             </div>
 
             <div class="form-group">
@@ -28,23 +27,20 @@
 
             <div class="form-group">
                 <label for="stock">Stock</label>
-                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1"
-                    value="<?php if (isset($entries['stock']))
-                        echo e($entries['stock']); ?>">
+                <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock']))
+                    echo e($entries['stock']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="author">Auteur</label>
-                <input type="text" id="author" name="author" required placeholder="Auteur"
-                    value="<?php if (isset($entries['author']))
-                        echo e($entries['author']); ?>">
+                <input type="text" id="author" name="author" required placeholder="Auteur" value="<?php if (isset($entries['author']))
+                    echo e($entries['author']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="isbn">ISBN</label>
-                <input type="text" id="isbn" name="isbn" required placeholder="ISBN"
-                    value="<?php if (isset($entries['isbn']))
-                        echo e($entries['isbn']); ?>">
+                <input type="text" id="isbn" name="isbn" required placeholder="ISBN" value="<?php if (isset($entries['isbn']))
+                    echo e($entries['isbn']); ?>">
             </div>
 
             <div class="form-group">
@@ -57,8 +53,7 @@
             <div class="form-group">
                 <label for="published_year">Date de publication</label>
                 <input type="number" id="published_year" name="published_year" required
-                    placeholder="Date de publication" min="1900"
-                    value="<?php if (isset($entries['published_year']))
+                    placeholder="Date de publication" min="1900" value="<?php if (isset($entries['published_year']))
                         echo e($entries['published_year']); ?>">
             </div>
 
@@ -74,7 +69,7 @@
                 <input type="file" id="cover" name="cover_img">
             </div>
 
-            <button type="submit" class="btn btn-primary btn-full">
+            <button type="submit" class="btn btn-secondary btn-full">
                 <i class="fas fa-user-plus"></i>
                 <?= $data['action'] ?>
             </button>

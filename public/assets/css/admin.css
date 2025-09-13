@@ -28,13 +28,6 @@ a {
   color: var(--secondary-color);
 }
 
-/* Boutons */
-.btn {
-  gap: 0;
-  margin: 0;
-  padding: 0.5rem 0.5rem;
-}
-
 .margin-1 {
   margin: 1rem;
 }

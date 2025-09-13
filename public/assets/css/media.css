@@ -27,13 +27,6 @@ h1 {
   font-size: 3rem;
 }
 
-button {
-  width: 10rem;
-  height: 3rem;
-  font-size: 1rem;
-  margin: 2rem;
-}
-
 .textfield {
   text-align: left;
   padding-left: 2rem;
@@ -66,49 +59,19 @@ button {
   /* font-family:sans-serif; */
   padding: 10px;
 }
+
 .message {
   font-size: x-large;
   font-style: italic;
 }
-.louer {
-  justify-content: center;
-}
 
-.format-button {
-  overflow: visible;
-  justify-self: center;
-  align-self: center;
-  position: fixed;
-  width: 28rem;
-  height: 10rem;
-  background-color: rgba(0, 0, 0, 0.934);
-  backdrop-filter: blur(2px);
-  color: white;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: x-large;
-  font-style: oblique;
-  text-align: center;
-}
-.yes {
-  font-weight: bold;
-  background-color: white;
-  border-radius: 10px;
-}
-.no {
-  font-weight: bold;
-  background-color: rgb(143, 134, 134);
-  border-radius: 10px;
-}
-.yes:hover {
-  background-color: rgb(99, 180, 99);
-}
-.no:hover {
-  background-color: rgb(235, 113, 113);
-}
-.espacement {
-  display: flex;
+.louer {
+  width: 10rem;
+  height: 3rem;
+  font-size: 1.3rem;
+  margin: 2rem;
+  font-weight: 500;
   justify-content: center;
-  gap: 2px;
 }
 
 @media (max-width: 768px) {
