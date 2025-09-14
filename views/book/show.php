@@ -1,6 +1,6 @@
 <div class="container">
     <section>
-        <div>
+        <div class="center-box">
             <img src="<?= e(get_media_cover_img($cover_img)) ?>">
             <span class="placement-button">
                 <?php
