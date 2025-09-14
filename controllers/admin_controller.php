@@ -14,8 +14,7 @@ function admin_add_book()
         [$is_valid, $book_data] = book_validation();
 
         if ($is_valid) {
-            $book_data['type'] = 'Book';
-            insert_new_media($book_data, 'insert_new_book');
+            insert_new_media($book_data, MediaType::Book);
             redirect('admin/medias');
         }
     }
@@ -39,11 +38,10 @@ function admin_add_movie()
             redirect('home/profile');
         }
 
-        [$is_valid, $movie_data] = book_validation();
+        [$is_valid, $movie_data] = movie_validation();
 
         if ($is_valid) {
-            $movie_data['type'] = 'Movie';
-            insert_new_media($movie_data, 'insert_new_movie');
+            insert_new_media($movie_data, MediaType::Movie);
             redirect('admin/medias');
         }
     }
@@ -72,8 +70,7 @@ function admin_add_game()
         [$is_valid, $game_data] = game_validation();
 
         if ($is_valid) {
-            $game_data['type'] = 'Game';
-            insert_new_media($game_data, 'insert_new_game');
+            insert_new_media($game_data, MediaType::Game);
             redirect('admin/medias');
         }
     }
@@ -158,7 +155,7 @@ function admin_edit_book()
         }
 
         if ($is_valid) {
-            update_media($book_data, 'update_book');
+            update_media($book_data, MediaType::Book);
             redirect('admin/medias');
         }
     }
@@ -224,7 +221,7 @@ function admin_edit_movie()
         }
 
         if ($is_valid) {
-            update_media($movie_data, 'update_movie');
+            update_media($movie_data, MediaType::Movie);
             redirect('admin/medias');
         }
     }
@@ -268,7 +265,7 @@ function admin_edit_game()
         }
 
         if ($is_valid) {
-            update_media($game_data, 'update_game');
+            update_media($game_data, MediaType::Game);
             redirect('admin/medias');
         }
     }

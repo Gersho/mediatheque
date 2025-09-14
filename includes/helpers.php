@@ -869,3 +869,10 @@ function game_validation()
     }
     return [$is_valid, $inputs];
 }
+
+enum MediaType: string
+{
+    case Book = "Book";
+    case Movie = "Movie";
+    case Game = "Game";
+}
