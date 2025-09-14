@@ -38,9 +38,9 @@
     <div class="confirm-container">
         <div class="confirm-title">Confirmer l'emprunt ?</div>
         <div class="confirm-buttons">
-            <form class="btn btn-primary" action="<?= url("media/borrow") ?>" method="post">
+            <form action="<?= url("media/borrow") ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                <button name="id" value="<?php e($media_id); ?>">OUI</button>
+                <button class="btn btn-primary" name="id" value="<?php e($media_id); ?>">OUI</button>
             </form>
             <button class="btn btn-alert" popovertarget="confirm-popover" popovertargetaction="hide">NON</button>
         </div>

@@ -33,9 +33,9 @@
                             <div class="confirm-container">
                                 <div class="confirm-title">Confirmer la suppression ?</div>
                                 <div class="confirm-buttons">
-                                    <form class="btn btn-primary" action="<?= url("admin/delete_media") ?>" method="post">
+                                    <form action="<?= url("admin/delete_media") ?>" method="post">
                                         <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                                        <button name="id" value="<?= $media['id'] ?>">OUI</button>
+                                        <button class="btn btn-primary" name="id" value="<?= $media['id'] ?>">OUI</button>
                                     </form>
                                     <button class="btn btn-alert" popovertarget="confirm-popover-<?= $media['id'] ?>"
                                         popovertargetaction="hide">NON</button>

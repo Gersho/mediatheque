@@ -7,7 +7,6 @@
     backdrop-filter: blur(2px);
     color: white;
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    font-size: x-large;
     text-align: center;
 }
 
@@ -30,10 +29,10 @@
 
 .confirm-container .confirm-title {
     font-style: oblique;
+    font-size: 1.3rem;
 }
 
 .confirm-buttons {
     display: flex;
     gap: 3rem;
-    /* justify-content: space-evenly; */
 }

@@ -23,9 +23,10 @@
                                 <div class="confirm-container">
                                     <div class="confirm-title">Confirmer le retour ?</div>
                                     <div class="confirm-buttons">
-                                        <form class="btn btn-primary" action="<?= url("media/return") ?>" method="post">
+                                        <form action="<?= url("media/return") ?>" method="post">
                                             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                                            <button type="submit" name="id" value="<?= $elem["media_id"] ?>">OUI</button>
+                                            <button class="btn btn-primary" type="submit" name="id"
+                                                value="<?= $elem["media_id"] ?>">OUI</button>
                                         </form>
                                         <button class="btn btn-alert" popovertarget="confirm-popover-<?= $elem['media_id'] ?>"
                                             popovertargetaction="hide">NON</button>

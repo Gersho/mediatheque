@@ -99,11 +99,11 @@
                                     <div class="confirm-container">
                                         <div class="confirm-title">Confirmer la suppression ?</div>
                                         <div class="confirm-buttons">
-                                            <form class="btn btn-primary" action="<?= url("admin/delete_user") ?>"
-                                                method="post">
+                                            <form action="<?= url("admin/delete_user") ?>" method="post">
                                                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
                                                 <input type="hidden" name="redirect" value="admin/users">
-                                                <button name="id" value="<?= $user['id'] ?>">OUI</button>
+                                                <button class="btn btn-primary" name="id"
+                                                    value="<?= $user['id'] ?>">OUI</button>
                                             </form>
                                             <button class="btn btn-alert" popovertarget="confirm-popover-<?= $user['id'] ?>"
                                                 popovertargetaction="hide">NON</button>
