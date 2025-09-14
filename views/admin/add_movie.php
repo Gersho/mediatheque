@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="title">Titre</label>
                 <input type="text" id="title" name="title" required placeholder="Titre du film" value="<?php if (isset($entries['title']))
-                    echo e($entries['title']); ?>">
+                    e($entries['title']); ?>">
             </div>
 
             <div class="form-group">
@@ -28,32 +28,32 @@
             <div class="form-group">
                 <label for="stock">Stock</label>
                 <input type="number" id="stock" name="stock" required placeholder="Stock" min="1" value="<?php if (isset($entries['stock']))
-                    echo e($entries['stock']); ?>">
+                    e($entries['stock']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="director">Réalisateur</label>
                 <input type="text" id="director" name="director" required placeholder="Réalisateur" value="<?php if (isset($entries['director']))
-                    echo e($entries['director']); ?>">
+                    e($entries['director']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="duration">Durée (minutes)</label>
                 <input type="number" id="duration" name="duration" required placeholder="Durée" min="1" max="999" value="<?php if (isset($entries['duration']))
-                    echo e($entries['duration']); ?>">
+                    e($entries['duration']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="published_year">Date de publication</label>
                 <input type="number" id="published_year" name="published_year" required
                     placeholder="Date de publication" min="1900" value="<?php if (isset($entries['published_year']))
-                        echo e($entries['published_year']); ?>">
+                        e($entries['published_year']); ?>">
             </div>
 
             <div class="form-group">
                 <label for="synopsis">Synopsis</label>
                 <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film"><?php if (isset($entries['synopsis']))
-                    echo e($entries['synopsis']); ?></textarea>
+                    e($entries['synopsis']); ?></textarea>
             </div>
 
             <div class="form-group">

@@ -682,3 +682,190 @@ function get_estimated_return_date(string $borrow_date)
     $formated = $return_date->format('d/m/Y');
     return $formated;
 }
+
+
+// Validations
+
+function get_error_by_field(string $field): string
+{
+    $errors = [
+        'title' => 'Titre invalide (nombre de caractères entre 1 et 200)',
+        'genre' => 'Genre invalide',
+        'stock' => 'Le stock doit être un entier positif',
+        'author' => 'Auteur invalide (nombre de caractères entre 2 et 100)',
+        'isbn' => 'ISBN invalide (10 ou 13 chiffres) ou déjà utilisé',
+        'pages' => 'Le nombre de pages doit être un entier entre 1 et 9999',
+        'published_year' => 'L\'année de publication doit être comprise entre 1900 et l\'année actuelle',
+        'summary' => 'Le résumé doit comprendre entre 1 et 3000 caractères',
+        'director' => 'Réalisateur invalide (nombre de caractères entre 2 et 100)',
+        'duration' => 'La durée du film doit être un entier entre 1 et 999',
+        'synopsis' => 'Le synopsis doit comprendre entre 1 et 3000 caractères',
+        'editor' => 'Éditeur invalide (nombre de caractères entre 2 et 100)',
+        'description' => 'La description doit comprendre entre 1 et 3000 caractères',
+        'pegi' => 'Certification PEGI invalide',
+        'plateform' => 'Plateforme invalide',
+        'certification' => 'Certification invalide'
+    ];
+    return $errors[$field] ?? "Aucune erreur ne correspond à ce champ";
+}
+
+function int_validation(string $nb, int $min = null, int $max = null): bool
+{
+    $nb_int = filter_var($nb, FILTER_VALIDATE_INT);
+
+    if ($nb_int === false) {
+        return false;
+    }
+
+    if ($min != null && $nb_int < $min) {
+        return false;
+    }
+
+    if ($max != null && $nb_int > $max) {
+        return false;
+    }
+
+    return true;
+}
+
+function string_range_validation(string $str, int $min = null, int $max = null): bool
+{
+    $len = strlen($str);
+    if ($min != null && $len < $min) {
+        return false;
+    }
+    if ($max != null && $len > $max) {
+        return false;
+    }
+    return true;
+}
+
+function isbn_validation(string $isbn, $is_edit = false): bool
+{
+    if (!is_numeric($isbn)) {
+        return false;
+    }
+
+    $len = strlen($isbn);
+
+    if ($len !== 10 && $len !== 13) {
+        return false;
+    }
+
+    if ($is_edit) {
+        if (!check_isbn_unique($isbn, get('id'))) {
+            return false;
+        }
+    } else {
+        if (!check_isbn_unique($isbn)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function book_validation($is_edit = false)
+{
+    $fields = get_books_fields();
+    $genres = get_books_genres();
+    $inputs = [];
+    $is_valid = true;
+
+    foreach ($fields as $field) {
+        if (!post($field)) {
+            set_flash('error', "$field n'est pas renseigné");
+            $is_valid = false;
+            continue;
+        }
+
+        $input = trim(post($field));
+        $valid = match ($field) {
+            'title' => string_range_validation($input, 1, 200),
+            'genre' => in_array($input, $genres),
+            'stock' => int_validation($input, 1),
+            'author' => string_range_validation($input, 2, 100),
+            'isbn' => isbn_validation($input, $is_edit),
+            'pages' => int_validation($input, 1, 9999),
+            'published_year' => int_validation($input, 1900, date('Y')),
+            'summary' => string_range_validation($input, 1, 3000)
+        };
+        if (!$valid) {
+            $is_valid = false;
+            set_flash('error', get_error_by_field($field));
+        }
+        $inputs[$field] = $input;
+    }
+    return [$is_valid, $inputs];
+}
+
+function movie_validation()
+{
+    $fields = get_movies_fields();
+    $genres = get_movies_genres();
+    $certifications = get_movies_certifications();
+    $inputs = [];
+    $is_valid = true;
+
+    foreach ($fields as $field) {
+        if (!post($field)) {
+            set_flash('error', "$field n'est pas renseigné");
+            $is_valid = false;
+            continue;
+        }
+
+        $input = trim(post($field));
+        $valid = match ($field) {
+            'title' => string_range_validation($input, 1, 200),
+            'genre' => in_array($input, $genres),
+            'stock' => int_validation($input, 1),
+            'director' => string_range_validation($input, 2, 100),
+            'duration' => int_validation($input, 1, 999),
+            'published_year' => int_validation($input, 1900, date('Y')),
+            'certification' => in_array($input, $certifications),
+            'synopsis' => string_range_validation($input, 1, 3000)
+        };
+        if (!$valid) {
+            $is_valid = false;
+            set_flash('error', get_error_by_field($field));
+        }
+        $inputs[$field] = $input;
+    }
+    return [$is_valid, $inputs];
+}
+
+function game_validation()
+{
+    $fields = get_games_fields();
+    $genres = get_games_genres();
+    $plateforms = get_games_plateforms();
+    $pegis = get_games_pegis();
+    $inputs = [];
+    $is_valid = true;
+
+    foreach ($fields as $field) {
+        if (!post($field)) {
+            set_flash('error', "$field n'est pas renseigné");
+            $is_valid = false;
+            continue;
+        }
+
+        $input = trim(post($field));
+        $valid = match ($field) {
+            'title' => string_range_validation($input, 1, 200),
+            'genre' => in_array($input, $genres),
+            'stock' => int_validation($input, 1),
+            'editor' => string_range_validation($input, 2, 100),
+            'duration' => int_validation($input, 1, 999),
+            'pegi' => in_array($input, $pegis),
+            'plateform' => in_array($input, $plateforms),
+            'description' => string_range_validation($input, 1, 3000)
+        };
+        if (!$valid) {
+            $is_valid = false;
+            set_flash('error', get_error_by_field($field));
+        }
+        $inputs[$field] = $input;
+    }
+    return [$is_valid, $inputs];
+}
