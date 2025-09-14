@@ -42,6 +42,8 @@ function media_borrow()
         error_logging(ErrorType::Error, "Failed to borrow media" . $media_id . " by user " . $user_id);
         redirect("home");
     }
+    $return_date = get_estimated_return_date(date('Y-m-d H:i:s'));
+    set_flash("success", "Emprunt enregistré avec succès. Date de retour prévue : " . $return_date);
     redirect("profile");
 }
 
