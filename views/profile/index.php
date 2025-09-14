@@ -8,15 +8,15 @@
                     <th>Titre</th>
                     <th>Type</th>
                     <th>Date d'emprunt</th>
-                    <th>Temps avant retour</th>
+                    <th>Retour prévu</th>
                 </tr>
                 <?php foreach ($borrow_current_info as $elem): ?>
                     <tr>
-                        <td><?= e($elem["title"]) ?></td>
-                        <td><?= e($elem["type"]) ?></td>
-                        <td><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
-                        <td><?= $elem["estimated_return"] ?></td>
-                        <td>
+                        <td data-label="Titre"><?= e($elem["title"]) ?></td>
+                        <td data-label="Type"><?= e($elem["type"]) ?></td>
+                        <td data-label="Date d'emprunt"><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
+                        <td data-label="Retour prévu"><?= $elem["estimated_return"] ?></td>
+                        <td class="no-label">
                             <button popovertarget="confirm-popover-<?php e($elem["media_id"]); ?>"
                                 class="btn btn-alert return">Retour</button>
                             <div class="confirm-popover" popover="hint" id="confirm-popover-<?= $elem['media_id'] ?>">
@@ -56,10 +56,10 @@
                 </tr>
                 <?php foreach ($borrow_history_info as $elem): ?>
                     <tr>
-                        <td><?= $elem["title"] ?></td>
-                        <td><?= e($elem["type"]) ?></td>
-                        <td><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
-                        <td><?= e(format_date($elem["return_date"], $format = 'd/m/Y')) ?></td>
+                        <td data-label="Titre"><?= $elem["title"] ?></td>
+                        <td data-label="Type"><?= e($elem["type"]) ?></td>
+                        <td data-label="Date d'emprunt"><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
+                        <td data-label="Date de retour"><?= e(format_date($elem["return_date"], $format = 'd/m/Y')) ?></td>
                     </tr>
                 <?php endforeach ?>
             </table>

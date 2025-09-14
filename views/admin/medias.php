@@ -19,14 +19,15 @@
         <tbody>
             <?php foreach ($medias as $media): ?>
                 <tr>
-                    <td class="text-white"><?= $media['id'] ?></td>
-                    <td class="text-white"><?= $media['stock'] ?></td>
-                    <td class="text-white"><?= $media['type'] ?></td>
-                    <td><a class="table-ref"
+                    <td data-label="Id" class="text-white"><?= $media['id'] ?></td>
+                    <td data-label="Stock" class="text-white"><?= $media['stock'] ?></td>
+                    <td data-label="Type" class="text-white"><?= $media['type'] ?></td>
+                    <td data-label="Titre"><a class="table-ref"
                             href="<?= get_media_url($media['id'], $media['type']) ?>"><?= $media['title'] ?></a></td>
-                    <td><a class="btn btn-primary" href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a>
+                    <td class="no-label"><a class="btn btn-primary"
+                            href="<?= get_edit_url($media['id'], $media['type']) ?>">Modifier</a>
                     </td>
-                    <td>
+                    <td class="no-label">
                         <button popovertarget="confirm-popover-<?= $media['id'] ?>" class="btn btn-alert">Supprimer</button>
                         <div class="confirm-popover" popover="hint" id="confirm-popover-<?= $media['id'] ?>">
                             <div class="confirm-container">

@@ -9,8 +9,13 @@
 
 .user-page h1 {
   color: var(--secondary-color);
+  text-align: center;
 }
 
+.user-table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+}
 
 .user-table {
   border-collapse: collapse;
@@ -29,23 +34,18 @@
   padding: 0.8rem;
 }
 
-.borrow-list-container {
-  display: flex;
-  width: 100%;
-  background-color: aqua;
-  justify-content: center;
-}
-
-.borrow-list {
+.borrow-list, .stats-container {
   background-color: var(--background-color);
   color: white;
   align-self: center;
   justify-self: center;
   padding: 2rem;
   border-radius: 0.6rem;
+  max-height: 60%;
+  overflow-y: auto;
 }
 
-.borrow-list p {
+.borrow-list p, .stats-container p {
   text-align: center;
   font-size: 1.3rem;
   font-weight: bold;
@@ -60,4 +60,63 @@
   font-weight: bold;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .user-table, .user-table tr {
+    border: 1px solid white;
+  }
+
+  .user-table th {
+    display: none;
+  }
+
+  .user-table td {
+    display: grid;
+    text-align: left;
+    margin-left: 0.6rem;
+  }
+  
+  .user-table td:not(.no-label) {
+    grid-template-columns: 15ch auto;
+  }
+
+  .user-table td:first-child {
+    padding-top: 2rem;
+  }
+
+  .user-table td:last-child {
+    padding-bottom: 2rem;
+  }
+
+  .user-table .btn {
+    max-width: fit-content;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .user-table td {
+    border: none;
+  }
+
+  .user-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: var(--white);
+  }
+
+
+  .borrow-list p, .stats-container p {
+    margin-bottom: 1rem;
+  }
+
+  .stats-container .user-table td:not(.no-label) {
+    grid-template-columns: 20ch auto;
+  }
+
+  .stats-container .user-table, .stats-container .user-table tr {
+    border: none;
+  }
+
 }

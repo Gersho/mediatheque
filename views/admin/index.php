@@ -25,7 +25,7 @@
                         <th>Titre du medias</th>
                         <th>Nom de l'utilisateur</th>
                         <th>Date d'emprunt</th>
-                        <th>Date de retour prévu</th>
+                        <th>Retour prévu</th>
                     </tr>
 
                 </thead>
@@ -33,10 +33,10 @@
                     <?php foreach ($list as $elem): ?>
 
                         <tr>
-                            <td><?= e($elem["title"]) ?></td>
-                            <td><?= e($elem["name"]) ?></td>
-                            <td><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
-                            <td> <?= e(get_estimated_return_date($elem['start'])); ?></td>
+                            <td data-label="Titre"><?= e($elem["title"]) ?></td>
+                            <td data-label="Nom"><?= e($elem["name"]) ?></td>
+                            <td data-label="Date d'emprunt"><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
+                            <td data-label="Retour prévu"> <?= e(get_estimated_return_date($elem['start'])); ?></td>
 
                         </tr>
                     <?php endforeach; ?>
