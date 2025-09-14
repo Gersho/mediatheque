@@ -650,3 +650,35 @@ function crop_string(string $str, int $max_len)
     }
     return $str;
 }
+
+// function get_time_before_return(string $borrow_date)
+// {
+//     $return_date = date_create($borrow_date)->modify("+" . RETURN_DELAY . "days");
+//     $now = date_create();
+//     $time_left = date_diff($now, $return_date);
+//     $late = $time_left->invert ? "Il y a" : "Dans";
+//     $units = [
+//         'y' => ['an', 'ans'],
+//         'm' => ['mois', 'mois'],
+//         'd' => ['jour', 'jours'],
+//         'h' => ['heure', 'heures'],
+//         'i' => ['minute', 'minutes'],
+//         's' => ['seconde', 'secondes'],
+//     ];
+
+//     foreach ($units as $key => [$singular, $plural]) {
+//         $value = $time_left->$key;
+//         if ($value > 0) {
+//             $label = $value === 1 ? $singular : $plural;
+//             return "$late $value $label";
+//         }
+//     }
+//     return "maintenant";
+// }
+
+function get_estimated_return_date(string $borrow_date)
+{
+    $return_date = date_create($borrow_date)->modify("+" . RETURN_DELAY . "days");
+    $formated = $return_date->format('d/m/Y');
+    return $formated;
+}
