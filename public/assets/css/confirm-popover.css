@@ -2,8 +2,7 @@
     overflow: visible;
     justify-self: center;
     align-self: center;
-    width: 28rem;
-    height: 10rem;
+    padding: 0.4rem 3rem 2rem 3rem;
     background-color: rgba(0, 0, 0, 0.934);
     backdrop-filter: blur(2px);
     color: white;
@@ -35,5 +34,6 @@
 
 .confirm-buttons {
     display: flex;
-    justify-content: space-evenly;
+    gap: 3rem;
+    /* justify-content: space-evenly; */
 }
