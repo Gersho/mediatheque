@@ -1,3 +1,5 @@
+<!-- tabindex on this page has to take into account that
+        flash messages uses tabindex 1 -->
 <div class="container">
     <section>
         <div class="center-box">
@@ -6,28 +8,28 @@
                 <?php
                 if ($stock !== 0 && !$already_rented):
                     ?>
-                    <button tabindex="3" popovertarget="confirm-popover" class="btn btn-primary louer">Emprunter</button>
+                    <button tabindex="4" popovertarget="confirm-popover" class="btn btn-primary louer">Emprunter</button>
                     <?php
                 elseif ($already_rented): ?>
-                    <div tabindex="3" class="message">Vous louez deja ce media.</div>
+                    <div tabindex="4" class="message">Vous louez deja ce media.</div>
                 <?php else: ?>
-                    <div tabindex="3" class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
+                    <div tabindex="4" class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
                 <?php endif; ?>
             </span>
 
         </div>
         <div class="textfield">
             <div class="titlefield">
-                <h1 tabindex="1"><?= e($title); ?></h1>
+                <h1 tabindex="2"><?= e($title); ?></h1>
             </div>
             <div class="auteur">
-                <p tabindex="4">par <?php e($author); ?> en <?php e($published_year); ?></p>
+                <p tabindex="5">par <?php e($author); ?> en <?php e($published_year); ?></p>
             </div>
-            <p tabindex="4">isbn: <?php e($isbn); ?></p>
-            <p tabindex="4">genre: <?php e($genre); ?></p>
-            <p tabindex="4">pages: <?php e($pages); ?></p>
-            <p tabindex="2">Resumé:</p>
-            <div tabindex="2" class="scroll-box"><?php e($summary); ?> </div>
+            <p tabindex="5">isbn: <?php e($isbn); ?></p>
+            <p tabindex="5">genre: <?php e($genre); ?></p>
+            <p tabindex="5">pages: <?php e($pages); ?></p>
+            <p tabindex="3">Resumé:</p>
+            <div tabindex="3" class="scroll-box"><?php e($summary); ?> </div>
         </div>
     </section>
 </div>
@@ -35,13 +37,13 @@
 <!-- Modal popover -->
 <div class="confirm-popover" popover="hint" id="confirm-popover">
     <div class="confirm-container">
-        <div tabindex="4" class="confirm-title">Confirmer l'emprunt ?</div>
+        <div tabindex="5" class="confirm-title">Confirmer l'emprunt ?</div>
         <div class="confirm-buttons">
             <form action="<?= url("media/borrow") ?>" method="post">
                 <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                <button tabindex="4" class="btn btn-primary" name="id" value="<?php e($media_id); ?>">OUI</button>
+                <button tabindex="5" class="btn btn-primary" name="id" value="<?php e($media_id); ?>">OUI</button>
             </form>
-            <button tabindex="4" class="btn btn-alert" popovertarget="confirm-popover"
+            <button tabindex="5" class="btn btn-alert" popovertarget="confirm-popover"
                 popovertargetaction="hide">NON</button>
         </div>
     </div>

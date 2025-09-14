@@ -1,6 +1,10 @@
+<!-- tabindex on this page has to take into account that
+        flash messages uses tabindex 1
+        pagination uses tabindex 9 -->
+
 <div class="user-page">
     <div class="table-container">
-        <h2>Emprunts en cours</h2>
+        <h2 tabindex="2">Emprunts en cours</h2>
         <?php
         if ($has_borrow_current): ?>
             <table class="user-table">
@@ -12,23 +16,26 @@
                 </tr>
                 <?php foreach ($borrow_current_info as $elem): ?>
                     <tr>
-                        <td data-label="Titre"><?= e($elem["title"]) ?></td>
+                        <td tabindex="2" data-label="Titre"><?= e($elem["title"]) ?></td>
                         <td data-label="Type"><?= e($elem["type"]) ?></td>
-                        <td data-label="Date d'emprunt"><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
-                        <td data-label="Retour prévu"><?= $elem["estimated_return"] ?></td>
+                        <td tabindex="2" title="Date d'emprunt" data-label="Date d'emprunt">
+                            <?= e(format_date($elem["start"], $format = 'd/m/Y')) ?>
+                        </td>
+                        <td tabindex="2" title="Retour prévu" data-label="Retour prévu"><?= $elem["estimated_return"] ?></td>
                         <td class="no-label">
-                            <button popovertarget="confirm-popover-<?php e($elem["media_id"]); ?>"
+                            <button tabindex="2" popovertarget="confirm-popover-<?php e($elem["media_id"]); ?>"
                                 class="btn btn-alert return">Retour</button>
                             <div class="confirm-popover" popover="hint" id="confirm-popover-<?= $elem['media_id'] ?>">
                                 <div class="confirm-container">
-                                    <div class="confirm-title">Confirmer le retour ?</div>
+                                    <div tabindex="3" class="confirm-title">Confirmer le retour ?</div>
                                     <div class="confirm-buttons">
                                         <form action="<?= url("media/return") ?>" method="post">
                                             <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-                                            <button class="btn btn-primary" type="submit" name="id"
+                                            <button tabindex="3" class="btn btn-primary" type="submit" name="id"
                                                 value="<?= $elem["media_id"] ?>">OUI</button>
                                         </form>
-                                        <button class="btn btn-alert" popovertarget="confirm-popover-<?= $elem['media_id'] ?>"
+                                        <button tabindex="3" class="btn btn-alert"
+                                            popovertarget="confirm-popover-<?= $elem['media_id'] ?>"
                                             popovertargetaction="hide">NON</button>
                                     </div>
                                 </div>
@@ -44,7 +51,7 @@
 
 
     <div class="table-container">
-        <h2>Historique des emprunts</h2>
+        <h2 tabindex="2">Historique des emprunts</h2>
         <?php
         if ($has_borrow_history):
             ?>
@@ -57,10 +64,14 @@
                 </tr>
                 <?php foreach ($borrow_history_info as $elem): ?>
                     <tr>
-                        <td data-label="Titre"><?= $elem["title"] ?></td>
+                        <td tabindex="2" data-label="Titre"><?= $elem["title"] ?></td>
                         <td data-label="Type"><?= e($elem["type"]) ?></td>
-                        <td data-label="Date d'emprunt"><?= e(format_date($elem["start"], $format = 'd/m/Y')) ?></td>
-                        <td data-label="Date de retour"><?= e(format_date($elem["return_date"], $format = 'd/m/Y')) ?></td>
+                        <td tabindex="2" title="Date d'emprunt" data-label="Date d'emprunt">
+                            <?= e(format_date($elem["start"], $format = 'd/m/Y')) ?>
+                        </td>
+                        <td tabindex="2" title="Date de retour" data-label="Date de retour">
+                            <?= e(format_date($elem["return_date"], $format = 'd/m/Y')) ?>
+                        </td>
                     </tr>
                 <?php endforeach ?>
             </table>
