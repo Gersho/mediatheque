@@ -1,17 +1,13 @@
 .return {
   margin: 0;
   justify-content: center;
-  /* background-color: blue; */
   max-width: fit-content;
-  /* max-width: 20%; */
-  /* color: blue; */
 }
 
 .user-page div h2 {
   font-weight: bold;
   text-align: center;
   color: var(--secondary-color);
-  /* color: white; */
   align-self: center;
   justify-self: center;
   padding: 2rem;

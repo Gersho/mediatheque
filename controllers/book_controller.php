@@ -40,16 +40,3 @@ function book_show()
     load_view_with_layout('book/show', $data);
 }
 
-
-// array(11) { 
-//     ["id"]=> int(2) 
-//     ["author"]=> string(19) "F. Scott Fitzgerald" 
-//     ["isbn"]=> string(13) "9780743273565" 
-//     ["pages"]=> int(180) 
-//     ["published_year"]=> int(1925) 
-//     ["summary"]=> string(68) "A mysterious millionaire pursues the woman he loves in the Jazz Age." 
-//     ["title"]=> string(16) "The Great Gatsby" 
-//     ["genre"]=> string(5) "Drama" 
-//     ["type"]=> string(4) "Book" 
-//     ["cover_img"]=> string(60) "https://m.media-amazon.com/images/I/91yg5rniqwL._SL1500_.jpg" 
-//     ["stock"]=> int(4) } 

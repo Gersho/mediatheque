@@ -12,7 +12,7 @@
                 elseif ($already_rented): ?>
                     <div class="message">Vous louez deja ce media.</div>
                 <?php else: ?>
-                    <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
+                    <div class="message">Désolé ! Ce jeux n'est plus disponible en stock.</div>
                 <?php endif; ?>
             </span>
 

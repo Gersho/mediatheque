@@ -1,6 +1,6 @@
 <div class="container">
     <section>
-        <div>
+        <div class="center-box">
             <img src="<?= e(get_media_cover_img($cover_img)) ?>">
             <span class="placement-button">
                 <?php
@@ -12,7 +12,7 @@
                 elseif ($already_rented): ?>
                     <div class="message">Vous louez deja ce media.</div>
                 <?php else: ?>
-                    <div class="message">Désolé ! Ce livre n'est plus disponible en stock.</div>
+                    <div class="message">Désolé ! Ce film n'est plus disponible en stock.</div>
                 <?php endif; ?>
             </span>
 
