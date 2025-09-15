@@ -83,10 +83,11 @@ function update_media(array $data, MediaType $media_type)
         db_rollback();
         if ($e instanceof PDOException) {
             $msg = "Insert Error. Media Type: $type | Media title: $title | Type: PDOException | Message: " . $e->getMessage();
+            set_flash('error', "Erreur lors de la modification dans la base de données");
         } else {
             $msg = $e->getMessage();
+            set_flash('error', $msg);
         }
-        set_flash('error', "Erreur lors de la modification dans la base de données");
         error_logging(ErrorType::Error, $msg);
 
         return false;
