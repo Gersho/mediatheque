@@ -617,7 +617,6 @@ function is_admin()
         return true;
     }
     return false;
-
 }
 
 function validate_password(string $str): bool
@@ -765,7 +764,7 @@ function isbn_validation(string $isbn, $is_edit = false): bool
     return true;
 }
 
-function book_validation($is_edit = false)
+function book_validation(bool $is_edit = false)
 {
     $fields = get_books_fields();
     $genres = get_books_genres();
@@ -783,7 +782,7 @@ function book_validation($is_edit = false)
         $valid = match ($field) {
             'title' => string_range_validation($input, 1, 200),
             'genre' => in_array($input, $genres),
-            'stock' => int_validation($input, 1),
+            'stock' => int_validation($input, $is_edit ? 0 : 1),
             'author' => string_range_validation($input, 2, 100),
             'isbn' => isbn_validation($input, $is_edit),
             'pages' => int_validation($input, 1, 9999),
@@ -799,7 +798,7 @@ function book_validation($is_edit = false)
     return [$is_valid, $inputs];
 }
 
-function movie_validation()
+function movie_validation(bool $is_edit = false)
 {
     $fields = get_movies_fields();
     $genres = get_movies_genres();
@@ -818,7 +817,7 @@ function movie_validation()
         $valid = match ($field) {
             'title' => string_range_validation($input, 1, 200),
             'genre' => in_array($input, $genres),
-            'stock' => int_validation($input, 1),
+            'stock' => int_validation($input, $is_edit ? 0 : 1),
             'director' => string_range_validation($input, 2, 100),
             'duration' => int_validation($input, 1, 999),
             'published_year' => int_validation($input, 1900, date('Y')),
@@ -834,7 +833,7 @@ function movie_validation()
     return [$is_valid, $inputs];
 }
 
-function game_validation()
+function game_validation(bool $is_edit = false)
 {
     $fields = get_games_fields();
     $genres = get_games_genres();
@@ -854,7 +853,7 @@ function game_validation()
         $valid = match ($field) {
             'title' => string_range_validation($input, 1, 200),
             'genre' => in_array($input, $genres),
-            'stock' => int_validation($input, 1),
+            'stock' => int_validation($input, $is_edit ? 0 : 1),
             'editor' => string_range_validation($input, 2, 100),
             'duration' => int_validation($input, 1, 999),
             'pegi' => in_array($input, $pegis),

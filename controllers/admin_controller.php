@@ -214,7 +214,7 @@ function admin_edit_movie()
             redirect('home/profile');
         }
 
-        [$is_valid, $inputs] = movie_validation();
+        [$is_valid, $inputs] = movie_validation(true);
 
         foreach ($inputs as $field => $value) {
             $movie_data[$field] = $value;
@@ -258,7 +258,7 @@ function admin_edit_game()
             redirect('home/profile');
         }
 
-        [$is_valid, $inputs] = game_validation();
+        [$is_valid, $inputs] = game_validation(true);
 
         foreach ($inputs as $field => $value) {
             $game_data[$field] = $value;
