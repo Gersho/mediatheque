@@ -695,12 +695,12 @@ function get_error_by_field(string $field): string
         'isbn' => 'ISBN invalide (10 ou 13 chiffres) ou déjà utilisé',
         'pages' => 'Le nombre de pages doit être un entier entre 1 et 9999',
         'published_year' => 'L\'année de publication doit être comprise entre 1900 et l\'année actuelle',
-        'summary' => 'Le résumé doit comprendre entre 1 et 3000 caractères',
+        'summary' => 'Le résumé doit comprendre maximum 3000 caractères',
         'director' => 'Réalisateur invalide (nombre de caractères entre 2 et 100)',
         'duration' => 'La durée du film doit être un entier entre 1 et 999',
-        'synopsis' => 'Le synopsis doit comprendre entre 1 et 3000 caractères',
+        'synopsis' => 'Le synopsis doit comprendre maximum 3000 caractères',
         'editor' => 'Éditeur invalide (nombre de caractères entre 2 et 100)',
-        'description' => 'La description doit comprendre entre 1 et 3000 caractères',
+        'description' => 'La description doit comprendre maximum 3000 caractères',
         'pegi' => 'Certification PEGI invalide',
         'plateform' => 'Plateforme invalide',
         'certification' => 'Certification invalide'
@@ -789,7 +789,7 @@ function book_validation(bool $is_edit = false)
             'isbn' => isbn_validation($input, $is_edit),
             'pages' => int_validation($input, 1, 9999),
             'published_year' => int_validation($input, 1900, date('Y')),
-            'summary' => string_range_validation($input, 1, 3000)
+            'summary' => string_range_validation($input, 0, 3000)
         };
         if (!$valid) {
             $is_valid = false;
@@ -824,7 +824,7 @@ function movie_validation(bool $is_edit = false)
             'duration' => int_validation($input, 1, 999),
             'published_year' => int_validation($input, 1900, date('Y')),
             'certification' => in_array($input, $certifications),
-            'synopsis' => string_range_validation($input, 1, 3000)
+            'synopsis' => string_range_validation($input, 0, 3000)
         };
         if (!$valid) {
             $is_valid = false;
@@ -860,7 +860,7 @@ function game_validation(bool $is_edit = false)
             'duration' => int_validation($input, 1, 999),
             'pegi' => in_array($input, $pegis),
             'plateform' => in_array($input, $plateforms),
-            'description' => string_range_validation($input, 1, 3000)
+            'description' => string_range_validation($input, 0, 3000)
         };
         if (!$valid) {
             $is_valid = false;
