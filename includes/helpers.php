@@ -259,7 +259,7 @@ function error_logging(ErrorType $type, string $message)
     $log_file = LOG_PATH . '/app.log';
     if (!file_exists($log_file)) {
         if (!is_dir(LOG_PATH)) {
-            mkdir(LOG_PATH, 0775, true);
+            mkdir(LOG_PATH, 0755, true);
         }
         touch($log_file);
     }
@@ -376,7 +376,7 @@ function upload_cover_image(): string|null
     }
     // Check if directory exist
     if (!is_dir(UPLOAD_PATH)) {
-        if (!mkdir(UPLOAD_PATH, 0775, true)) {
+        if (!mkdir(UPLOAD_PATH, 0755, true)) {
             throw new Exception("Failed to create uploads/covers directories");
         }
     }
@@ -433,7 +433,7 @@ function upload_cover_from_url(string $url): ?string
 
     // Check if directory exist
     if (!is_dir(UPLOAD_PATH)) {
-        if (!mkdir(UPLOAD_PATH, 0775, true)) {
+        if (!mkdir(UPLOAD_PATH, 0755, true)) {
             throw new Exception("Failed to create uploads/covers directories");
         }
     }
