@@ -15,6 +15,7 @@
             <th class="text-white">Stock</th>
             <th class="text-white">Type</th>
             <th class="text-white">Titre</th>
+            <th class="text-white" colspan="2">Action</th>
         </thead>
         <tbody>
             <?php foreach ($medias as $media): ?>
