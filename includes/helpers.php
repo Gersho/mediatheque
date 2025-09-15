@@ -777,8 +777,6 @@ function book_validation(bool $is_edit = false)
             continue;
         }
 
-        // var_dump($is_edit ? 0 : 1);
-        // die();
         $input = trim(post($field));
         $valid = match ($field) {
             'title' => string_range_validation($input, 1, 200),
