@@ -708,7 +708,7 @@ function get_error_by_field(string $field): string
     return $errors[$field] ?? "Aucune erreur ne correspond à ce champ";
 }
 
-function int_validation(string $nb, int $min = null, int $max = null): bool
+function int_validation(string $nb, ?int $min = null, ?int $max = null): bool
 {
     $nb_int = filter_var($nb, FILTER_VALIDATE_INT);
 
@@ -727,7 +727,7 @@ function int_validation(string $nb, int $min = null, int $max = null): bool
     return true;
 }
 
-function string_range_validation(string $str, int $min = null, int $max = null): bool
+function string_range_validation(string $str, ?int $min = null, ?int $max = null): bool
 {
     $len = strlen($str);
     if ($min != null && $len < $min) {
@@ -772,12 +772,14 @@ function book_validation(bool $is_edit = false)
     $is_valid = true;
 
     foreach ($fields as $field) {
-        if (!post($field)) {
+        if (!isset($field)) {
             set_flash('error', "$field n'est pas renseigné");
             $is_valid = false;
             continue;
         }
 
+        // var_dump($is_edit ? 0 : 1);
+        // die();
         $input = trim(post($field));
         $valid = match ($field) {
             'title' => string_range_validation($input, 1, 200),
@@ -807,7 +809,7 @@ function movie_validation(bool $is_edit = false)
     $is_valid = true;
 
     foreach ($fields as $field) {
-        if (!post($field)) {
+        if (!isset($field)) {
             set_flash('error', "$field n'est pas renseigné");
             $is_valid = false;
             continue;
@@ -843,7 +845,7 @@ function game_validation(bool $is_edit = false)
     $is_valid = true;
 
     foreach ($fields as $field) {
-        if (!post($field)) {
+        if (!isset($field)) {
             set_flash('error', "$field n'est pas renseigné");
             $is_valid = false;
             continue;
