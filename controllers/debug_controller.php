@@ -10,11 +10,11 @@ function debug_index()
                 try {
                     $media["cover_img"] = upload_cover_from_url($media["cover_img"]);
                     if ($media["type"] === 'Game') {
-                        insert_new_media($media, 'insert_new_game');
+                        insert_new_media($media, MediaType::Game);
                     } else if ($media['type'] === 'Movie') {
-                        insert_new_media($media, 'insert_new_movie');
+                        insert_new_media($media, MediaType::Movie);
                     } else if ($media['type'] === 'Book') {
-                        insert_new_media($media, 'insert_new_book');
+                        insert_new_media($media, MediaType::Book);
                     }
                 } catch (Exception $e) {
                     error_logging(ErrorType::Error, $e->getMessage());
