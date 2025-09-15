@@ -52,8 +52,8 @@
 
             <div class="form-group">
                 <label for="synopsis">Synopsis</label>
-                <textarea id="synopsis" name="synopsis" required placeholder="Synopsis du film"><?php if (isset($entries['synopsis']))
-                                                                                                    e($entries['synopsis']); ?></textarea>
+                <textarea id="synopsis" name="synopsis" placeholder="Synopsis du film" maxlength="3000"><?php if (isset($entries['synopsis']))
+                                                                                                            e($entries['synopsis']); ?></textarea>
             </div>
 
             <div class="form-group">
