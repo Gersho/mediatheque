@@ -8,7 +8,7 @@
                     <h2><?= strtoupper($media['type']) ?></h2>
                     <a class="media-tile-cover-title" href="<?= get_media_url($media['id'], $media['type']) ?>">
                         <img src="<?= get_media_cover_img($media['cover_img']) ?>" alt="cover">
-                        <p><?php e($media['title']) ?></p>
+                        <p><?php e(crop_string($media['title'], 35)) ?></p>
                     </a>
                 </div>
             </div>

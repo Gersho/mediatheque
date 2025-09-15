@@ -1,7 +1,7 @@
 <?php
 function book_show()
 {
-    
+
     if (!is_get()) {
         redirect('errors/404');
     }
@@ -21,7 +21,7 @@ function book_show()
         $already_rented = is_media_already_borrowed_by_user($book_id, $user_id);
     }
 
-// la DB des medias du model
+    // la DB des medias du model
     $data = [
         'author' => $book_info["author"],
         'isbn' => $book_info["isbn"],
@@ -34,9 +34,9 @@ function book_show()
         'stock' => $book_info["stock"],
         'media_id' => $book_id,
         'already_rented' => $already_rented,
-        'stylesheets' => ['assets/css/media.css']
+        'stylesheets' => ['assets/css/media.css', 'assets/css/confirm-popover.css']
     ];
-// renvoi vers la vu.
+    // renvoi vers la vu.
     load_view_with_layout('book/show', $data);
 }
 

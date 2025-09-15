@@ -21,7 +21,6 @@
 }
 
 .media-tile.unavailable img {
-  /* filter: blur(0.1rem); */
   filter: brightness(20%);
 }
 
@@ -55,9 +54,6 @@
   text-align: center;
   width: 150px;
   cursor: pointer;
-}
-.media-tile-cover-title:hover p {
-  /* TODO */
 }
 
 .media-tile-cover-title p {

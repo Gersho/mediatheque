@@ -1,7 +1,5 @@
-a {
+.table-ref {
   color: white;
-  font-size: 1rem;
-  text-decoration: none;
 }
 
 .text-white {
@@ -9,12 +7,11 @@ a {
   color: white;
 }
 
-.flex {
+.add-media-container {
   display: flex;
   padding: 3rem;
-  border-radius: 1rem;
   box-shadow: var(--shadow-lg);
-  width: 100%;
+  gap: 3rem;
   justify-content: center;
 }
 
@@ -28,18 +25,30 @@ a {
   color: var(--secondary-color);
 }
 
-/* Boutons */
-.btn {
-  gap: 0;
-  margin: 0;
-  padding: 0.5rem 0.5rem;
-}
-
-.margin-1 {
-  margin: 1rem;
-}
-
 .data-container {
   display: flex;
   justify-content: center;
+}
+
+.admin-link-container {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.infos-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+}
+
+.database-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.database-info p {
+  margin-bottom: 1rem;
 }

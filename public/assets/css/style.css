@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+a, button {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
 :root {
   --primary-color: #000000;
   --secondary-color: #e2b23a;

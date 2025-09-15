@@ -14,6 +14,7 @@ function home_index()
             'assets/css/pagination.css'
         ]
     ];
+
     try {
         $filter_list = ["title", "type", "genre", "available"];
         $filters = [];
@@ -74,19 +75,4 @@ function home_contact()
     }
 
     load_view_with_layout('home/contact', $data);
-}
-
-
-/**
- * Page profile
- */
-function home_profile()
-{
-    $data = [
-        'title' => 'Profile',
-        'message' => 'Bienvenue sur votre profil',
-        'content' => 'Cette application est un starter kit PHP MVC développé avec une approche procédurale.'
-    ];
-
-    load_view_with_layout('home/profile', $data);
 }

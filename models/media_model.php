@@ -1,14 +1,25 @@
 <?php
 
-function insert_new_media(array $data, callable $insert_func)
+function insert_new_media(array $data, MediaType $media_type)
 {
     db_begin_transaction();
     extract($data);
+    $type = $media_type->value;
     try {
         $query = "INSERT INTO medias (title, genre, type, stock, cover_img) VALUES (?,?,?,?,?)";
         db_execute($query, [$title, $genre, $type, $stock, $cover_img ?? null]);
         $media_id = db_last_insert_id();
-        $insert_func($media_id, $data);
+        switch ($media_type) {
+            case MediaType::Book:
+                insert_new_book($media_id, $data);
+                break;
+            case MediaType::Movie:
+                insert_new_movie($media_id, $data);
+                break;
+            case MediaType::Game:
+                insert_new_game($media_id, $data);
+                break;
+        }
         $cover_img = upload_cover_image();
         if ($cover_img) {
             $query = "UPDATE medias SET cover_img = ? WHERE id = ?";
@@ -30,10 +41,11 @@ function insert_new_media(array $data, callable $insert_func)
     return false;
 }
 
-function update_media(array $data, callable $update_func)
+function update_media(array $data, MediaType $media_type)
 {
     db_begin_transaction();
     extract($data);
+    $type = $media_type->value;
     try {
         // Gestion image : si pas de nouvel upload, garder l’ancien
         $new_cover = upload_cover_image();
@@ -53,11 +65,17 @@ function update_media(array $data, callable $update_func)
             WHERE id = ?";
 
         db_execute($query, [$title, $genre, $cover_img, $stock, $id]);
-        // Vérification callback
-        if (is_callable($update_func)) {
-            $update_func($id, $data);
+        switch ($media_type) {
+            case MediaType::Book:
+                update_book($id, $data);
+                break;
+            case MediaType::Movie:
+                update_movie($id, $data);
+                break;
+            case MediaType::Game:
+                update_game($id, $data);
+                break;
         }
-
         db_commit();
         set_flash('success', 'Média modifié avec succès');
         return true;
@@ -195,7 +213,7 @@ function get_medias(array $filters = []): array
 function get_media_by_id($media_id)
 {
     $query = "SELECT * FROM medias WHERE id = ?";
-    return db_select_one ($query, [$media_id]);
+    return db_select_one($query, [$media_id]);
 }
 
 /**
@@ -270,17 +288,18 @@ function delete_media(int $media_id)
     $query = "DELETE FROM medias WHERE id = ?";
     return db_select_one($query, [$media_id]);
 }
-function get_media_cover_db(int $media_id) {
+function get_media_cover_db(int $media_id)
+{
     $query = "SELECT cover_img FROM medias WHERE id = ?";
-    return UPLOAD_PATH . "/" .db_select_one($query, [$media_id])['cover_img'];
+    return UPLOAD_PATH . "/" . db_select_one($query, [$media_id])['cover_img'];
 }
-function get_books_count() 
+function get_books_count()
 {
     $query = 'SELECT COUNT(id) FROM books';
     return db_select_one($query)['COUNT(id)'];
 }
 
-function get_movies_count() 
+function get_movies_count()
 {
     $query = 'SELECT COUNT(id) FROM movies';
     return db_select_one($query)['COUNT(id)'];

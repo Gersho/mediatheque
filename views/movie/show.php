@@ -7,7 +7,7 @@
 
                 if ($stock !== 0 && !$already_rented):
                     ?>
-                    <button popovertarget="my-popover" class="btn btn-primary louer">Emprunter</button>
+                    <button popovertarget="confirm-popover" class="btn btn-primary louer">Emprunter</button>
                     <?php
                 elseif ($already_rented): ?>
                     <div class="message">Vous louez deja ce media.</div>
@@ -34,14 +34,15 @@
 </div>
 
 <!-- Modal popover -->
-<div class="format-button" popover id="my-popover">Confirmer l'emprunt ?
-    <div class="espacement">
-        <form action="<?= url("media/borrow") ?>" method="post">
-            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
-            <button class="yes" name="id" value="<?php e($media_id); ?>">OUI</button>
-        </form>
-        <form action="" method="get">
-            <button class="no" name="id" value="<?php e($media_id); ?>">NON</button>
-        </form>
+<div class="confirm-popover" popover="hint" id="confirm-popover">
+    <div class="confirm-container">
+        <div class="confirm-title">Confirmer l'emprunt ?</div>
+        <div class="confirm-buttons">
+            <form action="<?= url("media/borrow") ?>" method="post">
+                <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
+                <button class="btn btn-primary" name="id" value="<?php e($media_id); ?>">OUI</button>
+            </form>
+            <button class="btn btn-alert" popovertarget="confirm-popover" popovertargetaction="hide">NON</button>
+        </div>
     </div>
 </div>

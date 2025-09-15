@@ -77,31 +77,6 @@ function get_borrows_details_by_user(int $user_id): array
     return db_select($query, [$user_id]);
 }
 
-function get_estimated_return_date(string $borrow_date)
-{
-    $return_date = date_create($borrow_date)->modify("+" . RETURN_DELAY . "days");
-    $now = date_create();
-    $time_left = date_diff($now, $return_date);
-    $late = $time_left->invert ? "Il y a" : "Dans";
-    $units = [
-        'y' => ['an', 'ans'],
-        'm' => ['mois', 'mois'],
-        'd' => ['jour', 'jours'],
-        'h' => ['heure', 'heures'],
-        'i' => ['minute', 'minutes'],
-        's' => ['seconde', 'secondes'],
-    ];
-
-    foreach ($units as $key => [$singular, $plural]) {
-        $value = $time_left->$key;
-        if ($value > 0) {
-            $label = $value === 1 ? $singular : $plural;
-            return "$late $value $label";
-        }
-    }
-    return "maintenant";
-}
-
 function get_borrow_history_list_by_user_id(int $user_id, $limit = null, $offset = 0)
 {
     $query = "SELECT * FROM borrowed b LEFT JOIN medias m ON m.id = b.media_id WHERE b.user_id = ? AND return_date is NOT NULL ORDER BY start DESC";
