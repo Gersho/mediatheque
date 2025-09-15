@@ -13,7 +13,7 @@ return [
     ],
     [
         "title" => "The Great Gatsby",
-        "genre" => "Drama",
+        "genre" => "Drame",
         "type" => "Book",
         "cover_img" => "https://m.media-amazon.com/images/I/91yg5rniqwL._SL1500_.jpg",
         "stock" => 4,
@@ -48,7 +48,7 @@ return [
     ],
     [
         "title" => "To Kill a Mockingbird",
-        "genre" => "Drama",
+        "genre" => "Drame",
         "type" => "Book",
         "cover_img" => "https://m.media-amazon.com/images/I/81c6aew79KL._SL1500_.jpg",
         "stock" => 2,
@@ -60,7 +60,7 @@ return [
     ],
     [
         "title" => "Super Mario Odyssey",
-        "genre" => "Fantasy",
+        "genre" => "Fantaisie",
         "type" => "Game",
         "cover_img" => "https://m.media-amazon.com/images/I/71XZsDkAuNL._AC_SL1500_.jpg",
         "stock" => 5,
@@ -94,7 +94,7 @@ return [
     ],
     [
         "title" => "Pulp Fiction",
-        "genre" => "Thriller",
+        "genre" => "Thriller-Suspense",
         "type" => "Movie",
         "cover_img" => "https://m.media-amazon.com/images/I/71zSZQzlK+L._AC_SY879_.jpg",
         "stock" => 4,
@@ -118,7 +118,7 @@ return [
     ],
     [
         "title" => "The Godfather",
-        "genre" => "Drama",
+        "genre" => "Drame",
         "type" => "Movie",
         "cover_img" => "https://m.media-amazon.com/images/I/510L5ypQBdL._AC_SY879_.jpg",
         "stock" => 2,
@@ -130,7 +130,7 @@ return [
     ],
     [
         "title" => "The Hobbit",
-        "genre" => "Fantasy",
+        "genre" => "Fantaisie",
         "type" => "Book",
         "cover_img" => "https://m.media-amazon.com/images/I/81hylMcxa3L._SL1500_.jpg",
         "stock" => 3,
@@ -153,7 +153,7 @@ return [
     ],
     [
         "title" => "The Shining",
-        "genre" => "Horror",
+        "genre" => "Horreur",
         "type" => "Movie",
         "cover_img" => "https://m.media-amazon.com/images/M/MV5BNmM5ZThhY2ItOGRjOS00NzZiLWEwYTItNDgyMjFkOTgxMmRiXkEyXkFqcGc@._V1_FMjpg_UX627_.jpg",
         "stock" => 3,
@@ -223,7 +223,7 @@ return [
     ],
     [
         "title" => "Shutter Island",
-        "genre" => "Mystery",
+        "genre" => "Mystère",
         "type" => "Movie",
         "cover_img" => "https://m.media-amazon.com/images/I/71ZUy8y-3CL._AC_SL1500_.jpg",
         "stock" => 3,
@@ -235,7 +235,7 @@ return [
     ],
     [
         "title" => "The Road",
-        "genre" => "Drama",
+        "genre" => "Drame",
         "type" => "Book",
         "cover_img" => "https://m.media-amazon.com/images/I/51URLMJvQ7L._SL1000_.jpg",
         "stock" => 2,
@@ -247,7 +247,7 @@ return [
     ],
     [
         "title" => "Fight Club",
-        "genre" => "Drama",
+        "genre" => "Documentaire",
         "type" => "Movie",
         "cover_img" => "https://m.media-amazon.com/images/I/61IgtYrLF5L._AC_SL1280_.jpg",
         "stock" => 4,
@@ -259,7 +259,7 @@ return [
     ],
     [
         "title" => "Animal Farm",
-        "genre" => "Fantasy",
+        "genre" => "Fantaisie",
         "type" => "Book",
         "cover_img" => "https://m.media-amazon.com/images/I/619GyNyTTKL._SL1500_.jpg",
         "stock" => 3,
@@ -282,7 +282,7 @@ return [
     ],
     [
         "title" => "Saving Private Ryan",
-        "genre" => "Drama",
+        "genre" => "Comédie",
         "type" => "Movie",
         "cover_img" => "https://m.media-amazon.com/images/I/71aluwmPo-L._AC_SL1191_.jpg",
         "stock" => 2,
@@ -294,7 +294,7 @@ return [
     ],
     [
         "title" => "Silent Hill 2",
-        "genre" => "Horror",
+        "genre" => "FPS",
         "type" => "Game",
         "cover_img" => "https://m.media-amazon.com/images/I/71XsCEArGiL._AC_SL1500_.jpg",
         "stock" => 3,
@@ -305,7 +305,7 @@ return [
     ],
     [
         "title" => "The Catcher in the Rye",
-        "genre" => "Drama",
+        "genre" => "Comédie Musicale",
         "type" => "Book",
         "cover_img" => "https://m.media-amazon.com/images/I/71Xu4akGK+L._SL1500_.jpg",
         "stock" => 2,

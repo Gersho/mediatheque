@@ -491,18 +491,17 @@ function upload_cover_from_url(string $url): ?string
 function get_books_genres()
 {
     $genre_enum = [
-        'Action',
-        'Comedy',
-        'Documentary',
-        'Drama',
-        'Fantasy',
-        'Horror',
-        'Musical',
-        'Mystery',
-        'Romance',
+        'Roman',
+        'Policier',
+        'Biographie',
+        'Histoire',
+        'Fantaisie',
+        'Épouvante',
+        'Aventures',
+        'Psychologie',
         'Science Fiction',
-        'Thriller',
-        'Western',
+        'Thriller-Suspense',
+        'Bande Dessinée',
     ];
     return $genre_enum;
 }
@@ -525,16 +524,16 @@ function get_movies_genres()
 {
     $genre_enum = [
         'Action',
-        'Comedy',
-        'Documentary',
-        'Drama',
-        'Fantasy',
-        'Horror',
-        'Musical',
-        'Mystery',
+        'Comédie',
+        'Documentaire',
+        'Drame',
+        'Fantaisie',
+        'Horreur',
+        'Comédie Musicale',
+        'Mystère',
         'Romance',
         'Science Fiction',
-        'Thriller',
+        'Thriller-Suspense',
         'Western',
     ];
     return $genre_enum;

@@ -29,7 +29,7 @@ function media_borrow()
 
     //check user has rented less than 3
     if (get_borrow_count_by_user_id($user_id) >= 3) {
-        set_flash("error", "Vous avez déja atteint la limite de 3 emprunts simultanés");
+        set_flash("error", "Vous avez déjà atteint la limite de 3 emprunts simultanés");
         redirect("home");
     }
 
@@ -55,14 +55,14 @@ function media_return()
 
     if (!isset($_POST['csrf_token']) || !verify_csrf_token($_POST['csrf_token'])) {
         set_flash('error', "Token CSRF invalide");
-        error_logging(ErrorType::Error, "Tried to add book without valid token");
+        error_logging(ErrorType::Error, "Tried to return media without valid token");
         redirect('home/profile');
     }
 
     $media_id = (int) $_POST['id'];
 
     if (!is_logged_in()) {
-        set_flash("error", "you must be logged in");
+        set_flash("error", "Veuillez vous connecter");
         redirect("auth/login");
     }
 
@@ -74,6 +74,6 @@ function media_return()
         redirect("home");
     }
 
-    set_flash("success", "Le media a bien été rendu");
+    set_flash("success", "Le média a bien été rendu");
     redirect("profile");
 }
