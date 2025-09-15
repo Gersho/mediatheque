@@ -22,7 +22,7 @@
             </div>
             <ul class="nav-menu">
                 <?php if (is_admin()): ?>
-                    <li><a href="<?php echo url('admin'); ?>">Admin Dashboard</a></li>
+                    <li><a href="<?php echo url('admin'); ?>">Admin</a></li>
                 <?php endif; ?>
                 <li><a href="<?php echo url(); ?>">Accueil</a></li>
                 <li><a href="<?php echo url('home/about'); ?>">À propos</a></li>
