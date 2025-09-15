@@ -18,7 +18,7 @@
     <header class="header">
         <nav class="navbar">
             <div class="nav-brand">
-                <a href="<?php echo url(); ?>"><?php echo APP_NAME; ?></a>
+                <a href="<?php echo url(); ?>" title="retour à l'accueil"><?php echo APP_NAME; ?></a>
             </div>
             <ul class="nav-menu">
                 <?php if (is_admin()): ?>

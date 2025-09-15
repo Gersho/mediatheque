@@ -1,4 +1,8 @@
 <?php include VIEW_PATH . '/search-bar/search-bar.php' ?>
+<!-- tabindex on this page has to take into account that
+        flash messages uses tabindex 1
+        search bar uses tabindex 2
+        pagination uses tabindex 9 -->
 <div class="media-container">
     <?php if (count($medias) > 0): ?>
         <?php foreach ($medias as $media): ?>
@@ -8,7 +12,7 @@
                     <h2><?= strtoupper($media['type']) ?></h2>
                     <a class="media-tile-cover-title" href="<?= get_media_url($media['id'], $media['type']) ?>">
                         <img src="<?= get_media_cover_img($media['cover_img']) ?>" alt="cover">
-                        <p><?php e(crop_string($media['title'], 35)) ?></p>
+                        <p tabindex="3"><?php e(crop_string($media['title'], 35)) ?></p>
                     </a>
                 </div>
             </div>
