@@ -24,7 +24,7 @@
                 <label tabindex="2" for="available">Disponible</label>
                 <input tabindex="2" class="checkbox" type="checkbox" id="available" name="available" <?= get('available') ? 'checked' : '' ?>>
             </div>
-            <button tabindex="2" class="search-btn" type="submit"></button>
+            <button title="lancer la recherche" tabindex="2" class="search-btn" type="submit"></button>
         </div>
     </form>
 </div>

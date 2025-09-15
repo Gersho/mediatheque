@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(function () {
         alert.remove();
       }, 300);
-    }, 5000);
+    }, 20000);
 
     // Permettre de fermer manuellement
     alert.addEventListener("click", function () {

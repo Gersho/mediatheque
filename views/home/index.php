@@ -1,4 +1,5 @@
-<?php include VIEW_PATH . '/search-bar/search-bar.php' ?>
+<?php 
+include VIEW_PATH . '/search-bar/search-bar.php' ?>
 <!-- tabindex on this page has to take into account that
         flash messages uses tabindex 1
         search bar uses tabindex 2
