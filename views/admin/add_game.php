@@ -63,8 +63,8 @@
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" placeholder="Description"><?php if (isset($entries['description']))
-                                                                                            e($entries['description']); ?></textarea>
+                <textarea id="description" name="description" placeholder="Description" maxlength="3000"><?php if (isset($entries['description']))
+                                                                                                                e($entries['description']); ?></textarea>
             </div>
 
             <div class="form-group">

@@ -59,7 +59,7 @@
 
             <div class="form-group">
                 <label for="summary">Résumé</label>
-                <textarea id="summary" name="summary" required placeholder="Résumé du livre" maxlength="3000"
+                <textarea id="summary" name="summary" placeholder="Résumé du livre" maxlength="3000"
                     autocomplete="on"><?php if (isset($entries['summary']))
                                             e($entries['summary']); ?></textarea>
             </div>
