@@ -14,6 +14,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
     volumes:
       - mysql-media-data:/var/lib/mysql
+      - ./database/:/docker-entrypoint-initdb.d
     networks:
       - mediatheque_network
     healthcheck:

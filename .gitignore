@@ -63,3 +63,5 @@ phpunit.xml.bak
 
 composer.*
 vendor
+
+*.kpz

@@ -30,7 +30,7 @@ function home_index()
         $data = array_merge($data, $medias);
         load_view_with_layout('home/index', $data);
     } catch (Exception $e) {
-
+        echo "aaa: " . $e->getMessage();
         set_flash('error', 'Erreur lors du chargement des médias : ' . $e->getMessage());
         // Do NOT call redirect() here!
         $data['medias'] = [];
