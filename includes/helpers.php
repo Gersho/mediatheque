@@ -40,8 +40,11 @@ function url($path = '')
  */
 function redirect($path = '')
 {
-    $url = url($path);
-    header("Location: $url" . "/home");
+    // $url = url($path);
+    // header("Location: $url" . "/home");
+
+    $url = rtrim($path, '/') . '/' . ltrim($path, '/');
+    header("Location: $url");
     exit;
 }
 
@@ -201,7 +204,9 @@ function get($key, $default = null)
  */
 function is_logged_in()
 {
-    return isset($_SESSION['user_id']);
+    return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
+
+    // return !empty($_SESSION['user']) && !empty($_SESSION['user']['id']);
 }
 
 /**

@@ -7,7 +7,7 @@ define('DB_PASS', getenv('DB_PASS') ?: 'mediapassword123');
 define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
 
 // General Application Configuration
-define('BASE_URL', getenv('BASE_URL') ?: 'https://mediatheque.zennoune.fr');
+define('BASE_URL', rtrim(getenv('BASE_URL') ?: 'https://mediatheque.zennoune.fr', '/'));
 define('APP_NAME', getenv('APP_NAME') ?: 'Médiathèque Lyon 5');
 define('APP_VERSION', getenv('APP_VERSION') ?: '1.0.0');
 
