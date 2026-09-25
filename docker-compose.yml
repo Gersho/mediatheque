@@ -1,0 +1,60 @@
+services:
+
+  # MySQL Database Container
+  mediatheque_db:
+    image: mysql:8.0
+    container_name: mediatheque_db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - mysql-media-data:/var/lib/mysql
+    networks:
+      - mediatheque_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  # PHP Apache Web Application
+  mediatheque_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mediatheque_app
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      mediatheque_db:
+        condition: service_healthy
+    networks:
+      - mediatheque_network
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-network"
+      # Traefik Domain Router
+      - "traefik.http.routers.mediatheque.rule=Host(`mediatheque.zennoune.fr`)"
+      - "traefik.http.routers.mediatheque.entrypoints=websecure"
+      - "traefik.http.routers.mediatheque.tls.certresolver=letsencrypt"
+      - "traefik.http.services.mediatheque.loadbalancer.server.port=80"
+
+
+volumes:
+  mysql-media-data:
+
+
+networks:
+  mediatheque_network:
+    name: mediatheque_network
+    driver: bridge
+  traefik-network:
+    external: true
