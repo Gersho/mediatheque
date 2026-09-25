@@ -30,8 +30,15 @@ function home_index()
         $data = array_merge($data, $medias);
         load_view_with_layout('home/index', $data);
     } catch (Exception $e) {
-        set_flash('error', $e->getMessage());
-        redirect();
+
+        set_flash('error', 'Erreur lors du chargement des médias : ' . $e->getMessage());
+        // Do NOT call redirect() here!
+        $data['medias'] = [];
+        $data['total_pages'] = 1;
+        $data['current_page'] = 1;
+
+        // set_flash('error', $e->getMessage());
+        // redirect();
     }
 }
 
