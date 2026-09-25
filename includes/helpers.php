@@ -41,7 +41,7 @@ function url($path = '')
 function redirect($path = '')
 {
     $url = url($path);
-    header("Location: $url");
+    header("Location: $url" . "/home");
     exit;
 }
 
